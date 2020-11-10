@@ -24,5 +24,16 @@ See the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) f
 **Tip:** [GitKraken](https://www.gitkraken.com) may be useful when working with git. This intuitive Git GUI simplifies and streamlines Git processes.  
 You need to use Pro version when working with private repos. Pro version is free when you sign up with GitHub Student Account.
 
+## Additional Resources
+
+### Git Tutorials
+
+Atlassian's [Git Tutorials](https://www.atlassian.com/git/tutorials) are very helpful and clean.  
+You can find tutorial from any level. You should ignore resources about Bitbucket. You can start from the Beginner part.
+
+You can find more in [git documentation](https://git-scm.com/docs/gittutorial).
+
+**IMPORTANT!** If you are new to git, please **practice** first with your own repos. 
+
 ## License
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
