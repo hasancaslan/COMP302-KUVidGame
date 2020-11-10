@@ -37,7 +37,7 @@ You can find more in [git documentation](https://git-scm.com/docs/gittutorial).
 
 ## License
 
-Copyright 2020 AHMET KADIR ZEYBEK, ATA KADIRIOGLU, AYCAN DENİZ VİT, HASAN CAN ASLAN, ULAS BERK KARLI, YIGIT ERTURK
+Copyright 2020 DM Me - AHMET KADIR ZEYBEK, ATA KADIRIOGLU, AYCAN DENİZ VİT, HASAN CAN ASLAN, ULAS BERK KARLI, YIGIT ERTURK
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this repository except in compliance with the License.
