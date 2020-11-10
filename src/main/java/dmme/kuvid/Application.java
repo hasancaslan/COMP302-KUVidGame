@@ -1,9 +1,8 @@
 package dmme.kuvid;
 
-import javax.swing.*;
 import dmme.kuvid.logging.Logger;
 import dmme.kuvid.logging.LoggerFactory;
-import java.io.IOException;
+import javax.swing.*;
 
 public class Application implements Runnable {
     private static volatile Application _instance = null;
@@ -17,6 +16,7 @@ public class Application implements Runnable {
         if (_instance == null) {
             _instance = new Application();
         }
+
         return _instance;
     }
 
