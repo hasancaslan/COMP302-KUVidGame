@@ -4,3 +4,44 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/6.7/samples
  */
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+group = "dmme"
+version = "1.0.0"
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Required for json api of java ee
+    implementation 'javax.json:javax.json-api:1.1'
+    // Required for json api of java ee
+    runtimeOnly 'org.glassfish:javax.json:1.1'
+    // Required for tests
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+application {
+    mainClass.set('dmme.kuvid.Application')
+}
+
+test {
+    useJUnitPlatform()
+
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: " + descriptor)
+    }
+}

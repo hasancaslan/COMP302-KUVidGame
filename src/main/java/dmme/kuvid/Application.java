@@ -1,6 +1,8 @@
 package dmme.kuvid;
 
 import javax.swing.*;
+import dmme.kuvid.logging.Logger;
+import dmme.kuvid.logging.LoggerFactory;
 import java.io.IOException;
 
 public class Application implements Runnable {
@@ -34,11 +36,11 @@ public class Application implements Runnable {
     }
 
     public boolean startClient(String clientName, String ip, int port) {
-
+        return false;
     }
 
     public boolean startServer(int port) {
-
+        return false;
     }
 
     public void startGame() {
