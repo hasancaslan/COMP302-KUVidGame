@@ -4,11 +4,12 @@ KuVid is a game for COMP 302 Term Project.
 
 ## Team Members
 
-- AHMET KADIR ZEYBEK, @azeybek17  
-- ATA KADIRIOGLU, @akadirioglu16  
-- AYCAN DENİZ VİT, @aycandv  
-- ULAS BERK KARLI, @ukarli16  
-- YIGIT ERTURK, @yerturk16  
+- AHMET KADIR ZEYBEK, @azeybek17
+- ATA KADIRIOGLU, @akadirioglu16
+- AYCAN DENİZ VİT, @aycandv
+- HASAN CAN ASLAN, @haslan16
+- ULAS BERK KARLI, @ukarli16
+- YIGIT ERTURK, @yerturk16
 
 ## Contributing
 
