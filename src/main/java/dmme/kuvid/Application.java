@@ -1,14 +1,17 @@
 package dmme.kuvid;
 
-import dmme.kuvid.logging.Logger;
-import dmme.kuvid.logging.LoggerFactory;
+import dmme.kuvid.lib.logger.Logger;
+import dmme.kuvid.lib.logger.LoggerFactory;
 import javax.swing.*;
 
 public class Application implements Runnable {
     private static volatile Application _instance = null;
-    private final Logger logger = LoggerFactory.getInstance().getLogger(getClass());
+    private final Logger logger;
 
-    private Application() {
+    public Application() {
+        LoggerFactory loggerFactory = new LoggerFactory();
+        this.logger = loggerFactory.createLogger(Application.class);
+
         logger.i("Created new KUVid instance.");
     }
 
@@ -28,12 +31,9 @@ public class Application implements Runnable {
     @Override
     public void run() {
         logger.i("Running KUVid...");
-        startInitialization();
     }
 
-    public void startInitialization() {
-
-    }
+    public void init() { }
 
     public boolean startClient(String clientName, String ip, int port) {
         return false;
@@ -43,7 +43,5 @@ public class Application implements Runnable {
         return false;
     }
 
-    public void startGame() {
-
-    }
+    public void startGame() { }
 }
