@@ -33,6 +33,8 @@ You can find tutorial from any level. You should ignore resources about Bitbucke
 
 You can find more in [git documentation](https://git-scm.com/docs/gittutorial).
 
+A simple [Git Crash Course](https://www.youtube.com/watch?v=SWYqp7iY_Tc&t=944s)
+
 **IMPORTANT!** If you are new to git, please **practice** first with your own repos. 
 
 ## License
