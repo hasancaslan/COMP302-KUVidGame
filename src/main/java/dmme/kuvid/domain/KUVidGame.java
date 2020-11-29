@@ -1,5 +1,8 @@
 package dmme.kuvid.domain;
 
+import dmme.kuvid.lib.types.AtomType;
+import dmme.kuvid.lib.types.PowerType;
+
 import java.sql.Time;
 
 public class KUVidGame {
