@@ -1,4 +1,4 @@
-package dmme.kuvid.domain;
+package dmme.kuvid.domain.shooter;
 
 public class ShooterHandler {
     private Shooter shooter;

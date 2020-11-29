@@ -1,5 +1,6 @@
-package dmme.kuvid.domain;
+package dmme.kuvid.domain.shooter;
 
+import dmme.kuvid.lib.types.AmmoType;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Shooter extends Observable {

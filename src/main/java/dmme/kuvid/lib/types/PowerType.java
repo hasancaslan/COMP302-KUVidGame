@@ -1,4 +1,4 @@
-package dmme.kuvid.domain;
+package dmme.kuvid.lib.types;
 
 public enum PowerType {
     SIGMA_B,
