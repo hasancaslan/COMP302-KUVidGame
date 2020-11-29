@@ -4,6 +4,8 @@ import dmme.kuvid.constants.LogLevel;
 
 /**
  * Base logger class.
+ *
+ * @author Hasan Can
  */
 public abstract class Logger {
     private LogLevel level;
@@ -21,6 +23,8 @@ public abstract class Logger {
      *
      * @param level   Log level
      * @param msg Log message
+     *
+     * @author Hasan Can
      */
     protected abstract void write(String level, String msg);
 
@@ -28,6 +32,8 @@ public abstract class Logger {
      * Debug log message.
      *
      * @param msg Log message
+     *
+     * @author Hasan Can
      */
     public void d(String msg) {
         if (LogLevel.DEBUG.compareTo(level) >= 0) {
@@ -39,6 +45,8 @@ public abstract class Logger {
      * Info log message.
      *
      * @param msg Log message
+     *
+     * @author Hasan Can
      */
     public void i(String msg) {
         if (LogLevel.INFO.compareTo(level) >= 0) {
@@ -50,6 +58,8 @@ public abstract class Logger {
      * Warning log message.
      *
      * @param msg Log message
+     *
+     * @author Hasan Can
      */
     public void w(String msg) {
         if (LogLevel.WARNING.compareTo(level) >= 0) {
@@ -61,6 +71,8 @@ public abstract class Logger {
      * Error log message.
      *
      * @param msg Log message
+     *
+     * @author Hasan Can
      */
     public void e(String msg) {
         if (LogLevel.ERROR.compareTo(level) >= 0) {
