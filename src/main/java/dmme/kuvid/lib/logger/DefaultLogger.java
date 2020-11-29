@@ -6,6 +6,8 @@ import java.time.Instant;
 
 /**
  * Logs time, thread, class and log level respectively.
+ *
+ * @author Hasan Can
  */
 public class DefaultLogger extends Logger {
     public DefaultLogger(LogLevel level) {
