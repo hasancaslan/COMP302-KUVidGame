@@ -2,7 +2,10 @@ package dmme.kuvid;
 
 import dmme.kuvid.lib.logger.Logger;
 import dmme.kuvid.lib.logger.LoggerFactory;
+import dmme.kuvid.ui.BuildingWindow;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class Application implements Runnable {
     private static volatile Application _instance = null;
@@ -26,24 +29,26 @@ public class Application implements Runnable {
     public static void main(String[] args) {
         Application application = Application.getInstance();
         SwingUtilities.invokeLater(application);
-	build();
     }
 
     @Override
     public void run() {
         logger.i("Running KUVid...");
+        initGame();
     }
 
-    public void build(){
+    public void buildWindow() {
         BuildingWindow buildWindow = new BuildingWindow();
-	buildWindow.setTitle("BUILDING WINDOW");
-	buildWindow.setSize(510,510);
-	buildWindow.setLocationRelativeTo((Component)null);
-	buildWindow.setDefaultCloseOperation(3);
-	buildWindow.setVisible(true);
+        buildWindow.setTitle("BUILDING WINDOW");
+        buildWindow.setSize(510, 510);
+        buildWindow.setLocationRelativeTo((Component) null);
+        buildWindow.setDefaultCloseOperation(3);
+        buildWindow.setVisible(true);
     }
 
-    public void init() { }
+    public void initGame() {
+        buildWindow();
+    }
 
     public boolean startClient(String clientName, String ip, int port) {
         return false;
@@ -53,5 +58,6 @@ public class Application implements Runnable {
         return false;
     }
 
-    public void startGame() { }
+    public void startGame() {
+    }
 }
