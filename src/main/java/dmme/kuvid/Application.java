@@ -26,11 +26,21 @@ public class Application implements Runnable {
     public static void main(String[] args) {
         Application application = Application.getInstance();
         SwingUtilities.invokeLater(application);
+	build();
     }
 
     @Override
     public void run() {
         logger.i("Running KUVid...");
+    }
+
+    public void build(){
+        BuildingWindow buildWindow = new BuildingWindow();
+	buildWindow.setTitle("BUILDING WINDOW");
+	buildWindow.setSize(510,510);
+	buildWindow.setLocationRelativeTo((Component)null);
+	buildWindow.setDefaultCloseOperation(3);
+	buildWindow.setVisible(true);
     }
 
     public void init() { }
