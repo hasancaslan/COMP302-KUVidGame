@@ -5,6 +5,8 @@ import java.time.Instant;
 
 /**
  * Time, thread, class name logger with certain log level
+ *
+ * @author Hasan Can
  */
 public class ClassNameLogger extends Logger {
     private final String name;

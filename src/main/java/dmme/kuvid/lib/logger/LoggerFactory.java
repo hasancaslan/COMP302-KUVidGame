@@ -22,6 +22,8 @@ public class LoggerFactory {
      * Creates a default logger
      *
      * @return Creates a default logger
+     *
+     * @author Hasan Can
      */
 
     public Logger createLogger() {
@@ -33,6 +35,8 @@ public class LoggerFactory {
      *
      * @param cls Class to get class name from
      * @return Class aware logger
+     *
+     * @author Hasan Can
      */
 
     public Logger createLogger(Class<?> cls) {
