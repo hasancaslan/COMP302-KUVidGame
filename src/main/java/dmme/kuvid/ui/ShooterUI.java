@@ -28,7 +28,7 @@ public class ShooterUI extends JLabel implements PropertyListener, Animatable {
         this.setSize(dimension);
         this.setLocation(0, 0);
         this.setVisible(true);
-        shooter.addPropertyListener("location", this);
+        shooter.addPropertyListener("position", this);
     }
 
     public static ImageIcon getIconFromFileName(Dimension shooterDimension) {
@@ -53,7 +53,7 @@ public class ShooterUI extends JLabel implements PropertyListener, Animatable {
 
     @Override
     public void onPropertyEvent(PropertyEvent e) {
-        if (e.getPropertyName().equals("location")) {
+        if (e.getPropertyName().equals("position")) {
             this.location = (double) e.getNewValue();
             animationQueue.addLast(new ShooterAnimation(this, (double) e.getOldValue(), (double) e.getNewValue(), ShooterAnimationType.LOCATION));
         } else if (e.getPropertyName().equals("angle")) {

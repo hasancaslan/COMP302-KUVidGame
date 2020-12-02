@@ -8,10 +8,10 @@ public class ShooterHandler {
     }
 
     public void moveShooter(double displacement) {
-
+        shooter.setPosition(shooter.getPosition() + displacement);
     }
 
-    public void rotateShooter(int angle) {
-
+    public void rotateShooter(int angleChange) {
+        shooter.setAngle(shooter.getAngle() + angleChange);
     }
 }
