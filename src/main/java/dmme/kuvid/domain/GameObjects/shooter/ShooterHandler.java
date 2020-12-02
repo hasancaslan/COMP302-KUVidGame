@@ -1,4 +1,4 @@
-package dmme.kuvid.domain.shooter;
+package dmme.kuvid.domain.GameObjects.shooter;
 
 public class ShooterHandler {
     private Shooter shooter;

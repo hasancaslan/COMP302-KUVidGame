@@ -1,4 +1,4 @@
-package dmme.kuvid.domain.shooter;
+package dmme.kuvid.domain.GameObjects.shooter;
 
 import dmme.kuvid.lib.types.AmmoType;
 import dmme.kuvid.utils.observer.Observable;
