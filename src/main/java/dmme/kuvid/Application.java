@@ -1,5 +1,6 @@
 package dmme.kuvid;
 
+import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.logger.Logger;
 import dmme.kuvid.lib.logger.LoggerFactory;
 import dmme.kuvid.ui.BuildingWindow;
@@ -10,6 +11,7 @@ import java.awt.*;
 public class Application implements Runnable {
     private static volatile Application _instance = null;
     private final Logger logger;
+    private KUVidGame game;
 
     public Application() {
         LoggerFactory loggerFactory = new LoggerFactory();
@@ -35,19 +37,26 @@ public class Application implements Runnable {
     public void run() {
         logger.i("Running KUVid...");
         initGame();
+        
     }
 
-    public void buildWindow() {
-        BuildingWindow buildWindow = new BuildingWindow();
+    public BuildingWindow buildWindow() {
+        BuildingWindow buildWindow = new BuildingWindow(this.game);
         buildWindow.setTitle("BUILDING WINDOW");
         buildWindow.setSize(510, 510);
         buildWindow.setLocationRelativeTo((Component) null);
         buildWindow.setDefaultCloseOperation(3);
         buildWindow.setVisible(true);
+        
+        return buildWindow;
+        
     }
 
     public void initGame() {
-        buildWindow();
+    	this.game=new KUVidGame();
+        BuildingWindow window=buildWindow();
+        logger.i(""+this.game.getNumAtoms());
+        
     }
 
     public boolean startClient(String clientName, String ip, int port) {

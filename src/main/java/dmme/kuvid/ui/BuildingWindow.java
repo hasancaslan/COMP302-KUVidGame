@@ -1,6 +1,9 @@
 package dmme.kuvid.ui;
 
 import javax.swing.*;
+
+import dmme.kuvid.domain.KUVidGame;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +11,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class BuildingWindow extends JFrame {
+	
+	private KUVidGame game;
+	public boolean finished=false;
 
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
@@ -32,7 +38,10 @@ public class BuildingWindow extends JFrame {
     int moleculeNumber = 0;
     int gameSize = 0;
 
-    public BuildingWindow() {
+    public BuildingWindow(KUVidGame game) {
+    	
+    	this.game=game;
+    	
         this.ComboBox = new JComboBox<>(this.Difficulty);
         this.StartButton = new JButton("Start Game");
         this.setLayout(new GridLayout(9, 2, 4, 4));
@@ -81,15 +90,27 @@ public class BuildingWindow extends JFrame {
                 moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
                 gameSize = Integer.parseInt((String) GameSize.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
-
-                BuildingWindow.this.getContentPane().removeAll();
-                BuildingWindow.this.getContentPane().repaint();
+                
+                
+               
+                BuildingWindow.this.game.setNumAtoms(atomNumber);
+                BuildingWindow.this.game.setNumMolecules(moleculeNumber);
+                BuildingWindow.this.game.setNumBlocker(reactionBlockerNumber);
+                BuildingWindow.this.game.setNumPowerUp(powerUpNumber);
+                
+                BuildingWindow.this.finished=true;
+                //BuildingWindow.this.getContentPane().removeAll();
+                //BuildingWindow.this.getContentPane().repaint();
+                dispose();
+                
             }
         });
         SpinButton.addItemListener(new SpinHandler(true));
         StationaryButton.addItemListener(new SpinHandler(false));
         LinearButton.addItemListener(new StructureHandler(true));
         NoNLinearButton.addItemListener(new StructureHandler(false));
+        
+        
     }
 
 
