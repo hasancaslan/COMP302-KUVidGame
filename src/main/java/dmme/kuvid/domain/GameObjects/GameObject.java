@@ -1,15 +1,27 @@
 package dmme.kuvid.domain.GameObjects;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class GameObject {
-	
+
+	private static List<GameObject> gameObjectList = new ArrayList<>();
+
 	Position Position;
+
+	private String type;
+
 	boolean active;
 	
 	public GameObject(Position position, boolean active) {
 		super();
 		Position = position;
 		this.active = active;
+	}
+
+	public static List<GameObject> getGameObjectList() {
+		return gameObjectList;
 	}
 	
 	public abstract void Collusion();
