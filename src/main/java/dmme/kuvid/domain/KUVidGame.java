@@ -1,37 +1,31 @@
 package dmme.kuvid.domain;
 
-import dmme.kuvid.domain.GameObjects.*;
-import dmme.kuvid.domain.GameObjects.shooter.*;
-import dmme.kuvid.lib.types.*;
+import dmme.kuvid.domain.GameObjects.GameObject;
+import dmme.kuvid.domain.GameObjects.Shooter;
+import dmme.kuvid.lib.types.AtomType;
+import dmme.kuvid.lib.types.GameLevel;
+import dmme.kuvid.lib.types.PowerType;
 
 import java.sql.Time;
 
 public class KUVidGame {
+    private static KUVidGame instance = null;
+    private final int L = 50;
     public Time time;
-    public boolean active=true;
+    public boolean active = true;
     public boolean blendingMode;
-    private int numAtoms=1;
-    private int numMolecules=1;
-    private int numBlocker=1;
-    private int numPowerUp=1;
+    private int numAtoms = 1;
+    private int numMolecules = 1;
+    private int numBlocker = 1;
+    private int numPowerUp = 1;
     private GameLevel diff;
     private GameObject objects;
     private Shooter shooter;
-    private ShooterHandler shootControl;
-    private int N=20;
-    private final int L=50;
-    
- //
-    
-    
-    public KUVidGame() {
-    	this.shooter=new Shooter();
-    	this.shootControl=new ShooterHandler(this.shooter);
-    	
-    	
-    }
-    private Shooter shooter;
+    private int N = 20;
 
+    public KUVidGame() {
+        this.shooter = new Shooter();
+    }
 
     public KUVidGame(Time time, boolean active, boolean blendingMode) {
         this.time = time;
@@ -39,7 +33,13 @@ public class KUVidGame {
         this.blendingMode = blendingMode;
         this.shooter = new Shooter();
     }
-    
+
+    public static KUVidGame getInstance() {
+        if (instance == null)
+            instance = new KUVidGame();
+
+        return instance;
+    }
 
     public Time getTime() {
         return time;
@@ -69,7 +69,7 @@ public class KUVidGame {
         shooter.rotateShooter(angleChange);
     }
 
-    public void moveShooter(double displacement) {
+    public void moveShooter(int displacement) {
         shooter.moveShooter(displacement);
     }
 
@@ -85,55 +85,54 @@ public class KUVidGame {
 
     }
 
-	public int getNumPowerUp() {
-		return numPowerUp;
-	}
+    public int getNumPowerUp() {
+        return numPowerUp;
+    }
 
-	public void setNumPowerUp(int numPowerUp) {
-		this.numPowerUp = numPowerUp;
-	}
+    public void setNumPowerUp(int numPowerUp) {
+        this.numPowerUp = numPowerUp;
+    }
 
-	public int getNumBlocker() {
-		return numBlocker;
-	}
+    public int getNumBlocker() {
+        return numBlocker;
+    }
 
-	public void setNumBlocker(int numBlocker) {
-		this.numBlocker = numBlocker;
-	}
+    public void setNumBlocker(int numBlocker) {
+        this.numBlocker = numBlocker;
+    }
 
-	public int getNumMolecules() {
-		return numMolecules;
-	}
+    public int getNumMolecules() {
+        return numMolecules;
+    }
 
-	public void setNumMolecules(int numMolecules) {
-		this.numMolecules = numMolecules;
-	}
+    public void setNumMolecules(int numMolecules) {
+        this.numMolecules = numMolecules;
+    }
 
-	public int getNumAtoms() {
-		return numAtoms;
-	}
+    public int getNumAtoms() {
+        return numAtoms;
+    }
 
-	public void setNumAtoms(int numAtoms) {
-		this.numAtoms = numAtoms;
-	}
-	
-	public Shooter getShooter() {
-		return this.shooter;
-		
-	}
+    public void setNumAtoms(int numAtoms) {
+        this.numAtoms = numAtoms;
+    }
 
-
-	public int getN() {
-		return N;
-	}
+    public Shooter getShooter() {
+        return this.shooter;
+    }
 
 
-	public void setN(int n) {
-		this.N = n;
-	}
-	
-	public void shooterStart() {
-		this.shooter.setPosition(this.N*L/2);
-		this.shooter.setAngle(90);
-	}
+    public int getN() {
+        return N;
+    }
+
+
+    public void setN(int n) {
+        this.N = n;
+    }
+
+    public void shooterStart() {
+        this.shooter.setPosition(this.N * L / 2);
+        this.shooter.setAngle(90);
+    }
 }

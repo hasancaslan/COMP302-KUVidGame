@@ -13,7 +13,7 @@ import javax.swing.Timer;
 
 import dmme.kuvid.domain.KUVidGame;
 
-public class Units extends JPanel{
+public class Units extends JPanel {
 	
 	private int ind;
 	private Background map = new Background();

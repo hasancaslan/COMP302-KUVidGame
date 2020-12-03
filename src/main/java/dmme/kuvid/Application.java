@@ -43,7 +43,7 @@ public class Application implements Runnable {
     }
 
     public BuildingWindow buildWindow() {
-        BuildingWindow buildWindow = new BuildingWindow(this.game);
+        BuildingWindow buildWindow = new BuildingWindow();
         buildWindow.setTitle("BUILDING WINDOW");
         buildWindow.setSize(510, 510);
         buildWindow.setLocationRelativeTo((Component) null);
