@@ -8,14 +8,14 @@ import java.awt.event.KeyListener;
 
 
 public class GameWindow extends JFrame {
-    public Units units;
     private final ShooterUI shooterUI;
+    public Units units;
     private int h;
     private int w;
 
     public GameWindow() {
         this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter());
-        this.units = new Units(this.shooterUI);
+        this.units = new Units(KUVidGame.getInstance(), this.shooterUI);
         this.add(units);
         this.addKeyListener(new KeyListener() {
             @Override

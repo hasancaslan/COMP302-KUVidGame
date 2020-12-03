@@ -14,6 +14,7 @@ public class Units extends JPanel {
     List<Drawable> list;
     private int ind;
     private Background map = new Background();
+    private KUVidGame game;
     //ShooterUI shooter= new ShooterUI((parameters.getGameSize()-1)/2, parameters.getGameSize()-2);
     private ShooterUI shooterUI;
 //	int atom_number = KUVidGame.getAtoms();
@@ -23,11 +24,15 @@ public class Units extends JPanel {
     //int molecule_number = parameters.getMoleculeNumber();
 
 
-    public Units(ShooterUI shooter) {
+    public Units(KUVidGame game, ShooterUI shooter) {
+
         list = new ArrayList<>();
         list.add(map);
-        boolean active = KUVidGame.getInstance().isActive();
-		
+        this.game = game;
+        boolean active = this.game.isActive();
+        this.shooterUI = shooter;
+        list.add(this.shooterUI);
+
 		/*for(int i=0; i<atom_number; i++) {
 			list.add(new alphaAtomUI());
 		}*/
