@@ -14,6 +14,7 @@ public class Application implements Runnable {
     private final Logger logger;
     private KUVidGame game;
     private GameWindow mainWindow;
+    int i = 1;
 
     public Application() {
         LoggerFactory loggerFactory = new LoggerFactory();
