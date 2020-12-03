@@ -12,7 +12,7 @@ import java.awt.event.ItemListener;
 
 public class BuildingWindow extends JFrame {
     private final String DEFAULT_COMPONENT_AMOUNT = "50";
-    private final String DEFAULT_SIZE = "16";
+    private final String DEFAULT_SIZE = "14";
 	
 	private KUVidGame game;
 	public GameWindow window;
