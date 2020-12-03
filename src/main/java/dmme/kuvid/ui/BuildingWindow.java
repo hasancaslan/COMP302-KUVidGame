@@ -8,16 +8,18 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class BuildingWindow extends JFrame {
+    private final String DEFAULT_OBJ_NUM = "100";
+    private final String DEFAULT_GAME_SIZE = "1";
 
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
     String difficulty;
-    JTextField AtomNumber = new JTextField(8);
-    JTextField ReactionBlockerNumber = new JTextField(8);
-    JTextField PowerUpNumber = new JTextField(8);
-    JTextField MoleculeNumber = new JTextField(8);
-    JTextField GameSize = new JTextField(8);
+    JTextField AtomNumber = new JTextField(DEFAULT_OBJ_NUM,8);
+    JTextField ReactionBlockerNumber = new JTextField(DEFAULT_OBJ_NUM,8);
+    JTextField PowerUpNumber = new JTextField(DEFAULT_OBJ_NUM,8);
+    JTextField MoleculeNumber = new JTextField(DEFAULT_OBJ_NUM,8);
+    JTextField GameSize = new JTextField(DEFAULT_GAME_SIZE,8);
     ButtonGroup spinGroup;
     ButtonGroup movementGroup;
     JRadioButton SpinButton;
