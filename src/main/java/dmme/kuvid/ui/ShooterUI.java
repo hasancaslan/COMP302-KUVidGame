@@ -18,7 +18,7 @@ public class ShooterUI extends Drawable implements PropertyListener {
     public ShooterUI(Shooter shooter) {
         this.shooter = shooter;
         try {
-            img = ImageIO.read(new File(Config.getAssetsPath() + "/shooter.png"));
+            img = ImageIO.read(new File(Config.getAssetsPath() + "shooter.png"));
             img = resize(img, L, 3 * L);
         } catch (IOException e) {
             System.out.printf("% background s", e.getMessage());

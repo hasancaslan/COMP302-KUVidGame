@@ -107,22 +107,18 @@ public class BuildingWindow extends JFrame {
                 BuildingWindow.this.window.setVisible(true);
                 BuildingWindow.this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 BuildingWindow.this.window.setLocationRelativeTo(null);
-
-
             }
         });
+
         SpinButton.addItemListener(new SpinHandler(true));
         StationaryButton.addItemListener(new SpinHandler(false));
         LinearButton.addItemListener(new StructureHandler(true));
         NoNLinearButton.addItemListener(new StructureHandler(false));
-
-
     }
 
     public GameWindow returnWindow() {
         return this.window;
     }
-
 
     // private inner class to handle the movement of the molecules
     class SpinHandler implements ItemListener {
