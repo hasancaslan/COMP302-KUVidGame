@@ -13,58 +13,78 @@ import dmme.kuvid.utils.observer.PropertyListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class ShooterUI extends JLabel implements PropertyListener, Animatable {
-    private static final double L = 50;
-    private double location;
-    private double angle;
+public class ShooterUI extends Drawable implements PropertyChangeListener, Animatable {
+    private int location;
+    private int angle;
     private LinkedList<Animation> animationQueue;
+    private Shooter shooter;
 
     public ShooterUI(Shooter shooter) {
-        super(getIconFromFileName(new Dimension((int) (0.5 * L), (int) L)));
-        Dimension dimension = new Dimension((int) (0.5 * L), (int) L);
-        this.setSize(dimension);
-        this.setLocation(0, 0);
-        this.setVisible(true);
-        shooter.addPropertyListener("location", this);
-    }
-
-    public static ImageIcon getIconFromFileName(Dimension shooterDimension) {
-        Image tmp = null;
-        try {
-            tmp = ImageIO.read(new File(Config.getAssetsPath() + "shooter.png"));
-            tmp = tmp.getScaledInstance(shooterDimension.width, shooterDimension.height, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
+    	this.shooter=shooter;
+        try{							
+        	img = ImageIO.read(new File(Config.getAssetsPath() + "/shooter.png"));
+        	BufferedImage resized = resize(img, L, 3*L);
+        	img = resized;
+        } catch(IOException e) {
+        System.out.printf("% background s",e.getMessage());
         }
-
-        return new ImageIcon(tmp);
+       this.shooter.addPropertyChangeListener(this);
     }
 
-    public void changeLocation(double from, double to, double progress) {
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		//BufferedImage rotated = rotate(img, (double) this.shooter.getAngle());
+		//img=rotated;
+		g.drawImage(img,this.shooter.getPosition(),(L*N-3*L)-20,null);//check this Y
+	
+	}
 
-    }
+	@Override
+	public void doAction() {
+		// TODO Auto-generated method stub
+		
+	}
 
-    public void changeAngle(double from, double to, double progress) {
+	@Override
+	public void Collide() {
+		// TODO Auto-generated method stub
+		
+	}
 
-    }
+	@Override
+	public LinkedList<Animation> getAnimationQueue() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public void onPropertyEvent(PropertyEvent e) {
-        if (e.getPropertyName().equals("location")) {
-            this.location = (double) e.getNewValue();
-            animationQueue.addLast(new ShooterAnimation(this, (double) e.getOldValue(), (double) e.getNewValue(), ShooterAnimationType.LOCATION));
-        } else if (e.getPropertyName().equals("angle")) {
-            this.angle = (double) e.getNewValue();
-            animationQueue.addLast(new ShooterAnimation(this, (double) e.getOldValue(), (double) e.getNewValue(), ShooterAnimationType.ANGLE));
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		if (evt.getPropertyName().equals("angle")) {
+            double deltaD=Math.toRadians((int)evt.getNewValue()-(int)evt.getOldValue());
+            //System.out.println("angle change: "+deltaD+" "+evt.getOldValue()+" "+evt.getNewValue());
+            BufferedImage rotated = rotate(img,deltaD);
+    		img=rotated;
         }
-    }
+		
+	}
 
-    @Override
-    public LinkedList<Animation> getAnimationQueue() {
-        return animationQueue;
-    }
+	public void changeAngle(double from, double to, double progress) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void changeLocation(double from, double to, double progress) {
+		// TODO Auto-generated method stub
+		
+	}
 }

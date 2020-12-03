@@ -4,6 +4,7 @@ import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.logger.Logger;
 import dmme.kuvid.lib.logger.LoggerFactory;
 import dmme.kuvid.ui.BuildingWindow;
+import dmme.kuvid.ui.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ public class Application implements Runnable {
     private static volatile Application _instance = null;
     private final Logger logger;
     private KUVidGame game;
+    private GameWindow mainWindow;
 
     public Application() {
         LoggerFactory loggerFactory = new LoggerFactory();
@@ -55,7 +57,8 @@ public class Application implements Runnable {
     public void initGame() {
     	this.game=new KUVidGame();
         BuildingWindow window=buildWindow();
-        logger.i(""+this.game.getNumAtoms());
+        this.mainWindow=window.returnWindow();
+        logger.i(""+this.mainWindow);
         
     }
 

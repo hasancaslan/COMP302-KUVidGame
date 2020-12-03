@@ -13,7 +13,7 @@ import java.awt.event.ItemListener;
 public class BuildingWindow extends JFrame {
 	
 	private KUVidGame game;
-	public boolean finished=false;
+	public GameWindow window;
 
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
@@ -41,6 +41,7 @@ public class BuildingWindow extends JFrame {
     public BuildingWindow(KUVidGame game) {
     	
     	this.game=game;
+    	this.window= new GameWindow(this.game);
     	
         this.ComboBox = new JComboBox<>(this.Difficulty);
         this.StartButton = new JButton("Start Game");
@@ -97,11 +98,22 @@ public class BuildingWindow extends JFrame {
                 BuildingWindow.this.game.setNumMolecules(moleculeNumber);
                 BuildingWindow.this.game.setNumBlocker(reactionBlockerNumber);
                 BuildingWindow.this.game.setNumPowerUp(powerUpNumber);
+                BuildingWindow.this.game.setN(gameSize);
+                BuildingWindow.this.game.shooterStart();
                 
-                BuildingWindow.this.finished=true;
-                //BuildingWindow.this.getContentPane().removeAll();
-                //BuildingWindow.this.getContentPane().repaint();
                 dispose();
+                
+                Drawable.setN(gameSize);
+            	int N= Drawable.getN();// Check
+            	int L= Drawable.getL();
+                
+            	
+            	BuildingWindow.this.window.setSize(N*L, N*L);
+            	BuildingWindow.this.window.setTitle("KUVid Game");
+            	BuildingWindow.this.window.setVisible(true);
+            	BuildingWindow.this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            	BuildingWindow.this.window.setLocationRelativeTo(null);
+            	
                 
             }
         });
@@ -111,6 +123,9 @@ public class BuildingWindow extends JFrame {
         NoNLinearButton.addItemListener(new StructureHandler(false));
         
         
+    }
+    public GameWindow returnWindow() {
+    	return this.window;
     }
 
 

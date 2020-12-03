@@ -1,23 +1,33 @@
 package dmme.kuvid.domain;
 
-import dmme.kuvid.lib.types.AtomType;
-import dmme.kuvid.lib.types.PowerType;
+import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.domain.GameObjects.shooter.*;
+import dmme.kuvid.lib.types.*;
 
 import java.sql.Time;
 
 public class KUVidGame {
     public Time time;
-    public boolean active;
+    public boolean active=true;
     public boolean blendingMode;
     private int numAtoms=1;
     private int numMolecules=1;
     private int numBlocker=1;
     private int numPowerUp=1;
+    private GameLevel diff;
+    private GameObject objects;
+    private Shooter shooter;
+    private ShooterHandler shootControl;
+    private int N=20;
+    private final int L=50;
     
  //
     
     
     public KUVidGame() {
+    	this.shooter=new Shooter();
+    	this.shootControl=new ShooterHandler(this.shooter);
+    	
     	
     }
 
@@ -54,10 +64,12 @@ public class KUVidGame {
     }
 
     public void aimShooter(int angle) {
+    	this.shootControl.rotateShooter(angle);
 
     }
 
-    public void moveShooter(double displacement) {
+    public void moveShooter(int displacement) {
+    	this.shootControl.moveShooter(displacement);
 
     }
 
@@ -103,5 +115,25 @@ public class KUVidGame {
 
 	public void setNumAtoms(int numAtoms) {
 		this.numAtoms = numAtoms;
+	}
+	
+	public Shooter getShooter() {
+		return this.shooter;
+		
+	}
+
+
+	public int getN() {
+		return N;
+	}
+
+
+	public void setN(int n) {
+		this.N = n;
+	}
+	
+	public void shooterStart() {
+		this.shooter.setPosition(this.N*L/2);
+		this.shooter.setAngle(90);
 	}
 }
