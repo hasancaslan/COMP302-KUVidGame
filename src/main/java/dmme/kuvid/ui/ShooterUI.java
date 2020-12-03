@@ -1,7 +1,7 @@
 package dmme.kuvid.ui;
 
 import dmme.kuvid.constants.Config;
-import dmme.kuvid.domain.shooter.Shooter;
+import dmme.kuvid.domain.Shooter;
 import dmme.kuvid.ui.animations.Animatable;
 import dmme.kuvid.ui.animations.Animation;
 import dmme.kuvid.ui.animations.ShooterAnimation;

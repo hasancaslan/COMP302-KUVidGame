@@ -1,4 +1,4 @@
-package dmme.kuvid.domain.shooter;
+package dmme.kuvid.domain;
 
 import dmme.kuvid.lib.types.AmmoType;
 import dmme.kuvid.utils.observer.Observable;
@@ -12,6 +12,10 @@ public class Shooter extends Observable {
         this.position = position;
         this.angle = angle;
         this.ammoType = ammoType;
+    }
+
+    public Shooter() {
+        this(500, 90, AmmoType.ATOM);
     }
 
     public double getPosition() {
@@ -38,5 +42,13 @@ public class Shooter extends Observable {
 
     public void setAmmoType(AmmoType ammoType) {
         this.ammoType = ammoType;
+    }
+
+    public void moveShooter(double displacement) {
+        setPosition(getPosition() + displacement);
+    }
+
+    public void rotateShooter(int angleChange) {
+        setAngle(getAngle() + angleChange);
     }
 }

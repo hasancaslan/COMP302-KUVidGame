@@ -9,11 +9,13 @@ public class KUVidGame {
     public Time time;
     public boolean active;
     public boolean blendingMode;
+    private Shooter shooter;
 
     public KUVidGame(Time time, boolean active, boolean blendingMode) {
         this.time = time;
         this.active = active;
         this.blendingMode = blendingMode;
+        this.shooter = new Shooter();
     }
 
     public Time getTime() {
@@ -40,12 +42,12 @@ public class KUVidGame {
         this.blendingMode = blendingMode;
     }
 
-    public void aimShooter(int angle) {
-
+    public void aimShooter(int angleChange) {
+        shooter.rotateShooter(angleChange);
     }
 
     public void moveShooter(double displacement) {
-
+        shooter.moveShooter(displacement);
     }
 
     public void selectAtom(AtomType type) {
