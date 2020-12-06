@@ -3,14 +3,8 @@ package dmme.kuvid.domain.Collusion;
 import dmme.kuvid.domain.GameObjects.*;
 
 public class atomShooterCollision implements collisionHandler{
-
 	@Override
-	public GameObject search(Position p) {
-		// TODO Auto-generated method stub
-		for (GameObject gameObject : GameObject.getGameObjectList()) {
+	public void collusion(GameObject object1, GameObject object2) {
 
-		}
-		return null;
 	}
-
 }

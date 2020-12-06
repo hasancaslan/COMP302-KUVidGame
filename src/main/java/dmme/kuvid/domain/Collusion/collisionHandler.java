@@ -4,7 +4,7 @@ import dmme.kuvid.domain.GameObjects.*;
 
 public interface collisionHandler {
 	
-	public GameObject search(Position p);
+	public void collusion(GameObject object1, GameObject object2);
 	
 //	istanceof(GameObject)
 
