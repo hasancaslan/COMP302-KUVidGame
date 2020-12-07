@@ -1,5 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
+import dmme.kuvid.lib.types.ObjectType;
+
 import java.util.*;
 
 import java.util.ArrayList;
@@ -11,14 +13,15 @@ public abstract class GameObject {
 
 	Position Position;
 
-	private String type;
+	private ObjectType type;
 
 	boolean active;
 	
-	public GameObject(Position position, boolean active) {
+	public GameObject(Position position, boolean active, ObjectType type) {
 		super();
 		Position = position;
 		this.active = active;
+		this.type = type;
 	}
 
 	public static List<GameObject> getGameObjectList() {
@@ -44,9 +47,13 @@ public abstract class GameObject {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
-	
 
-	
+	public ObjectType getType() {
+		return type;
+	}
+
+	public void setType(ObjectType type) {
+		this.type = type;
+	}
+
 }

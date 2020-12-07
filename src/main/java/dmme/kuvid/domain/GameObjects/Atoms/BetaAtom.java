@@ -1,11 +1,12 @@
 package dmme.kuvid.domain.GameObjects.Atoms;
 
 import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.lib.types.ObjectType;
 
 public class BetaAtom extends Atom{
 
-	public BetaAtom(Position position, boolean active) {
-		super(position, active);
+	public BetaAtom(Position position, boolean active, ObjectType type) {
+		super(position, active, type);
 		// TODO Auto-generated constructor stub
 	}
 
