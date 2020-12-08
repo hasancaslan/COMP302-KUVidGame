@@ -5,8 +5,8 @@ import dmme.kuvid.lib.types.ObjectType;
 
 public class GamaMolecule extends Molecule{
 
-	public GamaMolecule(Position position, boolean active, ObjectType type) {
-		super(position, active, type);
+	public GamaMolecule(Position position, Position direction, boolean active, ObjectType type) {
+		super(position, direction, active, type);
 		// TODO Auto-generated constructor stub
 	}
 

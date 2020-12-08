@@ -5,8 +5,8 @@ import dmme.kuvid.lib.types.ObjectType;
 
 public class BetaMolecule extends Molecule{
 
-	public BetaMolecule(Position position, boolean active, ObjectType type) {
-		super(position, active, type);
+	public BetaMolecule(Position position, Position direction, boolean active, ObjectType type) {
+		super(position, direction, active, type);
 		// TODO Auto-generated constructor stub
 	}
 

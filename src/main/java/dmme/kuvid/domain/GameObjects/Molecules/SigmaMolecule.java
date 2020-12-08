@@ -5,8 +5,8 @@ import dmme.kuvid.lib.types.ObjectType;
 
 public class SigmaMolecule extends Molecule{
 
-	public SigmaMolecule(Position position, boolean active, ObjectType type) {
-		super(position, active, type);
+	public SigmaMolecule(Position position,Position direction, boolean active, ObjectType type) {
+		super(position, direction, active, type);
 		// TODO Auto-generated constructor stub
 	}
 

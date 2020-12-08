@@ -5,8 +5,8 @@ import dmme.kuvid.lib.types.ObjectType;
 
 public class SigmaAtom extends Atom{
 
-	public SigmaAtom(Position position, boolean active, ObjectType type) {
-		super(position, active, type);
+	public SigmaAtom(Position position, Position direction, boolean active, ObjectType type) {
+		super(position, direction, active, type);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -11,15 +11,20 @@ public abstract class GameObject {
 	
 	private static List<GameObject> gameObjectList = new ArrayList<>();
 
-	Position Position;
+	private Position position;
+
+
+
+	private Position direction;
 
 	private ObjectType type;
 
 	boolean active;
 	
-	public GameObject(Position position, boolean active, ObjectType type) {
+	public GameObject(Position position, Position direction, boolean active, ObjectType type) {
 		super();
-		Position = position;
+		this.position = position;
+		this.direction = direction;
 		this.active = active;
 		this.type = type;
 	}
@@ -33,11 +38,11 @@ public abstract class GameObject {
 	
 
 	public Position getPosition() {
-		return Position;
+		return position;
 	}
 
 	public void setPosition(Position position) {
-		Position = position;
+		this.position = position;
 	}
 
 	public boolean isActive() {
@@ -54,6 +59,14 @@ public abstract class GameObject {
 
 	public void setType(ObjectType type) {
 		this.type = type;
+	}
+
+	public Position getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Position direction) {
+		this.direction = direction;
 	}
 
 }

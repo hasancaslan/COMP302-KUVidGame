@@ -6,8 +6,8 @@ import dmme.kuvid.lib.types.ObjectType;
 
 public class AlphaAtom extends Atom{
 
-	public AlphaAtom(Position position, boolean active, ObjectType type) {
-		super(position, active, type);
+	public AlphaAtom(Position position, Position direction, boolean active, ObjectType type) {
+		super(position, direction, active, type);
 		// TODO Auto-generated constructor stub
 	}
 
