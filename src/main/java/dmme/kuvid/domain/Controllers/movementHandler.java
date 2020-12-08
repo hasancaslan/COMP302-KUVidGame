@@ -34,9 +34,6 @@ public class movementHandler {
         }
     }
 
-
-
-
     }
 
 }
