@@ -24,16 +24,16 @@ public class GameWindow extends JFrame {
                 char key = e.getKeyChar();
                 switch (key) {
                     case 'a':
-                        KUVidGame.getInstance().moveShooter(-10);
+                        KUVidGame.getInstance().moveShooter(-20);
                         break;
                     case 's':
-                        KUVidGame.getInstance().aimShooter(-10);
+                        KUVidGame.getInstance().aimShooter(-20);
                         break;
                     case 'd':
-                        KUVidGame.getInstance().moveShooter(10);
+                        KUVidGame.getInstance().moveShooter(20);
                         break;
                     case 'w':
-                        KUVidGame.getInstance().aimShooter(10);
+                        KUVidGame.getInstance().aimShooter(20);
                         break;
                 }
             }

@@ -4,8 +4,8 @@ import dmme.kuvid.domain.GameObjects.*;
 
 public class AlphaMolecule extends Molecule{
 
-	public AlphaMolecule(Position position, boolean active) {
-		super(position, active);
+	public AlphaMolecule(Position position, Position direction, boolean active) {
+		super(position, direction, active);
 		// TODO Auto-generated constructor stub
 	}
 

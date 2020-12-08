@@ -5,8 +5,8 @@ import dmme.kuvid.domain.GameObjects.*;
 
 public class AlphaAtom extends Atom{
 
-	public AlphaAtom(Position position, boolean active) {
-		super(position, active);
+	public AlphaAtom(Position position, Position direction, boolean active) {
+		super(position, direction, active);
 		// TODO Auto-generated constructor stub
 	}
 

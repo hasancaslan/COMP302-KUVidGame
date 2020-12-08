@@ -11,6 +11,7 @@ import java.sql.Time;
 public class KUVidGame {
     private static KUVidGame instance = null;
     private final int L = 50;
+    private final int range = 50;
     public Time time;
     public boolean active = true;
     public boolean blendingMode;
@@ -124,6 +125,14 @@ public class KUVidGame {
 
     public int getN() {
         return N;
+    }
+    
+    public int getL() {
+        return L;
+    }
+    
+    public int getRange() {
+        return range;
     }
 
 

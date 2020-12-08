@@ -4,8 +4,8 @@ import dmme.kuvid.domain.GameObjects.*;
 
 public class BetaAtom extends Atom{
 
-	public BetaAtom(Position position, boolean active) {
-		super(position, active);
+	public BetaAtom(Position position, Position direction, boolean active) {
+		super(position, direction, active);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -4,8 +4,8 @@ import dmme.kuvid.domain.GameObjects.*;
 
 public class GamaMolecule extends Molecule{
 
-	public GamaMolecule(Position position, boolean active) {
-		super(position, active);
+	public GamaMolecule(Position position, Position direction, boolean active) {
+		super(position, direction, active);
 		// TODO Auto-generated constructor stub
 	}
 

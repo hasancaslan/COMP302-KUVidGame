@@ -19,9 +19,10 @@ public class ShooterUI extends Drawable implements PropertyListener {
         this.shooter = shooter;
         try {
             img = ImageIO.read(new File(Config.getAssetsPath() + "shooter.png"));
+//        	img = ImageIO.read(new File("./assets/shooter/shooter0.png"));
             img = resize(img, L, 3 * L);
         } catch (IOException e) {
-            System.out.printf("% background s", e.getMessage());
+            System.out.printf(e.getMessage());
         }
         shooter.addPropertyListener("location", this);
         shooter.addPropertyListener("angle", this);
@@ -34,27 +35,32 @@ public class ShooterUI extends Drawable implements PropertyListener {
         //img=rotated;
         g.drawImage(img, this.shooter.getPosition(), (L * N - 3 * L) - 20, null);//check this Y
     }
-
+/*
     @Override
     public void doAction() {
         // TODO Auto-generated method stub
-
     }
-
+    
     @Override
     public void Collide() {
         // TODO Auto-generated method stub
-
     }
-
+*/
+    
     @Override
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("position")) {
             // this.location = (double) e.getNewValue();
             // animationQueue.addLast(new ShooterAnimation(this, (double) e.getOldValue(), (double) e.getNewValue(), ShooterAnimationType.LOCATION));
         } else if (e.getPropertyName().equals("angle")) {
-            double deltaD = Math.toRadians((int) e.getNewValue() - (int) e.getOldValue());
-            img = rotate(img, deltaD);
+        	try {
+        		int val = (int)e.getNewValue() - 90;
+				img = ImageIO.read(new File("./assets/shooter/shooter" + val + ".png"));
+			} catch (IOException e1) {
+	            System.out.printf(e1.getMessage());
+			}	
+//            double deltaD = Math.toRadians((int) e.getNewValue() - (int) e.getOldValue());
+//            img = rotate(img, deltaD);
         }
     }
 

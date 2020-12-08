@@ -4,8 +4,8 @@ import dmme.kuvid.domain.GameObjects.*;
 
 public abstract class Molecule extends GameObject{
 
-	public Molecule(Position position, boolean active) {
-		super(position, active);
+	public Molecule(Position position, Position direction, boolean active) {
+		super(position, direction, active);
 	}
 
 }
