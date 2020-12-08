@@ -25,10 +25,6 @@ public class KUVidGame {
     private GameLevel diff;
     private GameObject objects;
     private Shooter shooter;
-    public Time time;
-
-    public boolean active = true;
-    public boolean blendingMode;
 
 
     private KUVidGame() {
@@ -139,14 +135,6 @@ public class KUVidGame {
 
     public int getN() {
         return N;
-    }
-    
-    public int getL() {
-        return L;
-    }
-    
-    public int getRange() {
-        return range;
     }
 
 

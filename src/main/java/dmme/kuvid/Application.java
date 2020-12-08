@@ -35,7 +35,7 @@ public class Application implements Runnable {
     public static void main(String[] args) {
         Application application = Application.getInstance();
         SwingUtilities.invokeLater(application);
-        SwingUtilities.invokeLater(movementHandler.getInstance());
+        //SwingUtilities.invokeLater(movementHandler.getInstance());
 
     }
 

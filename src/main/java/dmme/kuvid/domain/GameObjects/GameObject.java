@@ -14,9 +14,6 @@ public abstract class GameObject {
 	private static List<GameObject> gameObjectList = new ArrayList<>();
 
 	private Position position;
-
-
-
 	private Position direction;
 
 	private ObjectType type;
@@ -45,14 +42,6 @@ public abstract class GameObject {
 
 	public void setPosition(Position position) {
 		this.position = position;
-	}
-
-	public Position getDirection() {
-		return Direction;
-	}
-
-	public void setDirection(Position direction) {
-		Direction = direction;
 	}
 		
 	public boolean isActive() {
