@@ -56,7 +56,6 @@ public class Application implements Runnable {
     }
 
     public void initGame() {
-    	this.game=new KUVidGame();
         BuildingWindow window=buildWindow();
         this.mainWindow=window.returnWindow();
         logger.i(""+this.mainWindow);

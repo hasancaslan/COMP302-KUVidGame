@@ -23,11 +23,11 @@ public class KUVidGame {
     private Shooter shooter;
     private int N = 20;
 
-    public KUVidGame() {
+    private KUVidGame() {
         this.shooter = new Shooter();
     }
 
-    public KUVidGame(Time time, boolean active, boolean blendingMode) {
+    private KUVidGame(Time time, boolean active, boolean blendingMode) {
         this.time = time;
         this.active = active;
         this.blendingMode = blendingMode;
