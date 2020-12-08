@@ -13,15 +13,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import dmme.kuvid.domain.KUVidGame;
+
 public abstract class Drawable extends JPanel{
 	
 	protected int x;	
 	protected int y;
-	protected static int L=50; // size of the objects
-	protected static int N=20; //determined in build mode
+    protected static int L = KUVidGame.getInstance().getL();
+    protected static int N = KUVidGame.getInstance().getN();
     BufferedImage img;
 	
-
 	public int getX() {
 		return x;
 	}
@@ -53,11 +54,12 @@ public abstract class Drawable extends JPanel{
 	public static void setN(int N) {
 		Drawable.N = N;
 	}
-
 	
 	public abstract void draw(Graphics g);
 
-	public abstract void doAction();
+//	public abstract void doAction();
+	
+//	public abstract void Collide();
 	
 	//This code is taken from the Internet to adjust size of the image
 	//https://memorynotfound.com/java-resize-image-fixed-width-height-example/
@@ -91,8 +93,5 @@ public abstract class Drawable extends JPanel{
 	    GraphicsDevice gd = ge.getDefaultScreenDevice();
 	    return gd.getDefaultConfiguration();
 	}
-	
-	public abstract void Collide();
-
 
 }

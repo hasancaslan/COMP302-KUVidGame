@@ -12,8 +12,10 @@ public class KUVidGame {
     private static KUVidGame instance = null;
 
     private final int L = 50;
-    private final int range = 12;
-
+    private final int range = 50;
+    public Time time;
+    public boolean active = true;
+    public boolean blendingMode;
     private int N = 20;
     private int numAtoms = 1;
     private int numMolecules = 1;
@@ -137,6 +139,14 @@ public class KUVidGame {
 
     public int getN() {
         return N;
+    }
+    
+    public int getL() {
+        return L;
+    }
+    
+    public int getRange() {
+        return range;
     }
 
 

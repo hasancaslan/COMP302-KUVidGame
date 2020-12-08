@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import dmme.kuvid.lib.types.ObjectType;
+
 public abstract class GameObject {
 	
 	private static List<GameObject> gameObjectList = new ArrayList<>();
@@ -45,6 +47,14 @@ public abstract class GameObject {
 		this.position = position;
 	}
 
+	public Position getDirection() {
+		return Direction;
+	}
+
+	public void setDirection(Position direction) {
+		Direction = direction;
+	}
+		
 	public boolean isActive() {
 		return active;
 	}

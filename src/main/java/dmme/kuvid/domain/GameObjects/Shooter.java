@@ -31,7 +31,9 @@ public class Shooter extends Observable {
         return angle;
     }
 
-    public void setAngle(int angle) {
+    public void setAngle(int angle) {	//NOTE: 0 ve 180 olacak ama her 10derecede 1 image lazým
+    	if(angle<10) angle=10;
+    	if(angle>170) angle=170;
         publishPropertyEvent("angle", this.angle, angle);
         this.angle = angle;
     }

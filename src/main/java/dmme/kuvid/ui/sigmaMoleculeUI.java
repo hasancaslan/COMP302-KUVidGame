@@ -21,15 +21,10 @@ public class sigmaMoleculeUI extends MoleculeUI{
         System.out.printf("%s",e.getMessage());
         }	
 	}
-	
+
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(img,x,y,null);	
 	}
-
-	@Override
-	public void doAction() {
-	}
-
 	
 }

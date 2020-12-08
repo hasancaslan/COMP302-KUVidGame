@@ -27,10 +27,5 @@ public class gammaMoleculeUI extends MoleculeUI{
 	public void draw(Graphics g) {
 		g.drawImage(img,x,y,null);	
 	}
-
-	@Override
-	public void doAction() {
-	}
-
 	
 }
