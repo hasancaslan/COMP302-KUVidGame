@@ -20,25 +20,25 @@ public class createHandler {
         switch (type) {
             case ALPHA:
                 for (int i = 0; i < amount; i++) {
-                    atom = new AlphaAtom(null, false, ObjectType.ATOM);
+                    atom = new AlphaAtom(null, null,false, ObjectType.ATOM);
                     GameObject.getGameObjectList().add(atom);
                 }
                 break;
             case BETA:
                 for (int i = 0; i < amount; i++) {
-                    atom = new BetaAtom(null, false, ObjectType.ATOM);
+                    atom = new BetaAtom(null, null,false, ObjectType.ATOM);
                     GameObject.getGameObjectList().add(atom);
                 }
                 break;
             case SIGMA:
                 for (int i = 0; i < amount; i++) {
-                    atom = new SigmaAtom(null, false, ObjectType.ATOM);
+                    atom = new SigmaAtom(null, null,false, ObjectType.ATOM);
                     GameObject.getGameObjectList().add(atom);
                 }
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
-                    atom = new GamaAtom(null, false, ObjectType.ATOM);
+                    atom = new GamaAtom(null, null,false, ObjectType.ATOM);
                     GameObject.getGameObjectList().add(atom);
                 }
                 break;
@@ -50,25 +50,25 @@ public class createHandler {
         switch (type) {
             case ALPHA:
                 for (int i = 0; i < amount; i++) {
-                    molecule = new AlphaMolecule(null, false, ObjectType.MOLECULE);
+                    molecule = new AlphaMolecule(null, null,false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList().add(molecule);
                 }
                 break;
             case BETA:
                 for (int i = 0; i < amount; i++) {
-                    molecule = new BetaMolecule(null, false, ObjectType.MOLECULE);
+                    molecule = new BetaMolecule(null, null,false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList().add(molecule);
                 }
                 break;
             case SIGMA:
                 for (int i = 0; i < amount; i++) {
-                    molecule = new SigmaMolecule(null, false, ObjectType.MOLECULE);
+                    molecule = new SigmaMolecule(null, null,false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList().add(molecule);
                 }
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
-                    molecule = new GamaMolecule(null, false, ObjectType.MOLECULE);
+                    molecule = new GamaMolecule(null, null,false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList().add(molecule);
                 }
                 break;
