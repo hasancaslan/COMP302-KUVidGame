@@ -10,18 +10,24 @@ import java.sql.Time;
 
 public class KUVidGame {
     private static KUVidGame instance = null;
+
     private final int L = 50;
-    public Time time;
-    public boolean active = true;
-    public boolean blendingMode;
+    private final int range = 12;
+
+    private int N = 20;
     private int numAtoms = 1;
     private int numMolecules = 1;
     private int numBlocker = 1;
     private int numPowerUp = 1;
+
     private GameLevel diff;
     private GameObject objects;
     private Shooter shooter;
-    private int N = 20;
+    public Time time;
+
+    public boolean active = true;
+    public boolean blendingMode;
+
 
     private KUVidGame() {
         this.shooter = new Shooter();
@@ -39,6 +45,13 @@ public class KUVidGame {
             instance = new KUVidGame();
 
         return instance;
+    }
+    public int getL() {
+        return L;
+    }
+
+    public int getRange() {
+        return range;
     }
 
     public Time getTime() {
