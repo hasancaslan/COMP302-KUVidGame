@@ -4,7 +4,7 @@ import dmme.kuvid.domain.GameObjects.*;
 
 public class reactionBlockerCollision implements collisionHandler{
 
-	@Override
+	//@Override
 	public void collusion(GameObject object1, GameObject object2) {
 		final int range = 10;
 		int x1 = object1.getPosition().getX();

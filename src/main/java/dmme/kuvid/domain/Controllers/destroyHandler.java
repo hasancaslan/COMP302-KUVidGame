@@ -13,4 +13,8 @@ public class destroyHandler {
         return true;
     }
 
+    public static void destroyObjectForBlender() {
+
+    }
+
 }
