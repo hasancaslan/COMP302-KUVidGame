@@ -15,6 +15,10 @@ public class GameFrame extends JFrame {
     private final ShooterUI shooterUI;
     public GamePanel gamePanel;
 
+    public GameFrame() {
+        this(KUVidGame.getInstance().getScreenSize());
+    }
+
     public GameFrame(Dimension size) {
         try {
             setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("./assets/kuvid_bc.png")))));
@@ -22,31 +26,28 @@ public class GameFrame extends JFrame {
             e.printStackTrace();
         }
 
-        getContentPane().setLayout(new GridBagLayout()); //setting layout of main frame
-        GridBagConstraints cns = new GridBagConstraints(); //creating constraint
+        getContentPane().setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
         this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter());
         this.gamePanel = new GamePanel(KUVidGame.getInstance(), this.shooterUI, this);
 
-        cns.gridx = 0;
-        cns.gridy = 1;
-        cns.weightx = 0.8;
-        cns.weighty = 1;
-        cns.anchor = GridBagConstraints.PAGE_START;
-        cns.fill = GridBagConstraints.BOTH;
-        getContentPane().add(gamePanel, cns);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.weightx = 0.8;
+        constraints.weighty = 1;
+        constraints.anchor = GridBagConstraints.PAGE_START;
+        constraints.fill = GridBagConstraints.BOTH;
+        getContentPane().add(gamePanel, constraints);
 
-        JPanel menuPanel = new JPanel();
-        cns.gridx = 1;
-        cns.gridy = 1;
-        cns.weightx = 0.2;
-        cns.weighty = 1;
-        cns.anchor = GridBagConstraints.FIRST_LINE_START;
-        cns.fill = GridBagConstraints.BOTH;
-        menuPanel.setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, new Color(0, 0, 0, 120)));
-        menuPanel.setBackground(new Color(0, 0, 0, 80));
-        getContentPane().add(menuPanel, cns);
-
+        JPanel menuPanel = new MenuPanel();
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        constraints.weightx = 0.2;
+        constraints.weighty = 1;
+        constraints.anchor = GridBagConstraints.PAGE_START;
+        constraints.fill = GridBagConstraints.BOTH;
+        getContentPane().add(menuPanel, constraints);
 
         this.setSize(size);
         this.setTitle("KUVid Game");
