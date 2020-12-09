@@ -14,7 +14,7 @@ import java.util.Random;
 public class KUVidGame {
     private static KUVidGame instance = null;
     private final int L = 50;
-    public Time time;
+    //public Time time;//delete
     public boolean active = true;
     public boolean blendingMode;
     private int numAtoms = 1;
@@ -31,7 +31,7 @@ public class KUVidGame {
     private destroyHandler destroyer;
     private int N = 20;
 
-    private int Time;
+    private int time;
     private Player p1;
     private Random rand= new Random();
     private static HashMap<Key,List<GameObject>> gameObjectMap= new HashMap<Key,List<GameObject>>();
@@ -53,7 +53,7 @@ public class KUVidGame {
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE,MoleculeType.SIGMA), new ArrayList<GameObject>());
     }
 
-    public KUVidGame(Time time, boolean active, boolean blendingMode) {
+    public KUVidGame(int time, boolean active, boolean blendingMode) {
         this.time = time;
         this.active = active;
         this.blendingMode = blendingMode;
@@ -67,11 +67,11 @@ public class KUVidGame {
         return instance;
     }
 
-    public Time getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -185,13 +185,13 @@ public class KUVidGame {
         return atom;
     }
 
-    public void runGame() {
+    public void runGame() { //main loop
 
         while (true){
             if(this.p1.getHealth()<=0) {
                 break;
             }
-            if(this.Time<=0) {
+            if(getTime()<=0) {
                 break;
             }
 
