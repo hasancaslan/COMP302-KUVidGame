@@ -8,6 +8,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import dmme.kuvid.constants.Config;
+
 public class alphaAtomUI extends AtomUI{
 	
 	public alphaAtomUI() {
@@ -15,8 +17,9 @@ public class alphaAtomUI extends AtomUI{
 //		this.type = ALPHA;
 		this.x=super.x;
 		this.y=super.y;
-		try{							
-        	img = ImageIO.read(new File("./assets/atoms/alpha.png"));
+		try{			
+//        	img = ImageIO.read(new File("./assets/shooter/shooter0.png"));
+        	img = ImageIO.read(new File(Config.getAssetsPath() + "atoms/alpha.png"));
         	BufferedImage resized = resize(img, L, L);
         	img = resized;
         } catch(IOException e) {
@@ -29,28 +32,4 @@ public class alphaAtomUI extends AtomUI{
 		g.drawImage(img,x,y,null);	
 	}
 
-	@Override
-	public void doAction() {
-/*	
-			Random rand = new Random();
-			move = rand.nextInt(4);
-			
-			if(move==0 && x+ l <420) {
-				x+=speed;
-				repaint();
-			} else if (move==1 && x>0) {
-				x-=speed;
-				repaint();
-			} else if(move==2 && y>0) {
-				y-=speed;
-				repaint();
-			} else if(move==3 && y+h<420) {
-				y+=speed;
-				repaint();
-			}
-*/
-	}
-
-	
-	
 }

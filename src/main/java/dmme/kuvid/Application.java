@@ -1,5 +1,6 @@
 package dmme.kuvid;
 
+import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.logger.Logger;
 import dmme.kuvid.lib.logger.LoggerFactory;
@@ -34,6 +35,8 @@ public class Application implements Runnable {
     public static void main(String[] args) {
         Application application = Application.getInstance();
         SwingUtilities.invokeLater(application);
+        //SwingUtilities.invokeLater(movementHandler.getInstance());
+
     }
 
     @Override

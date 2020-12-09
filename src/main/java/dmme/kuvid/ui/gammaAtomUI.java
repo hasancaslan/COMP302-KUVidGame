@@ -8,6 +8,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import dmme.kuvid.constants.Config;
+
 public class gammaAtomUI extends AtomUI{
 	
 	public gammaAtomUI() {
@@ -16,7 +18,8 @@ public class gammaAtomUI extends AtomUI{
 		this.x=super.x;
 		this.y=super.y;
 		try{							
-        	img = ImageIO.read(new File("./assets/atoms/gamma.png"));
+//        	img = ImageIO.read(new File("./assets/atoms/gamma.png"));
+        	img = ImageIO.read(new File(Config.getAssetsPath() + "atoms/gamma.png"));
         	BufferedImage resized = resize(img, L, L);
         	img = resized;
         } catch(IOException e) {
@@ -28,11 +31,5 @@ public class gammaAtomUI extends AtomUI{
 	public void draw(Graphics g) {
 		g.drawImage(img,x,y,null);	
 	}
-
-	@Override
-	public void doAction() {		
-	}
-
-	
 	
 }
