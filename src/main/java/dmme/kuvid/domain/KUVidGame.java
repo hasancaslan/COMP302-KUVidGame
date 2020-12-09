@@ -3,8 +3,12 @@ package dmme.kuvid.domain;
 import dmme.kuvid.domain.Controllers.*;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
+import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
+import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
 import dmme.kuvid.lib.types.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +26,9 @@ public class KUVidGame {
     private int numPowerUp = 1;
     private final int range = 10;
 
-    private GameLevel diff;
+    private boolean linearity;
+    private int difficulty;
+    private int sleepTime;
     private GameObject objects;
     private Shooter shooter;
     private Blender blender;
@@ -72,6 +78,35 @@ public class KUVidGame {
 
     public void setTime(int time) {
         this.time = time;
+    }
+    
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+    	switch(difficulty) {
+    	case "Easy":
+    		this.difficulty = 1;
+    		sleepTime= 1000;
+    		break;
+    	case "Medium":
+    		this.difficulty = 2;
+    		sleepTime= 500;
+    		break;
+    	case "Hard":
+    		this.difficulty = 4;
+    		sleepTime= 250;
+    		break;
+    	}
+    }
+
+    public boolean getLinearity() {
+        return linearity;
+    }
+
+    public void setLinearity(boolean linearity) {
+    	this.linearity = linearity;
     }
 
     public boolean isActive() {
@@ -176,9 +211,10 @@ public class KUVidGame {
         return atom;
     }
 
-    public void runGame() { //main loop
+    public void runGame(){ //main loop
 
         while (true){
+        	
             if(this.p1.getHealth()<=0) {
                 break;
             }
@@ -187,11 +223,17 @@ public class KUVidGame {
             }
 
             if(this.active) {
+            	for(int i = this.difficulty; i>0 ;i--) {
+                	try {
+        				Thread.sleep(sleepTime);
+        			} catch (InterruptedException e) {
+        				e.printStackTrace();
+        			}
+                	throwMolecule();
+            	}
             	movementHandler.getInstance().run();
             }
-            
-            this.time--;
-
+            this.time--;            
         }
     }
 
@@ -209,14 +251,13 @@ public class KUVidGame {
     
     public void throwMolecule() {
     	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,MoleculeType.randomMoleculeType()));
-    	GameObject molecule=list.get(this.rand.nextInt(list.size()));
+    	Molecule molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
 
         while(molecule.isActive()) {
-            molecule=list.get(this.rand.nextInt(list.size()));
+            molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
         }
         
         molecule.setPosition(new Position(this.rand.nextInt(N*L),0));
-       // molecule.setDirection(direct);
         molecule.setActive(true);
     }
 }

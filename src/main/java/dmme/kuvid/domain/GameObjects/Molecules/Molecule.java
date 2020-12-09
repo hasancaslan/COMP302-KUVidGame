@@ -8,6 +8,7 @@ import dmme.kuvid.lib.types.ObjectType;
 public abstract class Molecule extends GameObject{
 	
 	public MoleculeType subtype;
+	protected MovementStrategy strategy = new StraightPatternStrategy();
 
 	public Molecule(Position position, Position direction, boolean active, ObjectType type) {
 		super(position, direction, active, type);
@@ -15,6 +16,14 @@ public abstract class Molecule extends GameObject{
 
 	public Enum getSubType() {
 		return this.subtype;
+	}
+	
+	public void setPattern(MovementStrategy strategy){
+		strategy = strategy;
+	}
+	
+	public void move() {
+        strategy.move(this);
 	}
 	
 	public abstract void setMoleculeType();

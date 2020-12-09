@@ -86,22 +86,3 @@ public class movementHandler {
             move();
     }
 }
-
-/*
-if(gameObject.isActive()) {
-                int x1 = gameObject.getPosition().getX();
-                int y1 = gameObject.getPosition().getY();
-                int dx = gameObject.getDirection().getX();
-                int dy = gameObject.getDirection().getY();
-
-                int newX = x1 + dx;
-                int newY = y1 + dy;
-
-                if(newX > N * L || newX < 0) {//bouncing from the wall
-                    newX = x1 - dx;
-                    gameObject.getDirection().setX(-dx);
-                }
-                Position nextPosition = new Position(newX, newY);
-                gameObject.setPosition(nextPosition);
-            }
- */

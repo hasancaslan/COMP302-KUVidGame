@@ -22,5 +22,13 @@ public class AlphaMolecule extends Molecule{
 		// TODO Auto-generated method stub
 		this.subtype=MoleculeType.ALPHA;
 	}
+	
+	
+	
+	public void move() {
+		this.setPattern(new ZigZagPatternStrategy());
+		strategy.move(this);	
+	}
+	
 
 }

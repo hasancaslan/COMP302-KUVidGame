@@ -22,5 +22,13 @@ public class GamaMolecule extends Molecule{
 		// TODO Auto-generated method stub
 		this.subtype=MoleculeType.GAMMA;
 	}
+	
+	public void move() {
+		this.setPattern(new StraightPatternStrategy());
+		if(this.getPosition().getY() > (N*L)/2) {
+			this.setPattern(new ZigZagPatternStrategy());
+		}
+		strategy.move(this);		
+	}
 
 }

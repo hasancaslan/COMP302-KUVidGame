@@ -1,6 +1,8 @@
 package dmme.kuvid.ui;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
+import dmme.kuvid.lib.types.GameLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,8 @@ public class BuildingWindow extends JFrame {
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
     String difficulty;
+    
+    
     JTextField AtomNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField ReactionBlockerNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField PowerUpNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
@@ -92,7 +96,10 @@ public class BuildingWindow extends JFrame {
                 KUVidGame.getInstance().setNumMolecules(moleculeNumber);
                 KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
                 KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
-                KUVidGame.getInstance().setN(gameSize);
+                KUVidGame.getInstance().setN(gameSize);         
+                KUVidGame.getInstance().setDifficulty(difficulty);
+//                KUVidGame.getInstance().setFallPattern(linear);
+                KUVidGame.getInstance().setLinearity(linear);
                 KUVidGame.getInstance().shooterStart();
 
                 dispose();

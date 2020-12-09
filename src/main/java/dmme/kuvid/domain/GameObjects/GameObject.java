@@ -11,9 +11,10 @@ import dmme.kuvid.lib.types.*;
 
 public abstract class GameObject {
 
-
-	Position position;
-	Position direction;
+	protected int L = KUVidGame.getInstance().getL(); 
+	protected int N = KUVidGame.getInstance().getN(); 
+	protected Position position;
+	protected Position direction;
 
 	private ObjectType type;
 
@@ -31,7 +32,6 @@ public abstract class GameObject {
 		this.type = type;
 
 	}
-
 
 	public abstract void Collusion();
 	
