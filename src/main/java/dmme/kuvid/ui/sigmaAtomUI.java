@@ -8,6 +8,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import dmme.kuvid.constants.Config;
+
 public class sigmaAtomUI extends AtomUI{
 	
 	public sigmaAtomUI() {
@@ -16,7 +18,8 @@ public class sigmaAtomUI extends AtomUI{
 		this.x=super.x;
 		this.y=super.y;
 		try{							
-        	img = ImageIO.read(new File("./assets/atoms/sigma.png"));
+//        	img = ImageIO.read(new File("./assets/atoms/sigma.png"));
+        	img = ImageIO.read(new File(Config.getAssetsPath() + "atoms/sigma.png"));
         	BufferedImage resized = resize(img, L, L);
         	img = resized;
         } catch(IOException e) {
@@ -28,11 +31,5 @@ public class sigmaAtomUI extends AtomUI{
 	public void draw(Graphics g) {
 		g.drawImage(img,x,y,null);	
 	}
-
-	@Override
-	public void doAction() {		
-	}
-
-	
 	
 }

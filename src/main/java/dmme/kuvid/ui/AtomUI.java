@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.lib.types.*;
 
 public class AtomUI extends Drawable{
@@ -12,21 +13,13 @@ public class AtomUI extends Drawable{
 	protected AtomType type;
 	static int number;
 
-
-    /*
+/*		LAZIM MI BIR BAKALIM? UI direk Atom Domain objesi instancesine
+ * 		sahip olursa gerekemez gibi ***** ATOM UI objesi Domaine mesaj gondermiyor shooter aksine
+ * 
 	public AtomUI(){
-		Random rand = new Random();
-		x = 40*rand.nextInt(10);
-		y = 40*rand.nextInt(10);
-		while(x==200){
-			x = 40*rand.nextInt(10);
-		}
-		while(y==200){
-			y = 40*rand.nextInt(10);
-		}
+		Atom.addPropertyListener("location", this);
 	}
-    */
-    
+*/
 	public AtomType getType() {
 		return type;
 	}
@@ -46,18 +39,19 @@ public class AtomUI extends Drawable{
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		
 	}
-
+/*
 	@Override
 	public void doAction() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
+	
 
 	@Override
 	public void Collide() {
 		// TODO Auto-generated method stub
 		
 	}
+*/
+
 }

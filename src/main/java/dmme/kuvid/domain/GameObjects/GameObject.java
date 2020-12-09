@@ -2,39 +2,48 @@ package dmme.kuvid.domain.GameObjects;
 
 import java.util.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.lib.types.*;
+
 public abstract class GameObject {
-	
-	private static List<GameObject> gameObjectList = new ArrayList<>();
 
-	Position Position;
 
-	private String type;
+	Position position;
+	Position direction;
+
+	private ObjectType type;
 
 	boolean active;
-	
-	public GameObject(Position position, boolean active) {
+
+	public GameObject() {
+
+	}
+
+	public GameObject(Position position, Position direction, boolean active, ObjectType type) {
 		super();
-		Position = position;
+		this.position = position;
+		this.direction = direction;
 		this.active = active;
+		this.type = type;
+
 	}
 
-	public static List<GameObject> getGameObjectList() {
-		return gameObjectList;
-	}
 
-	
 	public abstract void Collusion();
 	
+	public abstract Enum getSubType();
+
 
 	public Position getPosition() {
-		return Position;
+		return position;
 	}
 
 	public void setPosition(Position position) {
-		Position = position;
+		this.position = position;
 	}
 
 	public boolean isActive() {
@@ -44,9 +53,42 @@ public abstract class GameObject {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
-	
 
+	public Position getDirection() {
+		return direction;
+	}
+
+	public ObjectType getType() {
+		return type;
+	}
 	
+	public void setDirection(Position direct) {
+		this.direction=direct;
+	}
+
+	public static List<GameObject> getGameObjectList(ObjectType type,Enum subType){
+		return KUVidGame.getGameObjectMap().get(new Key(type,subType));
+
+	}
+
+
+	public void move() {
+
+		if(this.isActive()) {
+			int x1 = this.getPosition().getX();
+			int y1 = this.getPosition().getY();
+			int dx = this.getDirection().getX();
+			int dy = this.getDirection().getY();
+
+			int newX = x1 + dx;
+			int newY = y1 + dy;
+
+			if(newX > KUVidGame.getInstance().getN() * KUVidGame.getInstance().getL() || newX < 0) {//bouncing from the wall
+				newX = x1 - dx;
+				this.getDirection().setX(-dx);
+			}
+			Position nextPosition = new Position(newX, newY);
+			this.setPosition(nextPosition);
+		}
+	}
 }
