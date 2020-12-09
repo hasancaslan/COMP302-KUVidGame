@@ -2,12 +2,15 @@ package dmme.kuvid.domain.GameObjects;
 
 import java.util.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.lib.types.*;
+
 public abstract class GameObject {
 	
-	private static List<GameObject> gameObjectList = new ArrayList<>();
 
 	Position Position;
 
@@ -15,14 +18,15 @@ public abstract class GameObject {
 
 	boolean active;
 	
+	public GameObject() {
+		
+	}
+	
 	public GameObject(Position position, boolean active) {
 		super();
 		Position = position;
 		this.active = active;
-	}
-
-	public static List<GameObject> getGameObjectList() {
-		return gameObjectList;
+		
 	}
 
 	
@@ -43,6 +47,11 @@ public abstract class GameObject {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public static List<GameObject> getGameObjectList(){
+		return KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM,AtomType.ALPHA));///MUST CHANGE
+		
 	}
 	
 	

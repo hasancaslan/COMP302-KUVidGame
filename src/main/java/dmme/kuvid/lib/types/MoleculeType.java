@@ -1,9 +1,8 @@
 package dmme.kuvid.lib.types;
 
-public enum MoleculeType {
+public enum MoleculeType{
 	ALPHA,
 	BETA,
 	GAMMA,
-	SIGMA
-
+	SIGMA;
 }
