@@ -109,16 +109,8 @@ public class KUVidGame {
     	this.blender.useBlender(action, typeCreate, typeDestroy);
     }
 
-    public int getNumPowerUp() {
-        return numPowerUp;
-    }
-
     public void setNumPowerUp(int numPowerUp) {
         this.numPowerUp = numPowerUp;
-    }
-
-    public int getNumBlocker() {
-        return numBlocker;
     }
 
     public void setNumBlocker(int numBlocker) {
@@ -131,10 +123,6 @@ public class KUVidGame {
 
     public void setNumMolecules(int numMolecules) {
         this.numMolecules = numMolecules;
-    }
-
-    public int getNumAtoms() {
-        return numAtoms;
     }
 
     public void setNumAtoms(int numAtoms) {
@@ -204,6 +192,10 @@ public class KUVidGame {
     
     public void resumeGame() {
     	this.setActive(true);
+    }
+    
+    public int getL() {
+    	return this.L;
     }
     
 }
