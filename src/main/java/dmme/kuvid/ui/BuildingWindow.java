@@ -12,7 +12,6 @@ import java.awt.event.ItemListener;
 public class BuildingWindow extends JFrame {
     private final String DEFAULT_COMPONENT_AMOUNT = "50";
     private final String DEFAULT_SIZE = "14";
-    public GameWindow window;
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
@@ -37,7 +36,12 @@ public class BuildingWindow extends JFrame {
     int gameSize = 0;
 
     public BuildingWindow() {
-        this.window = new GameWindow();
+        this.setTitle("BUILDING WINDOW");
+        this.setSize(510, 510);
+        this.setLocationRelativeTo((Component) null);
+        this.setDefaultCloseOperation(3);
+        this.setVisible(true);
+
         this.ComboBox = new JComboBox<>(this.Difficulty);
         this.StartButton = new JButton("Start Game");
         this.setLayout(new GridLayout(9, 2, 4, 4));
@@ -101,12 +105,7 @@ public class BuildingWindow extends JFrame {
                 int N = Drawable.getN();// Check
                 int L = Drawable.getL();
 
-
-                BuildingWindow.this.window.setSize(N * L, N * L);
-                BuildingWindow.this.window.setTitle("KUVid Game");
-                BuildingWindow.this.window.setVisible(true);
-                BuildingWindow.this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                BuildingWindow.this.window.setLocationRelativeTo(null);
+                new GameFrame(new Dimension(N * L, N * L));
             }
         });
 
@@ -114,10 +113,6 @@ public class BuildingWindow extends JFrame {
         StationaryButton.addItemListener(new SpinHandler(false));
         LinearButton.addItemListener(new StructureHandler(true));
         NoNLinearButton.addItemListener(new StructureHandler(false));
-    }
-
-    public GameWindow returnWindow() {
-        return this.window;
     }
 
     // private inner class to handle the movement of the molecules
