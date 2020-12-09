@@ -5,14 +5,15 @@ import dmme.kuvid.domain.Collusion.*;
 import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.domain.GameObjects.Shooter;
+import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.ObjectType;
 
 import java.sql.Time;
+import java.util.HashMap;
 import java.util.List;
 
-public class movementHandler extends Thread {
+public class movementHandler {
 
-    //BOYLE MI OLACAK ???
     private static movementHandler instance = null;
 
     private movementHandler() {}
@@ -23,15 +24,16 @@ public class movementHandler extends Thread {
 
         return instance;
     }
-    //BOYLE MI OLACAK ???
 
     final int range = KUVidGame.getInstance().getRange();
     final int L = KUVidGame.getInstance().getL();
     final int N = KUVidGame.getInstance().getN();
 
     public void search() {
-        List<GameObject> gameObjectList = GameObject.getGameObjectList();
-
+        HashMap<Key,List<GameObject>> map= KUVidGame.getGameObjectMap();
+        
+       for (Key k: map.keySet()) {
+    	   List<GameObject> gameObjectList = map.get(k);
         for (GameObject gameObject : gameObjectList) {
             if (!gameObject.isActive()) continue;
             int x1 = gameObject.getPosition().getX();
@@ -65,22 +67,23 @@ public class movementHandler extends Thread {
                 new ReactionSurfaceCollision(gameObject);
             }
         }
+       }
     }
 
     public void move() {
-        List<GameObject> gameObjectList = GameObject.getGameObjectList();
-        for (GameObject gameObject : gameObjectList) {
-            gameObject.move();
+    	HashMap<Key,List<GameObject>> map= KUVidGame.getGameObjectMap();
+        for (Key k: map.keySet()) {
+        	 List<GameObject> gameObjectList = map.get(k);
+	        for (GameObject gameObject : gameObjectList) {
+	            gameObject.move();
+	        }
         }
         this.search();
     }
 
-    @Override
     public void run() {
-        while (true) {
             search();
             move();
-        }
     }
 }
 

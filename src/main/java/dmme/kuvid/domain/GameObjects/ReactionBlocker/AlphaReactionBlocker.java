@@ -15,5 +15,11 @@ public class AlphaReactionBlocker extends ReactionBlocker {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Enum getSubType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

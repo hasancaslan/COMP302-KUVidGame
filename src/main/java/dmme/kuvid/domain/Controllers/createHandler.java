@@ -15,25 +15,25 @@ public class createHandler {
             case ALPHA:
                 for (int i = 0; i < amount; i++) {
                     atom = new AlphaAtom(null, null,false, ObjectType.ATOM);
-                    GameObject.getGameObjectList().add(atom);
+                    GameObject.getGameObjectList(ObjectType.ATOM,AtomType.ALPHA).add(atom);
                 }
                 break;
             case BETA:
                 for (int i = 0; i < amount; i++) {
                     atom = new BetaAtom(null, null,false, ObjectType.ATOM);
-                    GameObject.getGameObjectList().add(atom);
+                    GameObject.getGameObjectList(ObjectType.ATOM,AtomType.BETA).add(atom);
                 }
                 break;
             case SIGMA:
                 for (int i = 0; i < amount; i++) {
                     atom = new SigmaAtom(null, null,false, ObjectType.ATOM);
-                    GameObject.getGameObjectList().add(atom);
+                    GameObject.getGameObjectList(ObjectType.ATOM,AtomType.SIGMA).add(atom);
                 }
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
                     atom = new GamaAtom(null, null,false, ObjectType.ATOM);
-                    GameObject.getGameObjectList().add(atom);
+                    GameObject.getGameObjectList(ObjectType.ATOM,AtomType.GAMMA).add(atom);
                 }
                 break;
         }
@@ -45,31 +45,31 @@ public class createHandler {
             case ALPHA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new AlphaMolecule(null, null,false, ObjectType.MOLECULE);
-                    GameObject.getGameObjectList().add(molecule);
+                    GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.ALPHA).add(molecule);
                 }
                 break;
             case BETA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new BetaMolecule(null, null,false, ObjectType.MOLECULE);
-                    GameObject.getGameObjectList().add(molecule);
+                    GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.BETA).add(molecule);
                 }
                 break;
             case SIGMA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new SigmaMolecule(null, null,false, ObjectType.MOLECULE);
-                    GameObject.getGameObjectList().add(molecule);
+                    GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.SIGMA).add(molecule);
                 }
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new GamaMolecule(null, null,false, ObjectType.MOLECULE);
-                    GameObject.getGameObjectList().add(molecule);
+                    GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.GAMMA).add(molecule);
                 }
                 break;
         }
     }
 
-    public static void createPowerup(PowerType type, int amount) {
+  /*  public static void createPowerup(PowerType type, int amount) {
         GameObject powerUp;
         switch (type) {
             case ALPHA_B:
@@ -97,9 +97,9 @@ public class createHandler {
                 }
                 break;
         }
-    }
+    }*/
 
-    public static void createReactionBlocker(ReactionType type, int amount) {
+  /*  public static void createReactionBlocker(ReactionType type, int amount) {
         GameObject reactionBlocker;
         switch (type) {
             case ALPHA_R:
@@ -127,6 +127,6 @@ public class createHandler {
                 }
                 break;
         }
-    }
+    }*/
 
 }

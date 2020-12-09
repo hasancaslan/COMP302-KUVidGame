@@ -32,59 +32,48 @@ public class Blender {
 
 			if(typeCreate.equals(AtomType.ALPHA)) {
 
-				//destroyBlender(AtomType.SIGMA)
-
-				for(int i=4;i>0;i--) {
-					// createAtom(AtomType.ALPHA)
-				}
+				destroyHandler.blenderDestroy(typeDestroy);
+				
+				createHandler.createAtom(typeCreate, 4);
 
 
 			}else if(typeCreate.equals(AtomType.BETA)) {
-
-				// destroyBlender(AtomType.SIGMA)
-
-				for(int i=3;i>0;i--) {
-					// createAtom(AtomType.BETA)
-				}
+				
+				destroyHandler.blenderDestroy(typeDestroy);
+				
+				createHandler.createAtom(typeCreate, 3);
 
 			}else if(typeCreate.equals(AtomType.GAMMA)) {
 
-				// destroyBlender(AtomType.SIGMA)
-
-				for(int i=2;i>0;i--) {
-					// createAtom(AtomType.GAMMA)
-				}
+				
+				destroyHandler.blenderDestroy(typeDestroy);
+				
+				createHandler.createAtom(typeCreate, 2);
 			}
 
 		}else if (typeDestroy.equals(AtomType.GAMMA)&KUVidGame.getInstance().getNumAtom(AtomType.GAMMA)>=1) {
 
 			if(typeCreate.equals(AtomType.ALPHA)) {
-
-				//destroyBlender(AtomType.GAMMA)
-
-				for(int i=3;i>0;i--) {
-					// createAtom(AtomType.ALPHA)
-				}
+				
+				destroyHandler.blenderDestroy(typeDestroy);
+				
+				createHandler.createAtom(typeCreate, 3);
 
 
 			}else if(typeCreate.equals(AtomType.BETA)) {
 
-				// destroyBlender(AtomType.GAMMA)
-
-				for(int i=2;i>0;i--) {
-					// createAtom(AtomType.BETA)
-				}
+				destroyHandler.blenderDestroy(typeDestroy);
+				
+				createHandler.createAtom(typeCreate, 2);
 			}
 
 		}else if(typeDestroy.equals(AtomType.BETA)&KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=1) {
 
 			if(typeCreate.equals(AtomType.ALPHA)) {
 
-				//destroyBlender(AtomType.BETA)
-
-				for(int i=2;i>0;i--) {
-					// createAtom(AtomType.ALPHA)
-				}
+				destroyHandler.blenderDestroy(typeDestroy);
+				
+				createHandler.createAtom(typeCreate, 2);
 
 
 			}
@@ -97,31 +86,31 @@ public class Blender {
 	private void blendAtoms(AtomType typeCreate,AtomType typeDestroy) {
 		if (typeCreate.equals(AtomType.SIGMA)) {
 
-			// check enough atoms left
 			if(typeDestroy.equals(AtomType.ALPHA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA)>=4)) {
 
 				for(int i=4;i>0;i--) {
-					// destroy beta here destroyBlender(AtomType)
+					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				// createAtom(AtomType)
+				createHandler.createAtom(typeCreate, 1);
+
 			}else if(typeDestroy.equals(AtomType.BETA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=3)) {
 
 				for(int i=3;i>0;i--) {
-					// destroy beta here destroyBlender(AtomType.BETA)
+					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				// createAtom(AtomType.BETA)
+				createHandler.createAtom(typeCreate, 1);
 			}else if(typeDestroy.equals(AtomType.GAMMA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.GAMMA)>=2)) {
 
 				for(int i=2;i>0;i--) {
-					// destroy beta here destroyBlender(AtomType.GAMMA)
+					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				// createAtom(AtomType.GAMMA)
+				createHandler.createAtom(typeCreate, 1);
 			}
 
 		}else if(typeCreate.equals(AtomType.GAMMA)) {
@@ -130,18 +119,18 @@ public class Blender {
 					(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA)>=3)) {
 
 				for(int i=3;i>0;i--) {
-					// destroy beta here destroyBlender(AtomType)
+					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				// createAtom(AtomType)
+				createHandler.createAtom(typeCreate, 1);
 			}else if(typeDestroy.equals(AtomType.BETA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=2)) {
 
 				for(int i=2;i>0;i--) {
-					// destroy beta here destroyBlender(AtomType.BETA)
+					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				// createAtom(AtomType.BETA)
+				createHandler.createAtom(typeCreate, 1);
 			}
 
 		}else if(typeCreate.equals(AtomType.BETA)) {
@@ -149,10 +138,10 @@ public class Blender {
 					(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA)>=2)) {
 
 				for(int i=2;i>0;i--) {
-					// destroy beta here destroyBlender(AtomType)
+					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				// createAtom(AtomType)
+				createHandler.createAtom(typeCreate, 1);
 			}
 
 		}else {

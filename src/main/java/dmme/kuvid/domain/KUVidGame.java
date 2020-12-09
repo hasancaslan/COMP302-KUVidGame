@@ -186,11 +186,11 @@ public class KUVidGame {
                 break;
             }
 
-            // Collision check
-
             if(this.active) {
-                //moveHandler()
+            	movementHandler.getInstance().run();
             }
+            
+            this.time--;
 
         }
     }
@@ -205,5 +205,18 @@ public class KUVidGame {
 
     public int getL() {
         return L;
+    }
+    
+    public void throwMolecule() {
+    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,MoleculeType.randomMoleculeType()));
+    	GameObject molecule=list.get(this.rand.nextInt(list.size()));
+
+        while(molecule.isActive()) {
+            molecule=list.get(this.rand.nextInt(list.size()));
+        }
+        
+        molecule.setPosition(new Position(this.rand.nextInt(N*L),0));
+       // molecule.setDirection(direct);
+        molecule.setActive(true);
     }
 }

@@ -1,6 +1,7 @@
 package dmme.kuvid.domain.GameObjects.Molecules;
 
 import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
 
 public class AlphaMolecule extends Molecule{
@@ -14,6 +15,12 @@ public class AlphaMolecule extends Molecule{
 	public void Collusion() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void setMoleculeType() {
+		// TODO Auto-generated method stub
+		this.subtype=MoleculeType.ALPHA;
 	}
 
 }

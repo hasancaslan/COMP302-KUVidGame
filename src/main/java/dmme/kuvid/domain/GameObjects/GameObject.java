@@ -34,6 +34,8 @@ public abstract class GameObject {
 
 
 	public abstract void Collusion();
+	
+	public abstract Enum getSubType();
 
 
 	public Position getPosition() {
@@ -59,9 +61,13 @@ public abstract class GameObject {
 	public ObjectType getType() {
 		return type;
 	}
+	
+	public void setDirection(Position direct) {
+		this.direction=direct;
+	}
 
-	public static List<GameObject> getGameObjectList(){
-		return KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM,AtomType.ALPHA));///MUST CHANGE
+	public static List<GameObject> getGameObjectList(ObjectType type,Enum subType){
+		return KUVidGame.getGameObjectMap().get(new Key(type,subType));
 
 	}
 

@@ -16,4 +16,10 @@ public class SigmaPowerUp extends PowerUp {
 		
 	}
 
+	@Override
+	public Enum getSubType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

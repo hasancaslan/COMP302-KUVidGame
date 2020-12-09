@@ -16,4 +16,10 @@ public class BetaReactionBlocker extends ReactionBlocker {
 		
 	}
 
+	@Override
+	public Enum getSubType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

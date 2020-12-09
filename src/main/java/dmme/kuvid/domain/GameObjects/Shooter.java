@@ -59,7 +59,11 @@ public class Shooter extends Observable {
     }
 
     public void shootAtom() {
-        this.currentAtom.setPosition(new Position(this.position,0));
+    	int L=KUVidGame.getInstance().getL();
+    	int N=KUVidGame.getInstance().getN();
+    	double angle=this.getAngle();
+        this.currentAtom.setPosition(new Position(this.position,N*L-3*L));
+        this.currentAtom.setDirection(new Position((int)Math.cos(angle),(int)Math.sin(angle)));
         this.currentAtom.setActive(true);
         this.pickAtom();
     }
