@@ -12,8 +12,7 @@ public class GameWindow  extends JFrame{
     public Units units;
     private ShooterUI shooterUI;
     private KUVidGame game;
-    private int h;
-    private int w;
+
 
 public GameWindow(KUVidGame game){
 	

@@ -54,6 +54,7 @@ public class Units extends JPanel{
 				for(Drawable t : list) {
 					//t.doAction();
 					repaint();
+					//t.draw(t.getGraphics());
 					}
 				}
 				}	

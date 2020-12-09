@@ -1,6 +1,7 @@
 package dmme.kuvid.ui;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,11 @@ public class Background extends Drawable{
 
 	@Override
 	public void Collide() {	
+	}
+	
+	@Override
+	public Graphics2D getGraphics() {
+		return this.img.createGraphics();
 	}
 
 }

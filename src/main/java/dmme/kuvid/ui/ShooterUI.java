@@ -13,6 +13,8 @@ import dmme.kuvid.utils.observer.PropertyListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -25,6 +27,7 @@ public class ShooterUI extends Drawable implements PropertyChangeListener, Anima
     private int angle;
     private LinkedList<Animation> animationQueue;
     private Shooter shooter;
+    private Graphics2D g;
 
     public ShooterUI(Shooter shooter) {
     	this.shooter=shooter;
@@ -36,6 +39,7 @@ public class ShooterUI extends Drawable implements PropertyChangeListener, Anima
         System.out.printf("% background s",e.getMessage());
         }
        this.shooter.addPropertyChangeListener(this);
+       this.g=img.createGraphics();
     }
 
 	@Override
@@ -70,12 +74,14 @@ public class ShooterUI extends Drawable implements PropertyChangeListener, Anima
 	public void propertyChange(PropertyChangeEvent evt) {
 		// TODO Auto-generated method stub
 		if (evt.getPropertyName().equals("angle")) {
-            double deltaD=Math.toRadians((int)evt.getNewValue()-(int)evt.getOldValue());
+            double deltaD=(int)evt.getNewValue()-(int)evt.getOldValue();
             //System.out.println("angle change: "+deltaD+" "+evt.getOldValue()+" "+evt.getNewValue());
-            BufferedImage rotated = rotate(img,deltaD);
+            BufferedImage rotated = rotate(img,Math.toRadians(deltaD));
     		img=rotated;
-        }
-		
+    	
+    		  // the actual location of the sprite
+    		
+        }	
 	}
 
 	public void changeAngle(double from, double to, double progress) {
@@ -86,5 +92,10 @@ public class ShooterUI extends Drawable implements PropertyChangeListener, Anima
 	public void changeLocation(double from, double to, double progress) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Graphics2D getGraphics() {
+		return g;
 	}
 }

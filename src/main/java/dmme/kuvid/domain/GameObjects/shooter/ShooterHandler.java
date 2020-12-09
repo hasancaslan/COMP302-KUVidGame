@@ -12,7 +12,7 @@ public class ShooterHandler {
     }
 
     public void rotateShooter(int angle) {
-    	this.shooter.setAngle(this.shooter.getAngle()+angle);;
+    	this.shooter.setAngle(this.shooter.getAngle()+angle);
 
     }
 }

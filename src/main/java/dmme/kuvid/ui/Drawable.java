@@ -1,5 +1,6 @@
 package dmme.kuvid.ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -7,6 +8,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Transparency;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -91,6 +93,7 @@ public abstract class Drawable extends JPanel{
 	    GraphicsDevice gd = ge.getDefaultScreenDevice();
 	    return gd.getDefaultConfiguration();
 	}
+	
 	
 	public abstract void Collide();
 
