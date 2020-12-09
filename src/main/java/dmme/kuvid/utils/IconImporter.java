@@ -9,14 +9,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class IconImporter {
-    public static ImageIcon getIconFromFileName(String fileName, Dimension size) {
+    public static ImageIcon getIconFromFileName(String fileName, String folderName, Dimension size) {
         Image tmp = null;
         try {
             String osName = System.getProperty("os.name").toLowerCase();
             if (osName.contains("mac")) {
-                tmp = ImageIO.read(new File(Config.getAssetsPath() + fileName));
+                tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "/" + fileName));
             } else {
-                tmp = ImageIO.read(new File(Config.getAssetsPath() + fileName));
+                tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "/" + fileName));
             }
 
         } catch (IOException e) {
