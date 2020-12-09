@@ -66,5 +66,23 @@ public abstract class GameObject {
 	}
 
 
-	public abstract void move();
+	public void move() {
+
+		if(this.isActive()) {
+			int x1 = this.getPosition().getX();
+			int y1 = this.getPosition().getY();
+			int dx = this.getDirection().getX();
+			int dy = this.getDirection().getY();
+
+			int newX = x1 + dx;
+			int newY = y1 + dy;
+
+			if(newX > KUVidGame.getInstance().getN() * KUVidGame.getInstance().getL() || newX < 0) {//bouncing from the wall
+				newX = x1 - dx;
+				this.getDirection().setX(-dx);
+			}
+			Position nextPosition = new Position(newX, newY);
+			this.setPosition(nextPosition);
+		}
+	}
 }
