@@ -13,13 +13,13 @@ public class AtomUI extends Drawable{
 	protected AtomType type;
 	static int number;
 
-/*		LAZIM MI BÝR BAKALIM? UI direk Atom Domain objesi instancesine 
- * 		sahip olursa gerekemez gibi çünkü ATOM UI objesi Domaine mesaj göndermiyor shooter aksine
+/*		LAZIM MI BIR BAKALIM? UI direk Atom Domain objesi instancesine
+ * 		sahip olursa gerekemez gibi ***** ATOM UI objesi Domaine mesaj gondermiyor shooter aksine
  * 
 	public AtomUI(){
 		Atom.addPropertyListener("location", this);
 	}
-*/      
+*/
 	public AtomType getType() {
 		return type;
 	}
