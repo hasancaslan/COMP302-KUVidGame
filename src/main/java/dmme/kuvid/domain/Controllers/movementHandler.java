@@ -26,8 +26,10 @@ public class movementHandler {
     }
 
     final int range = KUVidGame.getInstance().getRange();
-    final int L = KUVidGame.getInstance().getL();
-    final int N = KUVidGame.getInstance().getN();
+
+    // TODO: CONFIGURE FOR SCREENSIZE NOT N
+    //final int L = KUVidGame.getInstance().getL();
+    //final int N = KUVidGame.getInstance().getN();
 
     public void search() {
         HashMap<Key,List<GameObject>> map= KUVidGame.getGameObjectMap();
