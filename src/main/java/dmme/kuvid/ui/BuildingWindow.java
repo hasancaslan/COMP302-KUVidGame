@@ -1,9 +1,8 @@
 package dmme.kuvid.ui;
 
-import javax.swing.*;
-
 import dmme.kuvid.domain.KUVidGame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,19 +12,16 @@ import java.awt.event.ItemListener;
 public class BuildingWindow extends JFrame {
     private final String DEFAULT_COMPONENT_AMOUNT = "50";
     private final String DEFAULT_SIZE = "14";
-	
-	private KUVidGame game;
-	public GameWindow window;
-
+    public GameWindow window;
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
     String difficulty;
-    JTextField AtomNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT,8);
-    JTextField ReactionBlockerNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT,8);
-    JTextField PowerUpNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT,8);
-    JTextField MoleculeNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT,8);
-    JTextField GameSize = new JTextField(DEFAULT_SIZE,8);
+    JTextField AtomNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField ReactionBlockerNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField PowerUpNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField MoleculeNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField GameSize = new JTextField(DEFAULT_SIZE, 8);
     ButtonGroup spinGroup;
     ButtonGroup movementGroup;
     JRadioButton SpinButton;
@@ -40,11 +36,8 @@ public class BuildingWindow extends JFrame {
     int moleculeNumber = 0;
     int gameSize = 0;
 
-    public BuildingWindow(KUVidGame game) {
-    	
-    	this.game=game;
-    	this.window= new GameWindow(this.game);
-    	
+    public BuildingWindow() {
+        this.window = new GameWindow();
         this.ComboBox = new JComboBox<>(this.Difficulty);
         this.StartButton = new JButton("Start Game");
         this.setLayout(new GridLayout(9, 2, 4, 4));
@@ -93,43 +86,39 @@ public class BuildingWindow extends JFrame {
                 moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
                 gameSize = Integer.parseInt((String) GameSize.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
-                
-                
-               
-                BuildingWindow.this.game.setNumAtoms(atomNumber);
-                BuildingWindow.this.game.setNumMolecules(moleculeNumber);
-                BuildingWindow.this.game.setNumBlocker(reactionBlockerNumber);
-                BuildingWindow.this.game.setNumPowerUp(powerUpNumber);
-                BuildingWindow.this.game.setN(gameSize);
-                BuildingWindow.this.game.shooterStart();
-                
+
+
+                KUVidGame.getInstance().setNumAtoms(atomNumber);
+                KUVidGame.getInstance().setNumMolecules(moleculeNumber);
+                KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
+                KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
+                KUVidGame.getInstance().setN(gameSize);
+                KUVidGame.getInstance().shooterStart();
+
                 dispose();
-                
+
                 Drawable.setN(gameSize);
-            	int N= Drawable.getN();// Check
-            	int L= Drawable.getL();
-                
-            	
-            	BuildingWindow.this.window.setSize(N*L, N*L);
-            	BuildingWindow.this.window.setTitle("KUVid Game");
-            	BuildingWindow.this.window.setVisible(true);
-            	BuildingWindow.this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            	BuildingWindow.this.window.setLocationRelativeTo(null);
-            	
-                
+                int N = Drawable.getN();// Check
+                int L = Drawable.getL();
+
+
+                BuildingWindow.this.window.setSize(N * L, N * L);
+                BuildingWindow.this.window.setTitle("KUVid Game");
+                BuildingWindow.this.window.setVisible(true);
+                BuildingWindow.this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                BuildingWindow.this.window.setLocationRelativeTo(null);
             }
         });
+
         SpinButton.addItemListener(new SpinHandler(true));
         StationaryButton.addItemListener(new SpinHandler(false));
         LinearButton.addItemListener(new StructureHandler(true));
         NoNLinearButton.addItemListener(new StructureHandler(false));
-        
-        
-    }
-    public GameWindow returnWindow() {
-    	return this.window;
     }
 
+    public GameWindow returnWindow() {
+        return this.window;
+    }
 
     // private inner class to handle the movement of the molecules
     class SpinHandler implements ItemListener {

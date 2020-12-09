@@ -14,6 +14,7 @@ public class Application implements Runnable {
     private final Logger logger;
     private KUVidGame game;
     private GameWindow mainWindow;
+    int i = 1;
 
     public Application() {
         LoggerFactory loggerFactory = new LoggerFactory();
@@ -43,7 +44,7 @@ public class Application implements Runnable {
     }
 
     public BuildingWindow buildWindow() {
-        BuildingWindow buildWindow = new BuildingWindow(this.game);
+        BuildingWindow buildWindow = new BuildingWindow();
         buildWindow.setTitle("BUILDING WINDOW");
         buildWindow.setSize(510, 510);
         buildWindow.setLocationRelativeTo((Component) null);

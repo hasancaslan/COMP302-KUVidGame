@@ -1,7 +1,4 @@
-package dmme.kuvid.domain.GameObjects.shooter;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.lib.types.AmmoType;
 import dmme.kuvid.utils.observer.Observable;
@@ -10,21 +7,15 @@ public class Shooter extends Observable {
     private int position;
     private int angle;
     public AmmoType ammoType;
-    protected PropertyChangeSupport propertyChangeSupport;
-   
 
-    public Shooter() {
-    	this.position=0;
-    	this.angle=90;
-    	this.ammoType=null;
-    	propertyChangeSupport = new PropertyChangeSupport(this);
-    }
-    
     public Shooter(int position, int angle, AmmoType ammoType) {
         this.position = position;
         this.angle = angle;
         this.ammoType = ammoType;
-        propertyChangeSupport = new PropertyChangeSupport(this);
+    }
+
+    public Shooter() {
+        this(500, 90, null);
     }
 
     public int getPosition() {
@@ -41,9 +32,8 @@ public class Shooter extends Observable {
     }
 
     public void setAngle(int angle) {
-        propertyChangeSupport.firePropertyChange("angle",this.angle, angle);
+        publishPropertyEvent("angle", this.angle, angle);
         this.angle = angle;
-        
     }
 
     public AmmoType getAmmoType() {
@@ -53,8 +43,12 @@ public class Shooter extends Observable {
     public void setAmmoType(AmmoType ammoType) {
         this.ammoType = ammoType;
     }
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
+
+    public void moveShooter(int displacement) {
+        setPosition(getPosition() + displacement);
+    }
+
+    public void rotateShooter(int angleChange) {
+        setAngle(getAngle() + angleChange);
     }
 }

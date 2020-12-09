@@ -1,28 +1,28 @@
 package dmme.kuvid.domain.GameObjects;
 
 public class Position {
-	int x;
-	int y;
-	
-	public Position(int x, int y) {
-		super();
-		this.x = x;
-		this.x = y;
-	}
+    int x;
+    int y;
 
-	public int getX() {
-		return x;
-	}
+    public Position(int x, int y) {
+        super();
+        this.x = x;
+        this.x = y;
+    }
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public void setX(int x) {
+        this.x = x;
+    }
 
-	public void setY(int y) {
-		this.y = y;
-	}	
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

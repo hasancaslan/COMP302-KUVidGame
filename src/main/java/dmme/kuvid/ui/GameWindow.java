@@ -1,56 +1,52 @@
 package dmme.kuvid.ui;
 
-import java.awt.event.KeyEvent;
-
-import java.awt.event.KeyListener;
-import javax.swing.JFrame;
-
 import dmme.kuvid.domain.KUVidGame;
 
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GameWindow  extends JFrame{
+
+public class GameWindow extends JFrame {
+    private final ShooterUI shooterUI;
     public Units units;
-    private ShooterUI shooterUI;
-    private KUVidGame game;
+    private int h;
+    private int w;
 
+    public GameWindow() {
+        this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter());
+        this.units = new Units(KUVidGame.getInstance(), this.shooterUI);
+        this.add(units);
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
 
-public GameWindow(KUVidGame game){
-	
-	this.game=game;
-	
-	this.shooterUI=new ShooterUI(this.game.getShooter());
-	this.units=new Units(this.game,this.shooterUI);
-	this.add(units);
-    this.addKeyListener(new KeyListener(){
-        @Override
-        public void keyTyped(KeyEvent e) {
-
-        	char key=e.getKeyChar();
-            switch(key) {
-                case 'a':
-                	GameWindow.this.game.moveShooter(-10);
-                    break;
-                case 's':
-                	GameWindow.this.game.aimShooter(-10);
-                    break;
-                case 'd':
-                	GameWindow.this.game.moveShooter(10);
-                    break;
-                case 'w':
-                	GameWindow.this.game.aimShooter(10);
-                    break;
+                char key = e.getKeyChar();
+                switch (key) {
+                    case 'a':
+                        KUVidGame.getInstance().moveShooter(-10);
+                        break;
+                    case 's':
+                        KUVidGame.getInstance().aimShooter(-10);
+                        break;
+                    case 'd':
+                        KUVidGame.getInstance().moveShooter(10);
+                        break;
+                    case 'w':
+                        KUVidGame.getInstance().aimShooter(10);
+                        break;
+                }
             }
-        }
 
-        @Override
-        public void keyPressed(KeyEvent e) {
+            @Override
+            public void keyPressed(KeyEvent e) {
 
-        }
+            }
 
-        @Override
-        public void keyReleased(KeyEvent e) {
+            @Override
+            public void keyReleased(KeyEvent e) {
 
-        }
-    });
-}
+            }
+        });
+    }
 }
