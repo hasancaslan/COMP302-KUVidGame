@@ -83,7 +83,7 @@ public abstract class GameObject {
 			int newX = x1 + dx;
 			int newY = y1 + dy;
 
-			if(newX > KUVidGame.getInstance().getN() * KUVidGame.getInstance().getL() || newX < 0) {//bouncing from the wall
+			if(newX > KUVidGame.getInstance().getScreenSize().width || newX < 0) {//bouncing from the wall
 				newX = x1 - dx;
 				this.getDirection().setX(-dx);
 			}

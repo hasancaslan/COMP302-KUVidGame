@@ -1,15 +1,13 @@
 package dmme.kuvid.domain;
 
-import dmme.kuvid.domain.Controllers.*;
+import dmme.kuvid.domain.Controllers.createHandler;
+import dmme.kuvid.domain.Controllers.destroyHandler;
+import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
-import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
-import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
 import dmme.kuvid.lib.types.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Time;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +15,12 @@ import java.util.Random;
 
 public class KUVidGame {
     private static KUVidGame instance = null;
-    private final int L = 50;
+    private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
     public boolean active = true;
     public boolean blendingMode;
+    private Dimension screenSize;
+    private Dimension playableArea;
+    private int L = 50;
     private int numAtoms = 1;
     private int numMolecules = 1;
     private int numBlocker = 1;
@@ -34,28 +35,24 @@ public class KUVidGame {
     private Blender blender;
     private createHandler creator;
     private destroyHandler destroyer;
-    private int N = 20;
-    
     private int time;
     private Player p1;
-    private Random rand= new Random();
-    private static HashMap<Key,List<GameObject>> gameObjectMap= new HashMap<Key,List<GameObject>>();
-
-
+    private Random rand = new Random();
     public KUVidGame() {
         this.shooter = new Shooter();
-        this.blender = new Blender(this.creator,this.destroyer);
-        this.p1= Player.getInstance();
+        this.blender = new Blender(this.creator, this.destroyer);
+        this.p1 = Player.getInstance();
+        this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.playableArea = new Dimension(this.screenSize.width*4/5,this.screenSize.height);
 
-
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM,AtomType.ALPHA), new ArrayList<GameObject>());
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM,AtomType.BETA), new ArrayList<GameObject>());
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM,AtomType.GAMMA), new ArrayList<GameObject>());
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM,AtomType.SIGMA), new ArrayList<GameObject>());
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE,MoleculeType.ALPHA), new ArrayList<GameObject>());
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE,MoleculeType.BETA), new ArrayList<GameObject>());
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE,MoleculeType.GAMMA), new ArrayList<GameObject>());
-        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE,MoleculeType.SIGMA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.ALPHA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.BETA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.GAMMA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.SIGMA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.GAMMA), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA), new ArrayList<GameObject>());
     }
 
     public KUVidGame(int time, boolean active, boolean blendingMode) {
@@ -70,6 +67,18 @@ public class KUVidGame {
             instance = new KUVidGame();
 
         return instance;
+    }
+
+    public static HashMap<Key, List<GameObject>> getGameObjectMap() {
+        return gameObjectMap;
+    }
+
+    public Dimension getScreenSize() {
+        return screenSize;
+    }
+
+    public void setScreenSize(Dimension screenSize) {
+        this.screenSize = screenSize;
     }
 
     public int getTime() {
@@ -145,7 +154,7 @@ public class KUVidGame {
         return range;
     }
 
-    public void useBlender(BlenderAction action,AtomType typeCreate,AtomType typeDestroy) {
+    public void useBlender(BlenderAction action, AtomType typeCreate, AtomType typeDestroy) {
         this.blender.useBlender(action, typeCreate, typeDestroy);
     }
 
@@ -177,35 +186,21 @@ public class KUVidGame {
         return this.shooter;
     }
 
-
-    public int getN() {
-        return N;
-    }
-
-
-    public void setN(int n) {
-        this.N = n;
-    }
-
     public void shooterStart() {
-        this.shooter.setPosition(this.N * L / 2);
+        this.shooter.setPosition(this.getScreenSize().width / 2);
         this.shooter.setAngle(90);
     }
 
-    public static HashMap<Key,List<GameObject>> getGameObjectMap(){
-        return gameObjectMap;
-    }
-
     public int getNumAtom(AtomType type) {
-        return KUVidGame.gameObjectMap.get(new Key(ObjectType.ATOM,type)).size();
+        return KUVidGame.gameObjectMap.get(new Key(ObjectType.ATOM, type)).size();
     }
 
     public GameObject getRandomAtom() {
-        List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM,AtomType.randomAtomType()));
-        GameObject atom=list.get(this.rand.nextInt(list.size()));
+        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
+        GameObject atom = list.get(this.rand.nextInt(list.size()));
 
-        while(atom.isActive()) {
-            atom=list.get(this.rand.nextInt(list.size()));
+        while (atom.isActive()) {
+            atom = list.get(this.rand.nextInt(list.size()));
         }
 
         return atom;
@@ -213,12 +208,11 @@ public class KUVidGame {
 
     public void runGame(){ //main loop
 
-        while (true){
-        	
-            if(this.p1.getHealth()<=0) {
+        while (true) {
+            if (this.p1.getHealth() <= 0) {
                 break;
             }
-            if(getTime()<=0) {
+            if (getTime() <= 0) {
                 break;
             }
 
@@ -248,7 +242,11 @@ public class KUVidGame {
     public int getL() {
         return L;
     }
-    
+
+    public void setL(int l) {
+        L = l;
+    }
+
     public void throwMolecule() {
     	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,MoleculeType.randomMoleculeType()));
     	Molecule molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
@@ -257,7 +255,7 @@ public class KUVidGame {
             molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
         }
         
-        molecule.setPosition(new Position(this.rand.nextInt(N*L),0));
+        molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width),0));
         molecule.setActive(true);
     }
 }
