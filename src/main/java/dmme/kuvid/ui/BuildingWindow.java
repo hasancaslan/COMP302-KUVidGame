@@ -20,7 +20,7 @@ public class BuildingWindow extends JFrame {
     JTextField ReactionBlockerNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField PowerUpNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField MoleculeNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
-    JTextField GameSize = new JTextField(DEFAULT_SIZE, 8);
+    JTextField LTextField = new JTextField(DEFAULT_SIZE, 8);
     ButtonGroup spinGroup;
     ButtonGroup movementGroup;
     JRadioButton SpinButton;
@@ -33,7 +33,7 @@ public class BuildingWindow extends JFrame {
     int reactionBlockerNumber = 0;
     int powerUpNumber = 0;
     int moleculeNumber = 0;
-    int gameSize = 0;
+    int L = 0;
 
     public BuildingWindow() {
         this.setTitle("BUILDING WINDOW");
@@ -74,7 +74,7 @@ public class BuildingWindow extends JFrame {
         movementGroup.add(NoNLinearButton);
 
         this.add(new JLabel("Game size in terms of L: "));
-        this.add(this.GameSize);
+        this.add(this.LTextField);
 
         this.add(new JLabel("GameDifficulty"));
         this.add(this.ComboBox);
@@ -88,15 +88,16 @@ public class BuildingWindow extends JFrame {
                 reactionBlockerNumber = Integer.parseInt((String) ReactionBlockerNumber.getText());
                 powerUpNumber = Integer.parseInt((String) PowerUpNumber.getText());
                 moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
-                gameSize = Integer.parseInt((String) GameSize.getText());
+                L = Integer.parseInt((String) LTextField.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
 
                 KUVidGame.getInstance().setNumAtoms(atomNumber);
                 KUVidGame.getInstance().setNumMolecules(moleculeNumber);
                 KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
                 KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
-                KUVidGame.getInstance().setN(gameSize);
+                KUVidGame.getInstance().setL(L);
                 KUVidGame.getInstance().shooterStart();
+
                 dispose();
 
                 new GameFrame();
