@@ -1,12 +1,13 @@
 package dmme.kuvid.domain.GameObjects.Atoms;
 
 import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.lib.types.ObjectType;
 
 
 public class AlphaAtom extends Atom{
 
-	public AlphaAtom(Position position, boolean active) {
-		super(position, active);
+	public AlphaAtom(Position position, Position direction, boolean active, ObjectType type) {
+		super(position, direction, active, type);
 		// TODO Auto-generated constructor stub
 	}
 

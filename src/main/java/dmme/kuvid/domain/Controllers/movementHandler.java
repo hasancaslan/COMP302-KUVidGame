@@ -1,5 +1,104 @@
 package dmme.kuvid.domain.Controllers;
 
-public class movementHandler {
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.Collusion.*;
+import dmme.kuvid.domain.GameObjects.GameObject;
+import dmme.kuvid.domain.GameObjects.Position;
+import dmme.kuvid.domain.GameObjects.Shooter;
+import dmme.kuvid.lib.types.ObjectType;
 
+import java.sql.Time;
+import java.util.List;
+
+public class movementHandler extends Thread {
+
+    //BOYLE MI OLACAK ???
+    private static movementHandler instance = null;
+
+    private movementHandler() {}
+
+    public static movementHandler getInstance() {
+        if (instance == null)
+            instance = new movementHandler();
+
+        return instance;
+    }
+    //BOYLE MI OLACAK ???
+
+    final int range = KUVidGame.getInstance().getRange();
+    final int L = KUVidGame.getInstance().getL();
+    final int N = KUVidGame.getInstance().getN();
+
+    public void search() {
+        List<GameObject> gameObjectList = GameObject.getGameObjectList();
+
+        for (GameObject gameObject : gameObjectList) {
+            if (!gameObject.isActive()) continue;
+            int x1 = gameObject.getPosition().getX();
+            int y1 = gameObject.getPosition().getY();
+            ObjectType objectType = gameObject.getType();
+            for (GameObject gameObject1 : gameObjectList) {
+                if (!gameObject1.isActive()) continue;
+                if (gameObject.equals(gameObject1)) continue;
+                int x2 = gameObject1.getPosition().getX();
+                int y2 = gameObject1.getPosition().getY();
+                ObjectType objectType1 = gameObject1.getType();
+                if ((x1 - x2 < range || x2 - x1 < range) && (y1 - y2 < range || y2 - y1 < range)) {
+                    if ((objectType == ObjectType.ATOM && objectType1 == ObjectType.MOLECULE) || (objectType1 == ObjectType.ATOM && objectType == ObjectType.MOLECULE)) {
+                        new AtomMoleculeCollision(gameObject, gameObject1);
+                    } else if ((objectType == ObjectType.ATOM && objectType1 == ObjectType.REACTION_BLOCKER) || (objectType1 == ObjectType.ATOM && objectType == ObjectType.REACTION_BLOCKER)) {
+                        new AtomReactionCollision(gameObject1, gameObject);
+                    } else if ((objectType == ObjectType.MOLECULE && objectType1 == ObjectType.REACTION_BLOCKER) || (objectType1 == ObjectType.MOLECULE && objectType == ObjectType.REACTION_BLOCKER)) {
+                        new MoleculeReactionCollision(gameObject, gameObject1);
+                    } else if ((objectType == ObjectType.POWER_UP && objectType1 == ObjectType.REACTION_BLOCKER) || (objectType1 == ObjectType.POWER_UP && objectType == ObjectType.REACTION_BLOCKER)) {
+                        new PowerReactionCollision(gameObject, gameObject1);
+                    } else if ((objectType == ObjectType.POWER_UP && objectType1 == ObjectType.REACTION_BLOCKER) || (objectType1 == ObjectType.POWER_UP && objectType == ObjectType.REACTION_BLOCKER)) {
+                        new PowerReactionCollision(gameObject, gameObject1);
+                    } else if ((objectType == ObjectType.SHOOTER && objectType1 == ObjectType.POWER_UP)) {
+                        new PowerShooterCollision(gameObject1);
+                    } else if ((objectType == ObjectType.POWER_UP && objectType1 == ObjectType.SHOOTER)) {
+                        new PowerShooterCollision(gameObject);
+                    }
+                }
+            }
+            if(objectType == ObjectType.REACTION_BLOCKER && y1-range == 0) {
+                new ReactionSurfaceCollision(gameObject);
+            }
+        }
+    }
+
+    public void move() {
+        List<GameObject> gameObjectList = GameObject.getGameObjectList();
+        for (GameObject gameObject : gameObjectList) {
+            gameObject.move();
+        }
+        this.search();
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            search();
+            move();
+        }
+    }
 }
+
+/*
+if(gameObject.isActive()) {
+                int x1 = gameObject.getPosition().getX();
+                int y1 = gameObject.getPosition().getY();
+                int dx = gameObject.getDirection().getX();
+                int dy = gameObject.getDirection().getY();
+
+                int newX = x1 + dx;
+                int newY = y1 + dy;
+
+                if(newX > N * L || newX < 0) {//bouncing from the wall
+                    newX = x1 - dx;
+                    gameObject.getDirection().setX(-dx);
+                }
+                Position nextPosition = new Position(newX, newY);
+                gameObject.setPosition(nextPosition);
+            }
+ */

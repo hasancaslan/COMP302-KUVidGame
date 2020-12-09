@@ -32,7 +32,7 @@ public class MoleculeUI extends Drawable{
 		// TODO Auto-generated method stub
 		
 	}
-
+/*
 	@Override
 	public void doAction() {
 		// TODO Auto-generated method stub
@@ -44,4 +44,5 @@ public class MoleculeUI extends Drawable{
 		// TODO Auto-generated method stub
 		
 	}
+*/
 }

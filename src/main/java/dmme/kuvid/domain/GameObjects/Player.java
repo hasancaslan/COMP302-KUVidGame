@@ -1,11 +1,21 @@
 package dmme.kuvid.domain.GameObjects;
 
+import dmme.kuvid.domain.KUVidGame;
+
 public class Player {
 	private int health=100;
 	private int point=0;
+
+	private static Player instance = null;
 	
-	public Player() {
-		
+	private Player() {
+	}
+
+	public static Player getInstance() {
+		if (instance == null)
+			instance = new Player();
+
+		return instance;
 	}
 
 	public int getHealth() {

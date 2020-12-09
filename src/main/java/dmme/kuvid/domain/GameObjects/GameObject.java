@@ -10,35 +10,38 @@ import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.*;
 
 public abstract class GameObject {
-	
 
-	Position Position;
 
-	private String type;
+	Position position;
+	Position direction;
+
+	private ObjectType type;
 
 	boolean active;
-	
+
 	public GameObject() {
-		
-	}
-	
-	public GameObject(Position position, boolean active) {
-		super();
-		Position = position;
-		this.active = active;
-		
+
 	}
 
-	
+	public GameObject(Position position, Position direction, boolean active, ObjectType type) {
+		super();
+		this.position = position;
+		this.direction = direction;
+		this.active = active;
+		this.type = type;
+
+	}
+
+
 	public abstract void Collusion();
-	
+
 
 	public Position getPosition() {
-		return Position;
+		return position;
 	}
 
 	public void setPosition(Position position) {
-		Position = position;
+		this.position = position;
 	}
 
 	public boolean isActive() {
@@ -49,13 +52,37 @@ public abstract class GameObject {
 		this.active = active;
 	}
 
+	public Position getDirection() {
+		return direction;
+	}
+
+	public ObjectType getType() {
+		return type;
+	}
+
 	public static List<GameObject> getGameObjectList(){
 		return KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM,AtomType.ALPHA));///MUST CHANGE
-		
-	}
-	
-	
-	
 
-	
+	}
+
+
+	public void move() {
+
+		if(this.isActive()) {
+			int x1 = this.getPosition().getX();
+			int y1 = this.getPosition().getY();
+			int dx = this.getDirection().getX();
+			int dy = this.getDirection().getY();
+
+			int newX = x1 + dx;
+			int newY = y1 + dy;
+
+			if(newX > KUVidGame.getInstance().getN() * KUVidGame.getInstance().getL() || newX < 0) {//bouncing from the wall
+				newX = x1 - dx;
+				this.getDirection().setX(-dx);
+			}
+			Position nextPosition = new Position(newX, newY);
+			this.setPosition(nextPosition);
+		}
+	}
 }

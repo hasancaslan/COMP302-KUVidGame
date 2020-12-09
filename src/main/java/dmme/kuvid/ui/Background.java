@@ -27,19 +27,4 @@ public class Background extends Drawable{
 	public void draw(Graphics g) {
 		g.drawImage(img,x,y,null);	
 	}
-
-
-	@Override
-	public void doAction() {
-	}
-
-	@Override
-	public void Collide() {	
-	}
-	
-	@Override
-	public Graphics2D getGraphics() {
-		return this.img.createGraphics();
-	}
-
 }
