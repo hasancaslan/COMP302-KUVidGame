@@ -91,21 +91,15 @@ public class BuildingWindow extends JFrame {
                 gameSize = Integer.parseInt((String) GameSize.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
 
-
                 KUVidGame.getInstance().setNumAtoms(atomNumber);
                 KUVidGame.getInstance().setNumMolecules(moleculeNumber);
                 KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
                 KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
                 KUVidGame.getInstance().setN(gameSize);
                 KUVidGame.getInstance().shooterStart();
-
                 dispose();
 
-                Drawable.setN(gameSize);
-                int N = Drawable.getN();// Check
-                int L = Drawable.getL();
-
-                new GameFrame(new Dimension(N * L, N * L));
+                new GameFrame();
             }
         });
 
