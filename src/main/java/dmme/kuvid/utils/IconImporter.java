@@ -16,7 +16,7 @@ public class IconImporter {
             if (osName.contains("mac")) {
                 tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "/" + fileName));
             } else {
-                tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "/" + fileName));
+                tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "\\" + fileName));
             }
 
         } catch (IOException e) {
