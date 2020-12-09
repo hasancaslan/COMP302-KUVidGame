@@ -6,6 +6,7 @@ public class AtomMoleculeCollision implements collisionHandler{
 
     public AtomMoleculeCollision(GameObject object1, GameObject object2) {
         collisionHandler.collusion(object1, object2);
+        Player.getInstance().incrementPoint(1);
     }
 
 }

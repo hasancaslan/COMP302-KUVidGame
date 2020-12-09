@@ -1,8 +1,9 @@
 package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.utils.observer.Observable;
 
-public class Player {
+public class Player extends Observable{
 	private int health=100;
 	private int point=0;
 
@@ -35,6 +36,7 @@ public class Player {
 	}
 	
 	public void incrementPoint(int increment) {
+		 publishPropertyEvent("point", this.point, this.point+1);
 		this.setPoint(this.getPoint()+increment);
 	}
 	
