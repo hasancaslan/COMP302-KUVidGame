@@ -1,4 +1,4 @@
-package dmme.kuvid.ui;
+package dmme.kuvid.ui.menu;
 
 import dmme.kuvid.utils.observer.PropertyEvent;
 import dmme.kuvid.utils.observer.PropertyListener;
