@@ -24,7 +24,7 @@ public class sigmaAtomUI extends AtomUI implements PropertyListener{
 	private GameObject atom;
 	
 	public sigmaAtomUI(GameObject atom) {
-		super(IconImporter.getIconFromFileName("sigma.png",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
+		super(IconImporter.getIconFromFileName("sigma.png","atoms",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
         Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
         this.setSize(dimension);
         

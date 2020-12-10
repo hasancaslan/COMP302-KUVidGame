@@ -6,6 +6,7 @@ import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.lib.types.*;
+import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class KUVidGame {
+public class KUVidGame extends Observable {
     private static KUVidGame instance = null;
     private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
     public boolean active = true;
@@ -28,7 +29,7 @@ public class KUVidGame {
     private final int range = 10;
 
     private boolean linearity;
-    private int difficulty;
+    private int difficulty=1;
     private int sleepTime;
     private GameObject objects;
     private Shooter shooter;
@@ -38,6 +39,7 @@ public class KUVidGame {
     private int time=600;
     private Player p1;
     private Random rand = new Random();
+
     public KUVidGame() {
         this.shooter = new Shooter();
         this.blender = new Blender(this.creator, this.destroyer);
@@ -58,8 +60,6 @@ public class KUVidGame {
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA), new ArrayList<GameObject>());
         
         
-        
-        System.out.println(KUVidGame.getGameObjectMap());
         
     }
 
@@ -102,6 +102,7 @@ public class KUVidGame {
     }
 
     public void setTime(int time) {
+        publishPropertyEvent("time", this.time, time);
         this.time = time;
     }
     
@@ -236,6 +237,7 @@ public class KUVidGame {
         createHandler.createMolecule(MoleculeType.BETA, numMol);
         createHandler.createMolecule(MoleculeType.GAMMA, numMol);
         createHandler.createMolecule(MoleculeType.SIGMA, numMol);
+        
 
         while (true) {
             if (this.p1.getHealth() <= 0) {
@@ -255,10 +257,11 @@ public class KUVidGame {
                 	throwMolecule();
             	}
             	movementHandler.getInstance().run();
+            	setTime(getTime() - 1);
             }
-            this.time--; 
+
             
-            //System.out.println(KUVidGame.getGameObjectMap());
+
         }
     }
 

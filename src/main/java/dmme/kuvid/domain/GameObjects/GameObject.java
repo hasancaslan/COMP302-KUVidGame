@@ -24,6 +24,7 @@ public abstract class GameObject extends Observable{
 	boolean active;
 
 	public GameObject() {
+		this.position=new Position(0,0);
 
 	}
 

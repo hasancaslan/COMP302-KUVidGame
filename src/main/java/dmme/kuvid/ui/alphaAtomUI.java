@@ -25,7 +25,7 @@ public class alphaAtomUI extends AtomUI implements PropertyListener{
 	
 	
 	public alphaAtomUI(GameObject atom) {
-		super(IconImporter.getIconFromFileName("gamma.png",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
+		super(IconImporter.getIconFromFileName("alpha.png","atoms",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
         Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
         this.setSize(dimension);
         atom.addPropertyListener("active",this);

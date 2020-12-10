@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements ActionListener, PropertyListene
         this.shooterUI = shooter;
         list.add(this.shooterUI);
         setOpaque(false);
+        
 
         Timer timer = new Timer(250, e -> {
             if (active) {

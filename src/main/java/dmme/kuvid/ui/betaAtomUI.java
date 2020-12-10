@@ -23,10 +23,10 @@ public class betaAtomUI extends AtomUI implements PropertyListener{
 	private GameObject atom;
 	
 	public betaAtomUI(GameObject atom) {
-		super(IconImporter.getIconFromFileName("gamma.png",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
+		super(IconImporter.getIconFromFileName("beta.png","atoms",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
         Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
         this.setSize(dimension);
-        this.setLocation(atom.getPosition().getX(),atom.getPosition().getY());
+        //this.setLocation(atom.getPosition().getX(),atom.getPosition().getY());
         atom.addPropertyListener("active",this);
         atom.addPropertyListener("postion",this);
         this.atom=atom;

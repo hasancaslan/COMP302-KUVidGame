@@ -4,6 +4,13 @@ import dmme.kuvid.domain.GameObjects.GameObject;
 
 
 public class Factory {
+	
+	private static GameFrame panel;
+	
+	public Factory(GameFrame gameFrame) {
+		Factory.panel=gameFrame;
+	}
+	
 	public static void createAlphaUI(GameObject atom) {
 		alphaAtomUI alpha=new alphaAtomUI(atom);	
 	}
@@ -22,20 +29,20 @@ public class Factory {
 		
 	}
 	public static void createAlphaMoleculUI(GameObject mol) {
-		alphaMoleculeUI gamma=new alphaMoleculeUI(mol);
+		alphaMoleculeUI gamma=new alphaMoleculeUI(mol,Factory.panel);
 		
 	}
 	public static void createGammaMoleculUI(GameObject mol) {
-		gammaMoleculeUI gamma=new gammaMoleculeUI(mol);
+		gammaMoleculeUI gamma=new gammaMoleculeUI(mol,Factory.panel);
 		
 	}
 	
 	public static void createBetaMoleculUI(GameObject mol) {
-		betaMoleculeUI beta=new betaMoleculeUI(mol);
+		betaMoleculeUI beta=new betaMoleculeUI(mol,Factory.panel);
 		
 	}
 	public static void createSigmaMoleculUI(GameObject mol) {
-		sigmaMoleculeUI sigma= new sigmaMoleculeUI(mol);
+		sigmaMoleculeUI sigma= new sigmaMoleculeUI(mol,Factory.panel);
 		
 	}
 }

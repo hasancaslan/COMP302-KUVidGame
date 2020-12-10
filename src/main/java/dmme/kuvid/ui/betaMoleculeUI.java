@@ -20,8 +20,8 @@ public class betaMoleculeUI extends MoleculeUI implements PropertyListener{
 	
 	private GameObject mol;
 	
-	public betaMoleculeUI(GameObject mol) {
-		super(IconImporter.getIconFromFileName("sigma.png",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
+	public betaMoleculeUI(GameObject mol, GameFrame panel) {
+		super(IconImporter.getIconFromFileName("beta-1.png","molecules",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
         Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
         this.setSize(dimension);
         
@@ -35,8 +35,10 @@ public class betaMoleculeUI extends MoleculeUI implements PropertyListener{
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
             this.setVisible(true);
+            this.repaint();
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
+        	this.repaint();
         }
     }
 	

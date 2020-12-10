@@ -19,14 +19,16 @@ public class gammaMoleculeUI extends MoleculeUI implements PropertyListener{
 	private static int L=KUVidGame.getInstance().getL();
 	
 	private GameObject mol;
+	private GameFrame panel;
 	
-	public gammaMoleculeUI(GameObject mol) {
-		super(IconImporter.getIconFromFileName("sigma.png",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
+	public gammaMoleculeUI(GameObject mol, GameFrame panel) {
+		super(IconImporter.getIconFromFileName("gamma-.png","molecules",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
         Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
         this.setSize(dimension);
         
         mol.addPropertyListener("active",this);
         this.mol=mol;
+        this.panel=panel;
 	}
 	
 	
@@ -34,9 +36,11 @@ public class gammaMoleculeUI extends MoleculeUI implements PropertyListener{
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
-            this.setVisible(true);
+            //this.panel.getContentPane().add(this);
+            setOpaque(false);
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
+        	this.repaint();
         }
     }
 	
