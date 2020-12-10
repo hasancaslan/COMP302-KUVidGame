@@ -22,22 +22,28 @@ public class sigmaAtomUI extends AtomUI implements PropertyListener{
 	private static int L=KUVidGame.getInstance().getL();
 	
 	private GameObject atom;
+	private GamePanel panel;
 	
-	public sigmaAtomUI(GameObject atom) {
-		super(IconImporter.getIconFromFileName("sigma.png","atoms",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
-        Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
+	public sigmaAtomUI(GameObject atom, GamePanel panel) {
+		super(IconImporter.getIconFromFileName("sigma.png","atoms",new Dimension((int) (10 * L), (int) (10 * L))));
+        Dimension dimension = new Dimension((int) (10 * L), (int) (10 * L));
         this.setSize(dimension);
         
         atom.addPropertyListener("active",this);
         this.atom=atom;
+        this.panel=panel;
 	}
 	
 	
 	@Override
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
-        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
-            this.setVisible(true);
+        	this.setLocation(this.atom.getPosition().getX(),580-10*L);
+        	if((boolean) e.getNewValue()) {
+        		this.panel.add(this);
+        	}else {
+        		this.panel.remove(this);
+        	}
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
         }

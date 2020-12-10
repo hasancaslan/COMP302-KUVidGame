@@ -19,7 +19,7 @@ public abstract class Molecule extends GameObject{
 	}
 	
 	public void setPattern(MovementStrategy strategy){
-		strategy = strategy;
+		this.strategy = strategy;
 	}
 	
 	public void move() {

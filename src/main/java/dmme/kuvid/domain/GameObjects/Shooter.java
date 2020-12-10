@@ -48,6 +48,10 @@ public class Shooter extends Observable {
 
     public void moveShooter(int displacement) {
         setPosition(getPosition() + displacement);
+        if (this.currentAtom!= null) {
+    		this.currentAtom.setPosition(new Position(this.position,580-50));;
+    	}
+        
     }
 
     public void rotateShooter(int angleChange) {
@@ -55,7 +59,14 @@ public class Shooter extends Observable {
     }
 
     public void pickAtom() {
+    	int L=KUVidGame.getInstance().getL();
+    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+    	if (this.currentAtom!= null) {
+    		this.currentAtom.setActive(false);
+    	}
         this.currentAtom=KUVidGame.getInstance().getRandomAtom();
+        this.currentAtom.setPosition(new Position(this.position,gameHeight-L));
+        this.currentAtom.setActive(true);
     }
 
     public void shootAtom() {

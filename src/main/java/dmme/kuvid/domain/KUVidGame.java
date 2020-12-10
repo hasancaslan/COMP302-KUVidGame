@@ -45,7 +45,7 @@ public class KUVidGame extends Observable implements Runnable {
     private Player p1;
     private Random rand = new Random();
 
-    public KUVidGame() {
+    private KUVidGame() {
         this.shooter = new Shooter();
         this.blender = new Blender(this.creator, this.destroyer);
         this.p1 = Player.getInstance();
@@ -67,7 +67,7 @@ public class KUVidGame extends Observable implements Runnable {
         
     }
 
-    public KUVidGame(int time, boolean active, boolean blendingMode) {
+    private KUVidGame(int time, boolean active, boolean blendingMode) {
         this.time = time;
         this.active = active;
         this.blendingMode = blendingMode;
@@ -163,7 +163,8 @@ public class KUVidGame extends Observable implements Runnable {
         shooter.moveShooter(displacement);
     }
 
-    public void selectAtom(AtomType type) {
+    public void selectAtom() {
+    	shooter.pickAtom();
 
     }
 
@@ -293,24 +294,11 @@ public class KUVidGame extends Observable implements Runnable {
 
         while(molecule.isActive()) {
             molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
-            //molecule.setPosition(new Position(this.playableArea.width/2,this.playableArea.height/2));
         }
         
         molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width),0));
         molecule.setActive(true);
-        
-       if(t.equals(MoleculeType.ALPHA)) {
-
-        }else if(t.equals(MoleculeType.BETA)) {
-        	JLabel test =new JLabel("BETA");
-        	//Factory.panel.add(test);
-        	//test.setLocation(400,400);
-        }else if(t.equals(MoleculeType.GAMMA)) {
-        	//Factory.createGammaMoleculUI(molecule);
-        	
-        }else if(t.equals(MoleculeType.SIGMA)) {
-        	//Factory.panel.add(new JLabel("SIGMA"));
-        }
+       
     }
 
 	@Override

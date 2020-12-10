@@ -12,20 +12,20 @@ public class Factory {
 	}
 	
 	public static void createAlphaUI(GameObject atom) {
-		alphaAtomUI alpha=new alphaAtomUI(atom);	
+		alphaAtomUI alpha=new alphaAtomUI(atom,Factory.panel);	
 	}
 	
 	public static void createGammaUI(GameObject atom) {
-		gammaAtomUI gamma=new gammaAtomUI(atom);
+		gammaAtomUI gamma=new gammaAtomUI(atom,Factory.panel);
 		
 	}
 	
 	public static void createBetaUI(GameObject atom) {
-		betaAtomUI beta=new betaAtomUI(atom);
+		betaAtomUI beta=new betaAtomUI(atom,Factory.panel);
 		
 	}
 	public static void createSigmaUI(GameObject atom) {
-		sigmaAtomUI sigma= new sigmaAtomUI(atom);
+		sigmaAtomUI sigma= new sigmaAtomUI(atom,Factory.panel);
 		
 	}
 	public static void createAlphaMoleculUI(GameObject mol) {

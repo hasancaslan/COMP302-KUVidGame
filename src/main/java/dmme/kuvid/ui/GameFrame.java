@@ -81,6 +81,8 @@ public class GameFrame extends JFrame {
                     case 'w':
                         KUVidGame.getInstance().aimShooter(20);//check
                         break;
+                    case 'c':
+                    	KUVidGame.getInstance().selectAtom();
                 }
             }
 

@@ -14,7 +14,7 @@ public class ZigZagPatternStrategy implements MovementStrategy {
 	public void move(Molecule m){
 		int Y = m.getPosition().getY();
 		int X = m.getPosition().getX();
-		double distance = L * Math.sqrt(0.5);
+		double distance = 10*L * Math.sqrt(0.5);
 		if(count%2==0) {
 			X -= distance;
 			Y += distance;
