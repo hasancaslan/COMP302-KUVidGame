@@ -1,7 +1,6 @@
 package dmme.kuvid.ui.menu;
 
-import dmme.kuvid.domain.GameObjects.Player;
-import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.constants.Config;
 import dmme.kuvid.lib.types.PowerType;
 import dmme.kuvid.utils.IconImporter;
 import dmme.kuvid.utils.observer.PropertyEvent;
@@ -21,8 +20,7 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         setOpaque(false);
         this.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0, 0, 0, 120)));
 
-        int fontSize =  48;
-        Font defaultFont = new Font("Sans-Serif", Font.PLAIN, fontSize);
+        Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
 
         alphaBCountLabel = new JLabel();
         betaBCountLabel = new JLabel();
@@ -39,10 +37,10 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         setPowerUpCount(PowerType.GAMMA_B, 0);
         setPowerUpCount(PowerType.SIGMA_B, 0);
 
-        ImageIcon alphaBIcon = IconImporter.getIconFromFileName("+alpha-b.png", "powerups", new Dimension(fontSize,fontSize));
-        ImageIcon betaBIcon = IconImporter.getIconFromFileName("+beta-b.png", "powerups", new Dimension(fontSize,fontSize));
-        ImageIcon gammaBIcon = IconImporter.getIconFromFileName("+gamma-b.png", "powerups", new Dimension(fontSize,fontSize));
-        ImageIcon sigmaBIcon = IconImporter.getIconFromFileName("+sigma-b.png", "powerups", new Dimension(fontSize,fontSize));
+        ImageIcon alphaBIcon = IconImporter.getIconFromFileName("+alpha-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
+        ImageIcon betaBIcon = IconImporter.getIconFromFileName("+beta-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
+        ImageIcon gammaBIcon = IconImporter.getIconFromFileName("+gamma-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
+        ImageIcon sigmaBIcon = IconImporter.getIconFromFileName("+sigma-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
 
         JLabel alphaBIconLabel = new JLabel(alphaBIcon, JLabel.TRAILING);
         JLabel betaBIconLabel = new JLabel(betaBIcon, JLabel.TRAILING);

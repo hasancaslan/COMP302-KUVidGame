@@ -1,5 +1,6 @@
 package dmme.kuvid.ui.menu;
 
+import dmme.kuvid.constants.Config;
 import dmme.kuvid.domain.GameObjects.Player;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.utils.IconImporter;
@@ -19,8 +20,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
         setOpaque(false);
         this.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0, 0, 0, 120)));
 
-        int fontSize =  48;
-        Font defaultFont = new Font("Sans-Serif", Font.PLAIN, fontSize);
+        Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
 
         scoreLabel = new JLabel();
         timeLabel = new JLabel();
@@ -39,12 +39,12 @@ public class ScorePanel extends JPanel implements PropertyListener {
         this.add(scoreTitleLabel);
         this.add(scoreLabel);
 
-        ImageIcon alarmIcon = IconImporter.getIconFromFileName("alarm.png", "", new Dimension(fontSize,fontSize));
+        ImageIcon alarmIcon = IconImporter.getIconFromFileName("alarm.png", "", new Dimension(Config.fontSize, Config.fontSize));
         JLabel timeTitleLabel = new JLabel(alarmIcon, JLabel.TRAILING);
         this.add(timeTitleLabel);
         this.add(timeLabel);
 
-        ImageIcon heartIcon = IconImporter.getIconFromFileName("heart.png", "", new Dimension(fontSize,fontSize));
+        ImageIcon heartIcon = IconImporter.getIconFromFileName("heart.png", "", new Dimension(Config.fontSize, Config.fontSize));
         JLabel healthTitleLabel = new JLabel(heartIcon, JLabel.TRAILING);
         this.add(healthTitleLabel);
         this.add(healthLabel);
