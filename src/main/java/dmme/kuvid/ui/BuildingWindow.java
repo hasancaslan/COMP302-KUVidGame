@@ -99,14 +99,8 @@ public class BuildingWindow extends JFrame {
                 KUVidGame.getInstance().setNumMolecules(moleculeNumber);
                 KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
                 KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
-<<<<<<< HEAD
-                KUVidGame.getInstance().setN(gameSize);         
-                KUVidGame.getInstance().setDifficulty(difficulty);
-//                KUVidGame.getInstance().setFallPattern(linear);
-                KUVidGame.getInstance().setLinearity(linear);
-=======
+
                 KUVidGame.getInstance().setL(L);
->>>>>>> 5615358a24de4eca5f9323974591189dce322a4c
                 KUVidGame.getInstance().shooterStart();
 
                 dispose();
