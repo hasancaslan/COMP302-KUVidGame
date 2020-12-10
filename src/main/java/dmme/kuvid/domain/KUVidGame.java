@@ -20,7 +20,7 @@ public class KUVidGame {
     public boolean blendingMode;
     private Dimension screenSize;
     private Dimension playableArea;
-    private int L = 50;
+    private int L = Math.floorDiv(screenSize.height,10);
     private int numAtoms = 1;
     private int numMolecules = 1;
     private int numBlocker = 1;
@@ -79,6 +79,14 @@ public class KUVidGame {
 
     public void setScreenSize(Dimension screenSize) {
         this.screenSize = screenSize;
+    }
+    
+    public Dimension getPlayableArea() {
+        return this.playableArea;
+    }
+
+    public void setPlayableArea(Dimension size) {
+        this.playableArea = size;
     }
 
     public int getTime() {

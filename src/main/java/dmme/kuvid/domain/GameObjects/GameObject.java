@@ -1,5 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
+import java.awt.Dimension;
+
 import java.util.*;
 
 
@@ -8,11 +10,12 @@ import java.util.List;
 
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.*;
+import dmme.kuvid.utils.observer.Observable;
 
-public abstract class GameObject {
+public abstract class GameObject extends Observable{
 
 	protected int L = KUVidGame.getInstance().getL(); 
-	protected int N = KUVidGame.getInstance().getN(); 
+	protected Dimension gameField = KUVidGame.getInstance().getPlayableArea(); 
 	protected Position position;
 	protected Position direction;
 
@@ -43,6 +46,7 @@ public abstract class GameObject {
 	}
 
 	public void setPosition(Position position) {
+		publishPropertyEvent("position",this.position,position);
 		this.position = position;
 	}
 
@@ -51,6 +55,7 @@ public abstract class GameObject {
 	}
 
 	public void setActive(boolean active) {
+		publishPropertyEvent("active", this.active, active);
 		this.active = active;
 	}
 

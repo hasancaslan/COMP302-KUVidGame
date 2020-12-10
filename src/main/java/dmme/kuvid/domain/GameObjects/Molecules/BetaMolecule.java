@@ -25,7 +25,7 @@ public class BetaMolecule extends Molecule{
 	
 	public void move() {
 		this.setPattern(new StraightPatternStrategy());
-		if(this.getPosition().getY() > (N*L)/4) {
+		if(this.getPosition().getY() > (gameField.height)/4) {
 			this.setPattern(new ZigZagPatternStrategy());
 		}
 		strategy.move(this);	

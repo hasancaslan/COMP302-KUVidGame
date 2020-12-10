@@ -36,7 +36,7 @@ public class Player extends Observable{
 	}
 	
 	public void incrementPoint(int increment) {
-		 publishPropertyEvent("point", this.point, this.point+1);
+		 publishPropertyEvent("point", this.point, this.point+increment);
 		this.setPoint(this.getPoint()+increment);
 	}
 	

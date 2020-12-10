@@ -1,5 +1,6 @@
 package dmme.kuvid.ui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,27 +10,37 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import dmme.kuvid.constants.Config;
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.GameObject;
+import dmme.kuvid.domain.GameObjects.Atoms.BetaAtom;
+import dmme.kuvid.utils.IconImporter;
+import dmme.kuvid.utils.observer.PropertyEvent;
+import dmme.kuvid.utils.observer.PropertyListener;
 
-public class betaAtomUI extends AtomUI{
+public class betaAtomUI extends AtomUI implements PropertyListener{
 	
-	public betaAtomUI() {
-		super();
-//		this.type = ALPHA;
-		this.x=super.x;
-		this.y=super.y;
-		try{							
-//        	img = ImageIO.read(new File("./assets/atoms/beta.png"));
-        	img = ImageIO.read(new File(Config.getAssetsPath() + "atoms/beta.png"));
-        	BufferedImage resized = resize(img, L, L);
-        	img = resized;
-        } catch(IOException e) {
-        System.out.printf("% beta s",e.getMessage());
-        }	
+	private static int L=KUVidGame.getInstance().getL();
+	private GameObject atom;
+	
+	public betaAtomUI(GameObject atom) {
+		super(IconImporter.getIconFromFileName("gamma.png",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
+        Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
+        this.setSize(dimension);
+        this.setLocation(atom.getPosition().getX(),atom.getPosition().getY());
+        atom.addPropertyListener("active",this);
+        atom.addPropertyListener("postion",this);
+        this.atom=atom;
 	}
+	
 	
 	@Override
-	public void draw(Graphics g) {
-		g.drawImage(img,x,y,null);	
-	}
+    public void onPropertyEvent(PropertyEvent e) {
+        if (e.getPropertyName().equals("active")) {
+        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
+            this.setVisible(true);
+        }else if (e.getPropertyName().equals("position")) {
+        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
+        }
+    }
 	
 }

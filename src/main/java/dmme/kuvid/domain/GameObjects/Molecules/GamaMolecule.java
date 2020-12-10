@@ -25,7 +25,7 @@ public class GamaMolecule extends Molecule{
 	
 	public void move() {
 		this.setPattern(new StraightPatternStrategy());
-		if(this.getPosition().getY() > (N*L)/2) {
+		if(this.getPosition().getY() > (gameField.height)/2) {
 			this.setPattern(new ZigZagPatternStrategy());
 		}
 		strategy.move(this);		

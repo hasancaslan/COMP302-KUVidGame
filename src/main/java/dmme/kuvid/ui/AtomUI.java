@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.lib.types.*;
+import dmme.kuvid.utils.observer.PropertyEvent;
 
 public class AtomUI extends JLabel{
 	

@@ -59,11 +59,10 @@ public class Shooter extends Observable {
     }
 
     public void shootAtom() {
-        // TODO: CONFIGURE FOR SCREENSIZE NOT N
-    	//int L=KUVidGame.getInstance().getL();
-    	//int N=KUVidGame.getInstance().getN();
+    	int L=KUVidGame.getInstance().getL();
+    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
     	double angle=this.getAngle();
-        //this.currentAtom.setPosition(new Position(this.position,N*L-3*L));
+        this.currentAtom.setPosition(new Position(this.position,gameHeight-L));
         this.currentAtom.setDirection(new Position((int)Math.cos(angle),(int)Math.sin(angle)));
         this.currentAtom.setActive(true);
         this.pickAtom();

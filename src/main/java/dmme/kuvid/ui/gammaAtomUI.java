@@ -12,31 +12,39 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import dmme.kuvid.constants.Config;
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.GameObject;
+import dmme.kuvid.domain.GameObjects.Atoms.GamaAtom;
+import dmme.kuvid.utils.IconImporter;
+import dmme.kuvid.utils.observer.PropertyEvent;
+import dmme.kuvid.utils.observer.PropertyListener;
 
-public class gammaAtomUI extends AtomUI{
+public class gammaAtomUI extends AtomUI implements PropertyListener{
 	
-	public gammaAtomUI() {
-		super(getIconFromFileName(new Dimension((int) (0.5 * L), (int) L)));
-        //Dimension dimension = new Dimension((int) (0.5 * L), (int) L);
-        //this.setSize(dimension);
-        this.setLocation(0, 0);
-        this.setVisible(true);
-        //shooter.addPropertyListener("position", this);
-
+	private static int L=KUVidGame.getInstance().getL();
+	private GameObject atom;
 	
+	
+	public gammaAtomUI(GameObject atom) {
+		super(IconImporter.getIconFromFileName("gamma.png",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
+        Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
+        this.setSize(dimension);
+        
+        atom.addPropertyListener("active",this);
+        this.atom=atom;
 	}
 	
-	public static ImageIcon getIconFromFileName(Dimension shooterDimension) {
-        Image tmp = null;
-        try {
-            tmp = ImageIO.read(new File(Config.getAssetsPath() + "shooter.png"));
-            tmp = tmp.getScaledInstance(shooterDimension.width, shooterDimension.height, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
+	
+	@Override
+    public void onPropertyEvent(PropertyEvent e) {
+        if (e.getPropertyName().equals("active")) {
+        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
+            this.setVisible(true);
+        }else if (e.getPropertyName().equals("position")) {
+        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
         }
-
-        return new ImageIcon(tmp);
     }
+
 
 	
 
