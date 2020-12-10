@@ -38,7 +38,6 @@ public class alphaAtomUI extends AtomUI implements PropertyListener{
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
-            this.setVisible(true);
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
         }

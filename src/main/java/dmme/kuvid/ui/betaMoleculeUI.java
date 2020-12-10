@@ -19,14 +19,17 @@ public class betaMoleculeUI extends MoleculeUI implements PropertyListener{
 	private static int L=KUVidGame.getInstance().getL();
 	
 	private GameObject mol;
+	private GamePanel panel;
 	
-	public betaMoleculeUI(GameObject mol, GameFrame panel) {
-		super(IconImporter.getIconFromFileName("beta-1.png","molecules",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
-        Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
+	public betaMoleculeUI(GameObject mol, GamePanel panel2) {
+		super(IconImporter.getIconFromFileName("beta-2.png","molecules",new Dimension((int) (10 * L), (int) (10 * L))));
+        Dimension dimension = new Dimension((int) (10 * L), (int) (10 * L));
         this.setSize(dimension);
         
         mol.addPropertyListener("active",this);
+        mol.addPropertyListener("position",this);
         this.mol=mol;
+        this.panel=panel2;
 	}
 	
 	
@@ -34,11 +37,9 @@ public class betaMoleculeUI extends MoleculeUI implements PropertyListener{
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
-            this.setVisible(true);
-            this.repaint();
+        	this.panel.add(this);
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
-        	this.repaint();
         }
     }
 	

@@ -5,10 +5,10 @@ import dmme.kuvid.domain.GameObjects.GameObject;
 
 public class Factory {
 	
-	private static GameFrame panel;
+	public static GamePanel panel;
 	
-	public Factory(GameFrame gameFrame) {
-		Factory.panel=gameFrame;
+	public Factory(GamePanel gamePanel) {
+		Factory.panel=gamePanel;
 	}
 	
 	public static void createAlphaUI(GameObject atom) {
@@ -45,4 +45,5 @@ public class Factory {
 		sigmaMoleculeUI sigma= new sigmaMoleculeUI(mol,Factory.panel);
 		
 	}
+
 }

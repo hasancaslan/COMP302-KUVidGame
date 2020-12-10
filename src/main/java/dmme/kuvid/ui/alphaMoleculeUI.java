@@ -19,16 +19,17 @@ public class alphaMoleculeUI extends MoleculeUI implements PropertyListener{
 	private static int L=KUVidGame.getInstance().getL();
 	
 	private GameObject mol;
-	private GameFrame panel;
+	private GamePanel panel;
 	
-	public alphaMoleculeUI(GameObject mol, GameFrame panel) {
-		super(IconImporter.getIconFromFileName("alpha-1.png","molecules",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
-        Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
+	public alphaMoleculeUI(GameObject mol, GamePanel panel2) {
+		super(IconImporter.getIconFromFileName("alpha-2.png","molecules",new Dimension((int) (10 * L), (int) (10 * L))));
+        Dimension dimension = new Dimension((int) (10 * L), (int) (10 * L));
         this.setSize(dimension);
         
         mol.addPropertyListener("active",this);
+        mol.addPropertyListener("position",this);
         this.mol=mol;
-        this.panel=panel;
+        this.panel=panel2;
 	}
 
 
@@ -37,8 +38,7 @@ public class alphaMoleculeUI extends MoleculeUI implements PropertyListener{
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
-            //this.panel.getContentPane().add(this);
-            setOpaque(false);
+            this.panel.add(this);
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
         }

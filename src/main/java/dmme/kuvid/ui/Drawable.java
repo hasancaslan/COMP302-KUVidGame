@@ -12,7 +12,8 @@ public abstract class Drawable extends JPanel {
     protected int y;
     BufferedImage img;
 
-    public static int getL() {
+
+	public static int getL() {
         return L;
     }
 

@@ -6,6 +6,8 @@ import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.lib.types.*;
+import dmme.kuvid.ui.Factory;
+import dmme.kuvid.utils.IconImporter;
 import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
@@ -14,7 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class KUVidGame extends Observable {
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
     private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
     public boolean active = true;
@@ -30,7 +35,7 @@ public class KUVidGame extends Observable {
 
     private boolean linearity;
     private int difficulty=1;
-    private int sleepTime;
+    private int sleepTime=1000;
     private GameObject objects;
     private Shooter shooter;
     private Blender blender;
@@ -58,7 +63,6 @@ public class KUVidGame extends Observable {
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.GAMMA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA), new ArrayList<GameObject>());
-        
         
         
     }
@@ -282,14 +286,36 @@ public class KUVidGame extends Observable {
     }
 
     public void throwMolecule() {
-    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,MoleculeType.randomMoleculeType()));
+    	
+    	MoleculeType t=MoleculeType.randomMoleculeType();
+    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
     	Molecule molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
 
         while(molecule.isActive()) {
             molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
+            //molecule.setPosition(new Position(this.playableArea.width/2,this.playableArea.height/2));
         }
         
         molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width),0));
         molecule.setActive(true);
+        
+       if(t.equals(MoleculeType.ALPHA)) {
+
+        }else if(t.equals(MoleculeType.BETA)) {
+        	JLabel test =new JLabel("BETA");
+        	//Factory.panel.add(test);
+        	//test.setLocation(400,400);
+        }else if(t.equals(MoleculeType.GAMMA)) {
+        	//Factory.createGammaMoleculUI(molecule);
+        	
+        }else if(t.equals(MoleculeType.SIGMA)) {
+        	//Factory.panel.add(new JLabel("SIGMA"));
+        }
     }
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		this.runGame();
+	}
 }

@@ -1,5 +1,6 @@
 package dmme.kuvid.ui;
 
+import dmme.kuvid.Application;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
 import dmme.kuvid.lib.types.GameLevel;
@@ -13,7 +14,7 @@ import java.awt.event.ItemListener;
 
 public class BuildingWindow extends JFrame {
     private final String DEFAULT_COMPONENT_AMOUNT = "50";
-    private final String DEFAULT_SIZE = "14";
+    private final String DEFAULT_SIZE = "5";
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
@@ -106,6 +107,7 @@ public class BuildingWindow extends JFrame {
                 dispose();
 
                 new GameFrame();
+                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
             }
         });
 

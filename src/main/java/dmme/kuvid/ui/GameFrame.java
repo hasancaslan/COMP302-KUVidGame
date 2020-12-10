@@ -1,5 +1,6 @@
 package dmme.kuvid.ui;
 
+import dmme.kuvid.Application;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.ui.menu.MenuPanel;
 
@@ -27,13 +28,13 @@ public class GameFrame extends JFrame {
             e.printStackTrace();
         }
 
-        Factory fack=new Factory(this);
         
         getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
-        this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter());
-        this.gamePanel = new GamePanel(KUVidGame.getInstance(), this.shooterUI, this);
+        
+        this.gamePanel = new GamePanel(KUVidGame.getInstance(), this);
+        this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter(), gamePanel);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -60,7 +61,7 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         validate();
         
-        KUVidGame.getInstance().runGame();
+        
 
         this.addKeyListener(new KeyListener() {
             @Override
@@ -72,13 +73,13 @@ public class GameFrame extends JFrame {
                         KUVidGame.getInstance().moveShooter(-10);
                         break;
                     case 's':
-                        KUVidGame.getInstance().aimShooter(-10);
+                        KUVidGame.getInstance().aimShooter(-20);//check
                         break;
                     case 'd':
                         KUVidGame.getInstance().moveShooter(10);
                         break;
                     case 'w':
-                        KUVidGame.getInstance().aimShooter(10);
+                        KUVidGame.getInstance().aimShooter(20);//check
                         break;
                 }
             }

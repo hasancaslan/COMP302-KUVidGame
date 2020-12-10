@@ -26,7 +26,7 @@ public class betaAtomUI extends AtomUI implements PropertyListener{
 		super(IconImporter.getIconFromFileName("beta.png","atoms",new Dimension((int) (0.1 * L), (int) (0.1 * L))));
         Dimension dimension = new Dimension((int) (0.1 * L), (int) (0.1 * L));
         this.setSize(dimension);
-        //this.setLocation(atom.getPosition().getX(),atom.getPosition().getY());
+        this.setLocation(atom.getPosition().getX(),atom.getPosition().getY());
         atom.addPropertyListener("active",this);
         atom.addPropertyListener("postion",this);
         this.atom=atom;
@@ -37,7 +37,6 @@ public class betaAtomUI extends AtomUI implements PropertyListener{
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
-            this.setVisible(true);
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
         }

@@ -19,25 +19,26 @@ public class GamePanel extends JPanel implements ActionListener, PropertyListene
     private ShooterUI shooterUI;
 
 
-    public GamePanel(KUVidGame game, ShooterUI shooter, GameFrame mainFrame) {
+    public GamePanel(KUVidGame game, GameFrame mainFrame) {
         this.mainFrame = mainFrame;
         list = new ArrayList<>();
         this.game = game;
         boolean active = this.game.isActive();
-        this.shooterUI = shooter;
-        list.add(this.shooterUI);
+       // list.add(this.shooterUI);
         setOpaque(false);
         
-
-        Timer timer = new Timer(250, e -> {
+        setLayout(null);
+        Factory fac=new Factory(this);
+        
+        
+      /*  Timer timer = new Timer(250, e -> {
             if (active) {
-                movementHandler.getInstance().move();
                 for (Drawable t : list) {
-                    repaint();
+                    t.repaint();
                 }
             }
         });
-        timer.start();
+        timer.start();*/
     }
 
     public void paintComponent(Graphics g) {
@@ -56,5 +57,6 @@ public class GamePanel extends JPanel implements ActionListener, PropertyListene
     public void actionPerformed(ActionEvent e) {
 
     }
+    
 }
 

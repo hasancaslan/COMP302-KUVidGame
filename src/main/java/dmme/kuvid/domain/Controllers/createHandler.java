@@ -1,6 +1,7 @@
 package dmme.kuvid.domain.Controllers;
 
 import dmme.kuvid.domain.KUVidGame;
+
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.GameObjects.Molecules.*;
@@ -18,28 +19,24 @@ public class createHandler {
                 for (int i = 0; i < amount; i++) {
                     atom = new AlphaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.ALPHA).add(atom);
-                    Factory.createAlphaUI(atom);
                 }
                 break;
             case BETA:
                 for (int i = 0; i < amount; i++) {
                     atom = new BetaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.BETA).add(atom);
-                    Factory.createBetaUI(atom);
                 }
                 break;
             case SIGMA:
                 for (int i = 0; i < amount; i++) {
                     atom = new SigmaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.SIGMA).add(atom);
-                    Factory.createSigmaUI(atom);
                 }
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
                     atom = new GamaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.GAMMA).add(atom);
-                    Factory.createGammaUI(atom);
                 }
                 break;
         }

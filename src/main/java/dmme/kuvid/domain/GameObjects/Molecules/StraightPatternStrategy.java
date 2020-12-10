@@ -9,7 +9,7 @@ public class StraightPatternStrategy implements MovementStrategy {
 	public void move(Molecule m){
 		int Y = m.getPosition().getY();
 		int X = m.getPosition().getX();
-		Y += L; 
+		Y += 10*L; 
 		
 		Position nextPosition = new Position(X, Y);	
 		m.setPosition(nextPosition); 	
