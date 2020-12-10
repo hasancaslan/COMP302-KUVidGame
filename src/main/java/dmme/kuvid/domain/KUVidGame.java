@@ -5,6 +5,7 @@ import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.lib.types.*;
+import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class KUVidGame {
+public class KUVidGame extends Observable {
     private static KUVidGame instance = null;
     private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
     private final int range = 10;
     public boolean active = true;
     public boolean blendingMode;
     private Dimension screenSize;
-    private int L = 50;
+    private int L;
     private int numAtoms = 1;
     private int numMolecules = 1;
     private int numBlocker = 1;
@@ -33,11 +34,13 @@ public class KUVidGame {
     private int time;
     private Player p1;
     private Random rand = new Random();
+
     public KUVidGame() {
         this.shooter = new Shooter();
         this.blender = new Blender(this.creator, this.destroyer);
         this.p1 = Player.getInstance();
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.L = screenSize.height / 10;
 
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.ALPHA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.BETA), new ArrayList<GameObject>());
@@ -80,6 +83,7 @@ public class KUVidGame {
     }
 
     public void setTime(int time) {
+        publishPropertyEvent("time", this.time, time);
         this.time = time;
     }
 
@@ -185,7 +189,7 @@ public class KUVidGame {
                 movementHandler.getInstance().run();
             }
 
-            this.time--;
+            setTime(getTime() - 1);
 
         }
     }
