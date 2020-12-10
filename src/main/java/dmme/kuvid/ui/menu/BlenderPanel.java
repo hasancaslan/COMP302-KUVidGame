@@ -1,6 +1,7 @@
 package dmme.kuvid.ui.menu;
 
 import dmme.kuvid.constants.Config;
+import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.utils.IconImporter;
 import dmme.kuvid.utils.observer.PropertyEvent;
@@ -32,10 +33,7 @@ public class BlenderPanel extends JPanel implements PropertyListener {
         gammaCountLabel.setFont(defaultFont);
         sigmaCountLabel.setFont(defaultFont);
 
-        setPowerUpCount(AtomType.ALPHA, 0);
-        setPowerUpCount(AtomType.BETA, 0);
-        setPowerUpCount(AtomType.GAMMA, 0);
-        setPowerUpCount(AtomType.SIGMA, 0);
+        updateAtomCounts();
 
         ImageIcon alphaIcon = IconImporter.getIconFromFileName("alpha.png", "atoms", new Dimension(Config.fontSize, Config.fontSize));
         ImageIcon betaIcon = IconImporter.getIconFromFileName("beta.png", "atoms", new Dimension(Config.fontSize, Config.fontSize));
@@ -61,7 +59,13 @@ public class BlenderPanel extends JPanel implements PropertyListener {
         this.add(sigmaCountLabel);
     }
 
-    public void setPowerUpCount(AtomType type, int count) {
+    private void updateAtomCounts() {
+        for (AtomType type : AtomType.values()) {
+            setAtomCount(type, KUVidGame.getInstance().getNumAtom(type));
+        }
+    }
+
+    private void setAtomCount(AtomType type, int count) {
         switch (type) {
             case ALPHA:
                 alphaCountLabel.setText("  " + count);
