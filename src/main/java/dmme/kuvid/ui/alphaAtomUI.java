@@ -30,6 +30,7 @@ public class alphaAtomUI extends AtomUI implements PropertyListener{
         Dimension dimension = new Dimension((int) (10 * L), (int) (10 * L));
         this.setSize(dimension);
         atom.addPropertyListener("active",this);
+        atom.addPropertyListener("position",this);
         this.atom=atom;
         this.panel=panel;
 
@@ -47,7 +48,7 @@ public class alphaAtomUI extends AtomUI implements PropertyListener{
         		this.panel.remove(this);
         	}
         }else if (e.getPropertyName().equals("position")) {
-        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
+        	this.setLocation(this.atom.getPosition().getX(),580-10*L);
    
         }
     }

@@ -30,6 +30,7 @@ public class sigmaAtomUI extends AtomUI implements PropertyListener{
         this.setSize(dimension);
         
         atom.addPropertyListener("active",this);
+        atom.addPropertyListener("position",this);
         this.atom=atom;
         this.panel=panel;
 	}

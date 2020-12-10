@@ -6,8 +6,6 @@ import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.Factory;
-import dmme.kuvid.utils.IconImporter;
 import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
@@ -16,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
@@ -299,6 +295,10 @@ public class KUVidGame extends Observable implements Runnable {
         molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width),0));
         molecule.setActive(true);
        
+    }
+    
+    public void shoot() {
+    	this.shooter.shootAtom();
     }
 
 	@Override
