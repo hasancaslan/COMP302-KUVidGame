@@ -14,9 +14,15 @@ public class IconImporter {
         try {
             String osName = System.getProperty("os.name").toLowerCase();
             if (osName.contains("mac")) {
-                tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "/" + fileName));
+                if (folderName.equals(""))
+                    tmp = ImageIO.read(new File(Config.getAssetsPath() + fileName));
+                else
+                    tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "/" + fileName));
             } else {
-                tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "\\" + fileName));
+                if (folderName.equals(""))
+                    tmp = ImageIO.read(new File(Config.getAssetsPath() + fileName));
+                else
+                    tmp = ImageIO.read(new File(Config.getAssetsPath() + folderName + "\\" + fileName));
             }
 
         } catch (IOException e) {
