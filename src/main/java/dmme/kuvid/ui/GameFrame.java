@@ -1,6 +1,7 @@
 package dmme.kuvid.ui;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.ui.menu.MenuPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class GameFrame extends JFrame {
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.weightx = 0.8;
+        constraints.weightx = 0.9;
         constraints.weighty = 1;
         constraints.anchor = GridBagConstraints.PAGE_START;
         constraints.fill = GridBagConstraints.BOTH;
@@ -43,7 +44,7 @@ public class GameFrame extends JFrame {
         JPanel menuPanel = new MenuPanel();
         constraints.gridx = 1;
         constraints.gridy = 0;
-        constraints.weightx = 0.2;
+        constraints.weightx = 0.1;
         constraints.weighty = 1;
         constraints.anchor = GridBagConstraints.PAGE_START;
         constraints.fill = GridBagConstraints.BOTH;
