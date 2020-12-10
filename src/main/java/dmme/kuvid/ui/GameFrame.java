@@ -56,6 +56,8 @@ public class GameFrame extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         validate();
+        
+        KUVidGame.getInstance().runGame();
 
         this.addKeyListener(new KeyListener() {
             @Override

@@ -21,7 +21,21 @@ public class Factory {
 		sigmaAtomUI sigma= new sigmaAtomUI(atom);
 		
 	}
-	public static void createMoleculUI() {
+	public static void createAlphaMoleculUI(GameObject mol) {
+		alphaMoleculeUI gamma=new alphaMoleculeUI(mol);
+		
+	}
+	public static void createGammaMoleculUI(GameObject mol) {
+		gammaMoleculeUI gamma=new gammaMoleculeUI(mol);
+		
+	}
+	
+	public static void createBetaMoleculUI(GameObject mol) {
+		betaMoleculeUI beta=new betaMoleculeUI(mol);
+		
+	}
+	public static void createSigmaMoleculUI(GameObject mol) {
+		sigmaMoleculeUI sigma= new sigmaMoleculeUI(mol);
 		
 	}
 }

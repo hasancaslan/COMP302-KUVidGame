@@ -20,7 +20,7 @@ public class KUVidGame {
     public boolean blendingMode;
     private Dimension screenSize;
     private Dimension playableArea;
-    private int L = Math.floorDiv(screenSize.height,10);
+    private int L;
     private int numAtoms = 1;
     private int numMolecules = 1;
     private int numBlocker = 1;
@@ -35,7 +35,7 @@ public class KUVidGame {
     private Blender blender;
     private createHandler creator;
     private destroyHandler destroyer;
-    private int time;
+    private int time=600;
     private Player p1;
     private Random rand = new Random();
     public KUVidGame() {
@@ -44,6 +44,9 @@ public class KUVidGame {
         this.p1 = Player.getInstance();
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.playableArea = new Dimension(this.screenSize.width*4/5,this.screenSize.height);
+        this.L=Math.floorDiv(screenSize.height,10);
+        this.creator=new createHandler();
+        
 
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.ALPHA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.BETA), new ArrayList<GameObject>());
@@ -53,6 +56,11 @@ public class KUVidGame {
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.GAMMA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA), new ArrayList<GameObject>());
+        
+        
+        
+        System.out.println(KUVidGame.getGameObjectMap());
+        
     }
 
     public KUVidGame(int time, boolean active, boolean blendingMode) {
@@ -215,6 +223,19 @@ public class KUVidGame {
     }
 
     public void runGame(){ //main loop
+    	
+    	int num=Math.floorDiv(this.numAtoms,4);
+        int numMol=Math.floorDiv(this.numMolecules, 4);
+        
+        createHandler.createAtom(AtomType.ALPHA,num);
+        createHandler.createAtom(AtomType.BETA,num);
+        createHandler.createAtom(AtomType.GAMMA,num);
+        createHandler.createAtom(AtomType.SIGMA,num);
+        
+        createHandler.createMolecule(MoleculeType.ALPHA, numMol);
+        createHandler.createMolecule(MoleculeType.BETA, numMol);
+        createHandler.createMolecule(MoleculeType.GAMMA, numMol);
+        createHandler.createMolecule(MoleculeType.SIGMA, numMol);
 
         while (true) {
             if (this.p1.getHealth() <= 0) {
@@ -235,7 +256,9 @@ public class KUVidGame {
             	}
             	movementHandler.getInstance().run();
             }
-            this.time--;            
+            this.time--; 
+            
+            //System.out.println(KUVidGame.getGameObjectMap());
         }
     }
 
