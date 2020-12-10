@@ -1,6 +1,8 @@
 package dmme.kuvid.domain.GameObjects;
 
-public class Player {
+import dmme.kuvid.utils.observer.Observable;
+
+public class Player extends Observable {
     private static Player instance = null;
     private int health = 100;
     private int point = 0;
@@ -20,6 +22,7 @@ public class Player {
     }
 
     private void setHealth(int health) {
+        publishPropertyEvent("health", this.health, health);
         this.health = health;
     }
 
@@ -28,6 +31,7 @@ public class Player {
     }
 
     private void setPoint(int point) {
+        publishPropertyEvent("point", this.point, point);
         this.point = point;
     }
 
