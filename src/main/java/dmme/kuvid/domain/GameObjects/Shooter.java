@@ -47,15 +47,25 @@ public class Shooter extends Observable {
     }
 
     public void moveShooter(int displacement) {
+    	int L=KUVidGame.getInstance().getL();
+    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
         setPosition(getPosition() + displacement);
         if (this.currentAtom!= null) {
-    		this.currentAtom.setPosition(new Position(this.position,580-50));;
+    		this.currentAtom.setPosition(new Position(this.position,gameHeight-20*L));;
     	}
         
     }
 
     public void rotateShooter(int angleChange) {
+    	int L=KUVidGame.getInstance().getL();
+    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+    	double angle=Math.toRadians(this.getAngle());
         setAngle(getAngle() + angleChange);
+        if (this.currentAtom!= null) {
+        	int x=this.position-(int)(20*L*Math.cos(angle));
+        	int y=gameHeight-(int)(20*L*Math.sin(angle));
+    		this.currentAtom.setPosition(new Position(x,y));
+    	}
     }
 
     public void pickAtom() {
@@ -65,17 +75,20 @@ public class Shooter extends Observable {
     		this.currentAtom.setActive(false);
     	}
         this.currentAtom=KUVidGame.getInstance().getRandomAtom();
-        this.currentAtom.setPosition(new Position(this.position,gameHeight-L));
+        double angle=Math.toRadians(this.getAngle());
+        int x=this.position-20*(int)(L*Math.cos(angle));
+    	int y=gameHeight-(int)(20*L*Math.sin(angle));
+        this.currentAtom.setPosition(new Position(x,y));
         this.currentAtom.setActive(true);
     }
 
     public void shootAtom() {
     	int L=KUVidGame.getInstance().getL();
     	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
-    	double angle=this.getAngle();
-        this.currentAtom.setPosition(new Position(this.position,gameHeight-L));
-        this.currentAtom.setDirection(new Position((int)Math.cos(angle),(int)Math.sin(angle)));
-        this.currentAtom.setActive(true);
+    	double angle=Math.toRadians(this.getAngle()); 
+        Position direction=new Position((int)(-10*L*Math.cos(angle)),(int)(-10*L*Math.sin(angle)));
+        this.currentAtom.setDirection(direction);
+        this.currentAtom=null;
         this.pickAtom();
     }
 

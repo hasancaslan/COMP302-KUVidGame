@@ -45,7 +45,8 @@ public class KUVidGame extends Observable implements Runnable {
         this.shooter = new Shooter();
         this.blender = new Blender(this.creator, this.destroyer);
         this.p1 = Player.getInstance();
-        this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.screenSize = new Dimension(1280,640);
+        		//Toolkit.getDefaultToolkit().getScreenSize();
         this.playableArea = new Dimension(this.screenSize.width*4/5,this.screenSize.height);
         this.L=Math.floorDiv(screenSize.height,10);
         this.creator=new createHandler();
@@ -300,6 +301,7 @@ public class KUVidGame extends Observable implements Runnable {
     public void shoot() {
     	this.shooter.shootAtom();
     }
+    
 
 	@Override
 	public void run() {

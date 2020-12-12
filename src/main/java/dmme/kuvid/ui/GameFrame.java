@@ -44,7 +44,7 @@ public class GameFrame extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         getContentPane().add(gamePanel, constraints);
 
-        JPanel menuPanel = new MenuPanel();
+        MenuPanel menuPanel = new MenuPanel();
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.weightx = 0.1;
@@ -53,6 +53,8 @@ public class GameFrame extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         getContentPane().add(menuPanel, constraints);
 
+        menuPanel.getBlenderPanel().updateAtomCounts();
+        
         this.setSize(size);
         this.setTitle("KUVid Game");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,28 +71,36 @@ public class GameFrame extends JFrame {
 
                 char key = e.getKeyChar();
                 switch (key) {
-                    case 'a':
-                        KUVidGame.getInstance().moveShooter(-10);
-                        break;
                     case 's':
                         KUVidGame.getInstance().aimShooter(-20);//check
-                        break;
-                    case 'd':
-                        KUVidGame.getInstance().moveShooter(10);
                         break;
                     case 'w':
                         KUVidGame.getInstance().aimShooter(20);//check
                         break;
                     case 'c':
                     	KUVidGame.getInstance().selectAtom();
-                    case 38:
-                    	System.out.println("Shoot");
-                    	KUVidGame.getInstance().shoot();
+                    	break;
+                    default:
+                    	System.out.println(e.getKeyCode());
                 }
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
+            	int key = e.getKeyCode();
+                switch (key) {
+                    case KeyEvent.VK_LEFT:
+                        KUVidGame.getInstance().moveShooter(-10);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        KUVidGame.getInstance().moveShooter(10);
+                        break;
+                    case KeyEvent.VK_UP:
+                    	KUVidGame.getInstance().shoot();
+                    	menuPanel.getBlenderPanel().updateAtomCounts();
+                    	break;
+                    	
+                }
 
             }
 

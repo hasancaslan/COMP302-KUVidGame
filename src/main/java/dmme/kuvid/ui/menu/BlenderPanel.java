@@ -59,7 +59,7 @@ public class BlenderPanel extends JPanel implements PropertyListener {
         this.add(sigmaCountLabel);
     }
 
-    private void updateAtomCounts() {
+    public void updateAtomCounts() {
         for (AtomType type : AtomType.values()) {
             setAtomCount(type, KUVidGame.getInstance().getNumAtom(type));
         }

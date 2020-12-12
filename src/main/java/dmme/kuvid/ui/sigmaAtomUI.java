@@ -39,14 +39,14 @@ public class sigmaAtomUI extends AtomUI implements PropertyListener{
 	@Override
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
-        	this.setLocation(this.atom.getPosition().getX(),580-10*L);
+        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY()-10*L);
         	if((boolean) e.getNewValue()) {
         		this.panel.add(this);
         	}else {
         		this.panel.remove(this);
         	}
         }else if (e.getPropertyName().equals("position")) {
-        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY());
+        	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY()-10*L);
         }
     }
 	

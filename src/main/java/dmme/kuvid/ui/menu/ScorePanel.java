@@ -66,6 +66,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
         String secStr = (sec < 10 ? "0" : "") + sec;
         String timeText = minStr + ":" + secStr;
         timeLabel.setText("  " + timeText);
+        
     }
 
     public void setHealthLabel(int health) {
