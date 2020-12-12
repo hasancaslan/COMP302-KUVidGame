@@ -46,10 +46,7 @@ public abstract class GameObject extends Observable{
 		return position;
 	}
 
-	public void setPosition(Position position) {
-		publishPropertyEvent("position",this.position,position);
-		this.position = position;
-	}
+	public abstract void setPosition(Position position);
 
 	public boolean isActive() {
 		return active;
@@ -85,16 +82,19 @@ public abstract class GameObject extends Observable{
 			int y1 = this.getPosition().getY();
 			int dx = this.getDirection().getX();
 			int dy = this.getDirection().getY();
+			
+			if(dx!=0 | dy!=0) {
+				int newX = x1 + dx;
+				int newY = y1 + dy;
 
-			int newX = x1 + dx;
-			int newY = y1 + dy;
-
-			if(newX > KUVidGame.getInstance().getScreenSize().width || newX < 0) {//bouncing from the wall
-				newX = x1 - dx;
-				this.getDirection().setX(-dx);
+				if(newX > KUVidGame.getInstance().getScreenSize().width || newX < 0) {//bouncing from the wall
+					newX = x1 - dx;
+					this.getDirection().setX(-dx);
+				}
+				Position nextPosition = new Position(newX, newY);
+				this.setPosition(nextPosition);
 			}
-			Position nextPosition = new Position(newX, newY);
-			this.setPosition(nextPosition);
+
 		}
 	}
 }

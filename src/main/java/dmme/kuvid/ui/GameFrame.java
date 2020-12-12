@@ -16,6 +16,7 @@ import java.io.IOException;
 public class GameFrame extends JFrame {
     private final ShooterUI shooterUI;
     public GamePanel gamePanel;
+    private static MenuPanel menu;
 
     public GameFrame() {
         this(KUVidGame.getInstance().getScreenSize());
@@ -45,6 +46,7 @@ public class GameFrame extends JFrame {
         getContentPane().add(gamePanel, constraints);
 
         MenuPanel menuPanel = new MenuPanel();
+        this.menu=menuPanel;
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.weightx = 0.1;
@@ -54,6 +56,7 @@ public class GameFrame extends JFrame {
         getContentPane().add(menuPanel, constraints);
 
         menuPanel.getBlenderPanel().updateAtomCounts();
+        JDialog pausePanel=PauseWindow.infoBox("PAUSED", "Pause Window");
         
         this.setSize(size);
         this.setTitle("KUVid Game");
@@ -72,13 +75,25 @@ public class GameFrame extends JFrame {
                 char key = e.getKeyChar();
                 switch (key) {
                     case 's':
-                        KUVidGame.getInstance().aimShooter(-20);//check
+                        KUVidGame.getInstance().aimShooter(-10);//check
                         break;
                     case 'w':
-                        KUVidGame.getInstance().aimShooter(20);//check
+                        KUVidGame.getInstance().aimShooter(10);//check
                         break;
                     case 'c':
                     	KUVidGame.getInstance().selectAtom();
+                    	break;
+                    case 'p':
+                    	KUVidGame.getInstance().pauseGame();
+                    	pausePanel.setVisible(true);
+                    	break;
+                    case 'r':
+                    	pausePanel.dispose();
+                    	KUVidGame.getInstance().resumeGame();
+                    	break;
+                    case 'b':
+                    	KUVidGame.getInstance().pauseGame();
+                    	new BlenderWindow();
                     	break;
                     default:
                     	System.out.println(e.getKeyCode());
@@ -97,7 +112,6 @@ public class GameFrame extends JFrame {
                         break;
                     case KeyEvent.VK_UP:
                     	KUVidGame.getInstance().shoot();
-                    	menuPanel.getBlenderPanel().updateAtomCounts();
                     	break;
                     	
                 }
@@ -109,5 +123,11 @@ public class GameFrame extends JFrame {
 
             }
         });
+        
+        
+    }
+    
+    public static void updateNumAtoms() {
+    	GameFrame.menu.getBlenderPanel().updateAtomCounts();
     }
 }

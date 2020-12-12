@@ -31,4 +31,11 @@ public class GamaMolecule extends Molecule{
 		strategy.move(this);		
 	}
 
+	@Override
+	public void setPosition(Position position) {
+		// TODO Auto-generated method stub
+		publishPropertyEvent("position",this.position,position);
+		this.position = position;
+	}
+
 }

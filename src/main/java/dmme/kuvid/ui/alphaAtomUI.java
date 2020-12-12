@@ -51,7 +51,6 @@ public class alphaAtomUI extends AtomUI implements PropertyListener{
         	}
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.atom.getPosition().getX(),this.atom.getPosition().getY()-10*L);
-   
         }
     }
 

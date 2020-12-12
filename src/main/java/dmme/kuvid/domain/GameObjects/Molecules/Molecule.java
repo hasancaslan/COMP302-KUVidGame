@@ -12,7 +12,9 @@ public abstract class Molecule extends GameObject{
 
 	public Molecule(Position position, Position direction, boolean active, ObjectType type) {
 		super(position, direction, active, type);
+		this.setMoleculeType();
 	}
+	
 
 	public Enum getSubType() {
 		return this.subtype;

@@ -7,9 +7,9 @@ import java.util.Random;
 
 public enum AtomType {
     ALPHA,
-    SIGMA,
     BETA,
-    GAMMA;
+    GAMMA,
+    SIGMA;
 	
 	private static final List<AtomType> VALUES =Collections.unmodifiableList(Arrays.asList(values()));
 	private static final int SIZE = VALUES.size();

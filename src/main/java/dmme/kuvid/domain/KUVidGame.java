@@ -40,6 +40,13 @@ public class KUVidGame extends Observable implements Runnable {
     private int time=600;
     private Player p1;
     private Random rand = new Random();
+    private int throwMolecule;
+    
+    private int alphaNo=1;
+    private int betaNo=1;
+    private int gammaNo=1;
+    private int sigmaNo=1;
+    private int MOLNO=0;
 
     private KUVidGame() {
         this.shooter = new Shooter();
@@ -153,16 +160,21 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void aimShooter(int angleChange) {
-        shooter.rotateShooter(angleChange);
+    	if(this.active) {
+    		shooter.rotateShooter(angleChange);
+    	}
     }
 
     public void moveShooter(int displacement) {
-        shooter.moveShooter(displacement);
+    	if(this.active) {
+    		shooter.moveShooter(displacement);
+    	}
     }
 
     public void selectAtom() {
-    	shooter.pickAtom();
-
+    	if(this.active) {
+    		shooter.pickAtom();
+    	}
     }
 
     public void selectPowerUp(PowerType type) {
@@ -229,11 +241,14 @@ public class KUVidGame extends Observable implements Runnable {
     	
     	int num=Math.floorDiv(this.numAtoms,4);
         int numMol=Math.floorDiv(this.numMolecules, 4);
+        this.throwMolecule=numMol*4;
+        this.MOLNO=numMol;
         
         createHandler.createAtom(AtomType.ALPHA,num);
         createHandler.createAtom(AtomType.BETA,num);
         createHandler.createAtom(AtomType.GAMMA,num);
         createHandler.createAtom(AtomType.SIGMA,num);
+        
         
         createHandler.createMolecule(MoleculeType.ALPHA, numMol);
         createHandler.createMolecule(MoleculeType.BETA, numMol);
@@ -256,10 +271,19 @@ public class KUVidGame extends Observable implements Runnable {
         			} catch (InterruptedException e) {
         				e.printStackTrace();
         			}
-                	throwMolecule();
+                	if(this.throwMolecule>0) {
+                		throwMolecule();
+                	}
             	}
             	movementHandler.getInstance().run();
             	setTime(getTime() - 1);
+            }else {
+            	try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
 
             
@@ -284,22 +308,47 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void throwMolecule() {
-    	
     	MoleculeType t=MoleculeType.randomMoleculeType();
     	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
-    	Molecule molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
-
-        while(molecule.isActive()) {
-            molecule=(Molecule)list.get(this.rand.nextInt(list.size()));
+    	
+    	while(list.size()==0) {
+    		t=MoleculeType.randomMoleculeType();
+    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
+    	}
+    	
+    	Molecule molecule=null;
+    	while(molecule==null) {
+    		
+	    	if(t.equals(MoleculeType.ALPHA) && this.alphaNo<=this.MOLNO) {
+	    		molecule=(Molecule)list.get(this.MOLNO-this.alphaNo);
+	    		this.alphaNo++;
+	    	}else if(t.equals(MoleculeType.BETA) && this.betaNo<=this.MOLNO) {
+	    		molecule=(Molecule)list.get(this.MOLNO-this.betaNo);
+	    		this.betaNo++;
+	    	}else if(t.equals(MoleculeType.GAMMA) && this.gammaNo<=this.MOLNO) {
+	    		molecule=(Molecule)list.get(this.MOLNO-this.gammaNo);
+	    		this.gammaNo++;
+	    	}else if(t.equals(MoleculeType.SIGMA) && this.sigmaNo<=this.MOLNO) {
+	    		molecule=(Molecule)list.get(this.MOLNO-this.sigmaNo);
+	    		this.sigmaNo++;
+	    	}
+        
+        	t=MoleculeType.randomMoleculeType();
+    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
+    		
         }
         
-        molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width),0));
+        molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width - 30*L) + 10 * L ,0));
         molecule.setActive(true);
+        this.throwMolecule--;
+        
        
     }
     
     public void shoot() {
-    	this.shooter.shootAtom();
+    	if(this.active) {
+    		this.shooter.shootAtom();
+    	}
     }
     
 
@@ -307,5 +356,15 @@ public class KUVidGame extends Observable implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		this.runGame();
+	}
+	
+	private void prettyPrint(List<GameObject> list) {
+		System.out.print("[");
+		for(int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i).isActive());
+            System.out.print(" , ");
+        }
+		System.out.print("]");
+		System.out.println("");
 	}
 }

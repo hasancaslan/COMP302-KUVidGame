@@ -9,6 +9,7 @@ import dmme.kuvid.domain.GameObjects.Powerup.*;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.*;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.Factory;
+import dmme.kuvid.ui.GameFrame;
 
 public class createHandler {
 
@@ -44,6 +45,7 @@ public class createHandler {
                 }
                 break;
         }
+        GameFrame.updateNumAtoms();
     }
 
     public static void createMolecule(MoleculeType type, int amount) {

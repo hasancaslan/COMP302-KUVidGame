@@ -48,28 +48,13 @@ public class gammaMoleculeUI extends MoleculeUI implements PropertyListener{
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
-        	
-        	Insets insets = this.panel.getInsets();
-        	
-        	this.panel.add(this);
-        	int x=this.mol.getPosition().getX();
-        	int y=this.mol.getPosition().getY();
-        	//this.setBounds( x+ insets.left, y + insets.top,
-             //       this.dim.width, this.dim.height);
-            //this.panel.revalidate();
-           // this.panel.repaint();
-            //System.out.println("I am here");
+        	if((boolean) e.getNewValue()) {
+        		this.panel.add(this);
+        	}else {
+        		this.panel.remove(this);
+        	}
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
-        	Insets insets = this.panel.getInsets();
-        	int x=this.mol.getPosition().getX();
-        	int y=this.mol.getPosition().getY();
-        	//this.setBounds( x+ insets.left, y + insets.top,
-             //       this.dim.width, this.dim.height);
-        	//this.panel.revalidate();
-            //this.panel.repaint();
-        	//System.out.println("pos change");
-        	//System.out.println("ins:"+this.id+" "+this.mol.getPosition().getY()+""+KUVidGame.getInstance().getPlayableArea());
         }
     }
 	

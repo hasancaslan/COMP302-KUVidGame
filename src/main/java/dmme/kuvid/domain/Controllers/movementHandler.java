@@ -9,12 +9,15 @@ import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.ObjectType;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class movementHandler {
 
     private static movementHandler instance = null;
+    
+    private List<GameObject> garbage=new ArrayList<GameObject>();
 
     private movementHandler() {}
 
@@ -78,8 +81,17 @@ public class movementHandler {
         	 List<GameObject> gameObjectList = map.get(k);
 	        for (GameObject gameObject : gameObjectList) {
 	            gameObject.move();
+	            
+	            if(gameObject.getPosition().getY()>KUVidGame.getInstance().getPlayableArea().height && gameObject.isActive()) {
+	            	this.garbage.add(gameObject);
+	        	}
 	        }
         }
+        
+        for(GameObject gameObject: garbage) {
+        	destroyHandler.destroyObject(gameObject);
+        }
+        garbage.clear();
         this.search();
     }
 

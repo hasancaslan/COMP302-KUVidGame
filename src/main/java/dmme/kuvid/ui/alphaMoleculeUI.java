@@ -38,7 +38,11 @@ public class alphaMoleculeUI extends MoleculeUI implements PropertyListener{
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("active")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
-            this.panel.add(this);
+        	if((boolean) e.getNewValue()) {
+        		this.panel.add(this);
+        	}else {
+        		this.panel.remove(this);
+        	}
         }else if (e.getPropertyName().equals("position")) {
         	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
         }

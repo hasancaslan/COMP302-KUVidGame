@@ -51,7 +51,7 @@ public class Shooter extends Observable {
     	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
         setPosition(getPosition() + displacement);
         if (this.currentAtom!= null) {
-    		this.currentAtom.setPosition(new Position(this.position,gameHeight-20*L));;
+    		this.currentAtom.setPosition(new Position(this.position,gameHeight-10*L));;
     	}
         
     }
@@ -62,8 +62,8 @@ public class Shooter extends Observable {
     	double angle=Math.toRadians(this.getAngle());
         setAngle(getAngle() + angleChange);
         if (this.currentAtom!= null) {
-        	int x=this.position-(int)(20*L*Math.cos(angle));
-        	int y=gameHeight-(int)(20*L*Math.sin(angle));
+        	int x=this.position-(int)(10*L*Math.cos(angle));
+        	int y=gameHeight-(int)(10*L*Math.sin(angle));
     		this.currentAtom.setPosition(new Position(x,y));
     	}
     }
@@ -76,8 +76,8 @@ public class Shooter extends Observable {
     	}
         this.currentAtom=KUVidGame.getInstance().getRandomAtom();
         double angle=Math.toRadians(this.getAngle());
-        int x=this.position-20*(int)(L*Math.cos(angle));
-    	int y=gameHeight-(int)(20*L*Math.sin(angle));
+        int x=this.position-10*(int)(L*Math.cos(angle));
+    	int y=gameHeight-(int)(10*L*Math.sin(angle));
         this.currentAtom.setPosition(new Position(x,y));
         this.currentAtom.setActive(true);
     }
