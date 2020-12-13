@@ -94,7 +94,7 @@ public class Shooter extends Observable {
     		int L=KUVidGame.getInstance().getL();
     		int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
     		double angle=Math.toRadians(this.getAngle()); 
-    		Position direction=new Position((int)(-10*L*Math.cos(angle)),(int)(-10*L*Math.sin(angle)));
+    		Position direction=new Position((int)(-L*Math.cos(angle)),(int)(-L*Math.sin(angle)));
     		this.currentAtom.setDirection(direction);
     		this.currentAtom=null;
     		this.pickAtom();

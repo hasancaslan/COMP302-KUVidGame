@@ -112,6 +112,11 @@ public class GameFrame extends JFrame {
                         break;
                     case KeyEvent.VK_UP:
                     	KUVidGame.getInstance().shoot();
+                        try {
+                        	Thread.sleep(1000);
+                        } catch (InterruptedException e1) {
+                        	e1.printStackTrace();
+                        }
                     	break;
                     	
                 }

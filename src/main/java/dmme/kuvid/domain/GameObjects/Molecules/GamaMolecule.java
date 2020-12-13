@@ -28,7 +28,8 @@ public class GamaMolecule extends Molecule{
 		if(this.getPosition().getY() > (gameField.height)/2) {
 			this.setPattern(new ZigZagPatternStrategy());
 		}
-		strategy.move(this);		
+		this.strategy.move(this, count);		
+		this.count++;
 	}
 
 	@Override

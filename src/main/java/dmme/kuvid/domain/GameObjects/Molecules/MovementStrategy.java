@@ -10,5 +10,6 @@ public interface MovementStrategy {
 	int L = KUVidGame.getInstance().getL(); 
 	Dimension gameField=KUVidGame.getInstance().getPlayableArea();
 	
-	public void move(Molecule m);
+	public void move(Molecule m, int count);
+
 }

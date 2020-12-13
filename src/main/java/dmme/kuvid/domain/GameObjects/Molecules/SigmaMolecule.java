@@ -22,6 +22,12 @@ public class SigmaMolecule extends Molecule{
 		// TODO Auto-generated method stub
 		this.subtype=MoleculeType.SIGMA;
 	}
+	
+	public void move() {
+		this.setPattern(new StraightPatternStrategy());
+		this.strategy.move(this, count);	
+		this.count++;
+	}
 
 	@Override
 	public void setPosition(Position position) {

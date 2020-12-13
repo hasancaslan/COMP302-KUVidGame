@@ -27,7 +27,8 @@ public class AlphaMolecule extends Molecule{
 	
 	public void move() {
 		this.setPattern(new ZigZagPatternStrategy());
-		strategy.move(this);	
+		this.strategy.move(this, count);	
+		this.count++;
 	}
 
 	@Override

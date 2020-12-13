@@ -81,7 +81,6 @@ public class movementHandler {
         	 List<GameObject> gameObjectList = map.get(k);
 	        for (GameObject gameObject : gameObjectList) {
 	            gameObject.move();
-	            
 	            if(gameObject.getPosition().getY()>KUVidGame.getInstance().getPlayableArea().height && gameObject.isActive()) {
 	            	this.garbage.add(gameObject);
 	        	}

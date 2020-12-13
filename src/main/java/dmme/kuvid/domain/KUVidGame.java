@@ -31,7 +31,7 @@ public class KUVidGame extends Observable implements Runnable {
 
     private boolean linearity;
     private int difficulty=1;
-    private int sleepTime=1000;
+    private int sleepTime=100;
     private GameObject objects;
     private Shooter shooter;
     private Blender blender;
@@ -47,6 +47,7 @@ public class KUVidGame extends Observable implements Runnable {
     private int gammaNo=1;
     private int sigmaNo=1;
     private int MOLNO=0;
+    private int count = 0;
 
     private KUVidGame() {
         this.shooter = new Shooter();
@@ -122,15 +123,15 @@ public class KUVidGame extends Observable implements Runnable {
     	switch(difficulty) {
     	case "Easy":
     		this.difficulty = 1;
-    		sleepTime= 1000;
+    		sleepTime= 100;
     		break;
     	case "Medium":
     		this.difficulty = 2;
-    		sleepTime= 500;
+    		sleepTime= 50;
     		break;
     	case "Hard":
     		this.difficulty = 4;
-    		sleepTime= 250;
+    		sleepTime= 25;
     		break;
     	}
     }
@@ -265,18 +266,24 @@ public class KUVidGame extends Observable implements Runnable {
             }
 
             if(this.active) {
+            	movementHandler.getInstance().run();
+            	count++;
             	for(int i = this.difficulty; i>0 ;i--) {
                 	try {
         				Thread.sleep(sleepTime);
         			} catch (InterruptedException e) {
         				e.printStackTrace();
         			}
-                	if(this.throwMolecule>0) {
-                		throwMolecule();
+                	if(count == 10 && this.throwMolecule>0) {
+                    	throwMolecule();
                 	}
             	}
-            	movementHandler.getInstance().run();
-            	setTime(getTime() - 1);
+            	if(count == 10) {
+            		count = 0;
+            		setTime(getTime() - 1);
+            	}
+            	
+
             }else {
             	try {
 					Thread.sleep(100);
@@ -308,6 +315,8 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void throwMolecule() {
+    	
+    	
     	MoleculeType t=MoleculeType.randomMoleculeType();
     	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
     	

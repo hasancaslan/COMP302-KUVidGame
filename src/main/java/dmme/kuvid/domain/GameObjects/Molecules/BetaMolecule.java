@@ -28,7 +28,8 @@ public class BetaMolecule extends Molecule{
 		if(this.getPosition().getY() > (gameField.height)/4) {
 			this.setPattern(new ZigZagPatternStrategy());
 		}
-		strategy.move(this);	
+		this.strategy.move(this, count);	
+		this.count++;
 	}
 
 	@Override

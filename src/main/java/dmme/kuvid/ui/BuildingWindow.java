@@ -78,7 +78,7 @@ public class BuildingWindow extends JFrame {
         movementGroup.add(LinearButton);
         movementGroup.add(NoNLinearButton);
 
-        this.add(new JLabel("Game size in terms of L: "));
+        this.add(new JLabel("Default Distance L ratio: "));
         this.add(this.LTextField);
 
         this.add(new JLabel("GameDifficulty"));
@@ -103,7 +103,9 @@ public class BuildingWindow extends JFrame {
 
                 KUVidGame.getInstance().setL(L);
                 KUVidGame.getInstance().shooterStart();
-
+                KUVidGame.getInstance().setDifficulty(difficulty);
+                KUVidGame.getInstance().setLinearity(linear);
+                
                 dispose();
 
                 new GameFrame();
