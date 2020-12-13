@@ -6,10 +6,10 @@ import dmme.kuvid.domain.Controllers.*;
 
 public class Blender {
 	private BlenderAction action;
-	private createHandler creator;
+	private DomainFactory creator;
 	private destroyHandler destroyer;
 
-	public Blender(createHandler c, destroyHandler d) {
+	public Blender(DomainFactory c, destroyHandler d) {
 		this.creator=c;
 		this.destroyer=d;
 	}
@@ -34,21 +34,21 @@ public class Blender {
 
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				createHandler.createAtom(typeCreate, 4);
+				DomainFactory.createAtom(typeCreate, 4);
 
 
 			}else if(typeCreate.equals(AtomType.BETA)) {
 				
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				createHandler.createAtom(typeCreate, 3);
+				DomainFactory.createAtom(typeCreate, 3);
 
 			}else if(typeCreate.equals(AtomType.GAMMA)) {
 
 				
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				createHandler.createAtom(typeCreate, 2);
+				DomainFactory.createAtom(typeCreate, 2);
 			}
 
 		}else if (typeDestroy.equals(AtomType.GAMMA)&KUVidGame.getInstance().getNumAtom(AtomType.GAMMA)>=1) {
@@ -57,14 +57,14 @@ public class Blender {
 				
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				createHandler.createAtom(typeCreate, 3);
+				DomainFactory.createAtom(typeCreate, 3);
 
 
 			}else if(typeCreate.equals(AtomType.BETA)) {
 
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				createHandler.createAtom(typeCreate, 2);
+				DomainFactory.createAtom(typeCreate, 2);
 			}
 
 		}else if(typeDestroy.equals(AtomType.BETA)&KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=1) {
@@ -73,7 +73,7 @@ public class Blender {
 
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				createHandler.createAtom(typeCreate, 2);
+				DomainFactory.createAtom(typeCreate, 2);
 
 
 			}
@@ -93,7 +93,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				createHandler.createAtom(typeCreate, 1);
+				DomainFactory.createAtom(typeCreate, 1);
 
 			}else if(typeDestroy.equals(AtomType.BETA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=3)) {
@@ -102,7 +102,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				createHandler.createAtom(typeCreate, 1);
+				DomainFactory.createAtom(typeCreate, 1);
 			}else if(typeDestroy.equals(AtomType.GAMMA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.GAMMA)>=2)) {
 
@@ -110,7 +110,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				createHandler.createAtom(typeCreate, 1);
+				DomainFactory.createAtom(typeCreate, 1);
 			}
 
 		}else if(typeCreate.equals(AtomType.GAMMA)) {
@@ -122,7 +122,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				createHandler.createAtom(typeCreate, 1);
+				DomainFactory.createAtom(typeCreate, 1);
 			}else if(typeDestroy.equals(AtomType.BETA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=2)) {
 
@@ -130,7 +130,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				createHandler.createAtom(typeCreate, 1);
+				DomainFactory.createAtom(typeCreate, 1);
 			}
 
 		}else if(typeCreate.equals(AtomType.BETA)) {
@@ -141,7 +141,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				createHandler.createAtom(typeCreate, 1);
+				DomainFactory.createAtom(typeCreate, 1);
 			}
 
 		}else {

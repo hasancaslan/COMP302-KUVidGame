@@ -1,6 +1,6 @@
 package dmme.kuvid.domain;
 
-import dmme.kuvid.domain.Controllers.createHandler;
+import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
@@ -37,7 +37,7 @@ public class KUVidGame extends Observable implements Runnable {
     private GameObject objects;
     private Shooter shooter;
     private Blender blender;
-    private createHandler creator;
+    private DomainFactory creator;
     private destroyHandler destroyer;
     private int time=60;//600;
     private Player p1;
@@ -60,7 +60,7 @@ public class KUVidGame extends Observable implements Runnable {
         		//Toolkit.getDefaultToolkit().getScreenSize();
         this.playableArea = new Dimension(this.screenSize.width*7/10,this.screenSize.height);
         this.L=Math.floorDiv(screenSize.height,10);
-        this.creator=new createHandler();
+        this.creator=new DomainFactory();
         
 
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.ALPHA), new ArrayList<GameObject>());
@@ -257,16 +257,16 @@ public class KUVidGame extends Observable implements Runnable {
         this.throwMolecule=numMol*4;
         this.MOLNO=numMol;
         
-        createHandler.createAtom(AtomType.ALPHA,num);
-        createHandler.createAtom(AtomType.BETA,num);
-        createHandler.createAtom(AtomType.GAMMA,num);
-        createHandler.createAtom(AtomType.SIGMA,num);
+        DomainFactory.createAtom(AtomType.ALPHA,num);
+        DomainFactory.createAtom(AtomType.BETA,num);
+        DomainFactory.createAtom(AtomType.GAMMA,num);
+        DomainFactory.createAtom(AtomType.SIGMA,num);
         
         
-        createHandler.createMolecule(MoleculeType.ALPHA, numMol);
-        createHandler.createMolecule(MoleculeType.BETA, numMol);
-        createHandler.createMolecule(MoleculeType.GAMMA, numMol);
-        createHandler.createMolecule(MoleculeType.SIGMA, numMol);
+        DomainFactory.createMolecule(MoleculeType.ALPHA, numMol);
+        DomainFactory.createMolecule(MoleculeType.BETA, numMol);
+        DomainFactory.createMolecule(MoleculeType.GAMMA, numMol);
+        DomainFactory.createMolecule(MoleculeType.SIGMA, numMol);
         
 
         while (true) {
