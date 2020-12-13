@@ -1,69 +1,79 @@
 package dmme.kuvid.ui;
 
 import dmme.kuvid.constants.Config;
-import dmme.kuvid.domain.shooter.Shooter;
-import dmme.kuvid.ui.animations.Animatable;
-import dmme.kuvid.ui.animations.Animation;
-import dmme.kuvid.ui.animations.ShooterAnimation;
-import dmme.kuvid.ui.animations.ShooterAnimationType;
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.Shooter;
+import dmme.kuvid.utils.IconImporter;
 import dmme.kuvid.utils.observer.PropertyEvent;
 import dmme.kuvid.utils.observer.PropertyListener;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
 
-public class ShooterUI extends JLabel implements PropertyListener, Animatable {
-    private static final double L = 50;
-    private double location;
-    private double angle;
-    private LinkedList<Animation> animationQueue;
 
-    public ShooterUI(Shooter shooter) {
-        super(getIconFromFileName(new Dimension((int) (0.5 * L), (int) L)));
-        Dimension dimension = new Dimension((int) (0.5 * L), (int) L);
+public class ShooterUI extends JLabel implements PropertyListener {
+    
+	private Shooter shooter;
+    
+    private Dimension dim;
+    
+    private static int L=KUVidGame.getInstance().getL();
+    private GamePanel panel;
+    private int y;
+
+    public ShooterUI(Shooter shooter, GamePanel p) {
+        super(IconImporter.getIconFromFileName("shooter0.png","shooter",new Dimension((int) (10 * L), (int) (20 * L))));
+        Dimension dimension = new Dimension((int) (10 * L), (int) (20 * L));
         this.setSize(dimension);
-        this.setLocation(0, 0);
-        this.setVisible(true);
+        
+        int y=KUVidGame.getInstance().getPlayableArea().height-dimension.height;
+        this.setLocation(shooter.getPosition(),y-L);
+        this.shooter=shooter;
+    	
         shooter.addPropertyListener("position", this);
+        shooter.addPropertyListener("angle", this);
+        this.dim=dimension;
+        this.panel=p;
+        this.panel.add(this);
+        this.y=y;
     }
 
-    public static ImageIcon getIconFromFileName(Dimension shooterDimension) {
-        Image tmp = null;
-        try {
-            tmp = ImageIO.read(new File(Config.getAssetsPath() + "shooter.png"));
-            tmp = tmp.getScaledInstance(shooterDimension.width, shooterDimension.height, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return new ImageIcon(tmp);
-    }
-
-    public void changeLocation(double from, double to, double progress) {
-
-    }
-
-    public void changeAngle(double from, double to, double progress) {
-
-    }
-
+   
+    
     @Override
     public void onPropertyEvent(PropertyEvent e) {
         if (e.getPropertyName().equals("position")) {
-            this.location = (double) e.getNewValue();
-            animationQueue.addLast(new ShooterAnimation(this, (double) e.getOldValue(), (double) e.getNewValue(), ShooterAnimationType.LOCATION));
+        	this.setLocation(this.shooter.getPosition(),this.y);
+        	this.panel.add(this);
         } else if (e.getPropertyName().equals("angle")) {
-            this.angle = (double) e.getNewValue();
-            animationQueue.addLast(new ShooterAnimation(this, (double) e.getOldValue(), (double) e.getNewValue(), ShooterAnimationType.ANGLE));
+        	int angle=(this.shooter.getAngle()-90);
+/*        	if(angle>=90) {
+        		angle=90;
+        	}else if(angle<=-90) {
+        		angle=-90;
+        	}
+*/       	String s = "shooter"+angle+".png";
+        	ImageIcon icon =IconImporter.getIconFromFileName(s,"shooter",new Dimension((int) (10 * L), (int) (20 * L)));
+        	this.setIcon(icon);
+        	this.panel.add(this);
         }
     }
 
-    @Override
-    public LinkedList<Animation> getAnimationQueue() {
-        return animationQueue;
-    }
+
+
+	public void changeAngle(double from, double to, double progress) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void changeLocation(double from, double to, double progress) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

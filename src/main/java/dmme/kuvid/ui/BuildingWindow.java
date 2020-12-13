@@ -1,5 +1,10 @@
 package dmme.kuvid.ui;
 
+import dmme.kuvid.Application;
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
+import dmme.kuvid.lib.types.GameLevel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,18 +13,19 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class BuildingWindow extends JFrame {
-    private final String DEFAULT_OBJ_NUM = "100";
-    private final String DEFAULT_GAME_SIZE = "1";
-
+    private final String DEFAULT_COMPONENT_AMOUNT = "50";
+    private final String DEFAULT_SIZE = "5";
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
     String difficulty;
-    JTextField AtomNumber = new JTextField(DEFAULT_OBJ_NUM,8);
-    JTextField ReactionBlockerNumber = new JTextField(DEFAULT_OBJ_NUM,8);
-    JTextField PowerUpNumber = new JTextField(DEFAULT_OBJ_NUM,8);
-    JTextField MoleculeNumber = new JTextField(DEFAULT_OBJ_NUM,8);
-    JTextField GameSize = new JTextField(DEFAULT_GAME_SIZE,8);
+    
+    
+    JTextField AtomNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField ReactionBlockerNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField PowerUpNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField MoleculeNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField LTextField = new JTextField(DEFAULT_SIZE, 8);
     ButtonGroup spinGroup;
     ButtonGroup movementGroup;
     JRadioButton SpinButton;
@@ -32,9 +38,15 @@ public class BuildingWindow extends JFrame {
     int reactionBlockerNumber = 0;
     int powerUpNumber = 0;
     int moleculeNumber = 0;
-    int gameSize = 0;
+    int L = 0;
 
     public BuildingWindow() {
+        this.setTitle("BUILDING WINDOW");
+        this.setSize(510, 510);
+        this.setLocationRelativeTo((Component) null);
+        this.setDefaultCloseOperation(3);
+        this.setVisible(true);
+
         this.ComboBox = new JComboBox<>(this.Difficulty);
         this.StartButton = new JButton("Start Game");
         this.setLayout(new GridLayout(9, 2, 4, 4));
@@ -66,8 +78,8 @@ public class BuildingWindow extends JFrame {
         movementGroup.add(LinearButton);
         movementGroup.add(NoNLinearButton);
 
-        this.add(new JLabel("Game size in terms of L: "));
-        this.add(this.GameSize);
+        this.add(new JLabel("Default Distance L ratio: "));
+        this.add(this.LTextField);
 
         this.add(new JLabel("GameDifficulty"));
         this.add(this.ComboBox);
@@ -81,19 +93,31 @@ public class BuildingWindow extends JFrame {
                 reactionBlockerNumber = Integer.parseInt((String) ReactionBlockerNumber.getText());
                 powerUpNumber = Integer.parseInt((String) PowerUpNumber.getText());
                 moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
-                gameSize = Integer.parseInt((String) GameSize.getText());
+                L = Integer.parseInt((String) LTextField.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
 
-                BuildingWindow.this.getContentPane().removeAll();
-                BuildingWindow.this.getContentPane().repaint();
+                KUVidGame.getInstance().setNumAtoms(atomNumber);
+                KUVidGame.getInstance().setNumMolecules(moleculeNumber);
+                KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
+                KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
+
+                KUVidGame.getInstance().setL(L);
+                KUVidGame.getInstance().shooterStart();
+                KUVidGame.getInstance().setDifficulty(difficulty);
+                KUVidGame.getInstance().setLinearity(linear);
+                
+                dispose();
+
+                new GameFrame();
+                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
             }
         });
+
         SpinButton.addItemListener(new SpinHandler(true));
         StationaryButton.addItemListener(new SpinHandler(false));
         LinearButton.addItemListener(new StructureHandler(true));
         NoNLinearButton.addItemListener(new StructureHandler(false));
     }
-
 
     // private inner class to handle the movement of the molecules
     class SpinHandler implements ItemListener {
