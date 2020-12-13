@@ -54,7 +54,7 @@ public class KUVidGame extends Observable implements Runnable {
         this.p1 = Player.getInstance();
         this.screenSize = new Dimension(1280,640);
         		//Toolkit.getDefaultToolkit().getScreenSize();
-        this.playableArea = new Dimension(this.screenSize.width*4/5,this.screenSize.height);
+        this.playableArea = new Dimension(this.screenSize.width*7/10,this.screenSize.height);
         this.L=Math.floorDiv(screenSize.height,10);
         this.creator=new createHandler();
         

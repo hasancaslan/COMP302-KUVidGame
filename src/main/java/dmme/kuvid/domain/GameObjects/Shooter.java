@@ -49,7 +49,11 @@ public class Shooter extends Observable {
     public void moveShooter(int displacement) {
     	int L=KUVidGame.getInstance().getL();
     	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
-        setPosition(getPosition() + displacement);
+    	int gameWidth=KUVidGame.getInstance().getPlayableArea().width;
+    	int newPosition = getPosition() + displacement;
+    	if(newPosition > gameWidth) newPosition = gameWidth;
+    	if(newPosition < -5*L) newPosition = -5*L;
+        setPosition(newPosition);
         if (this.currentAtom!= null) {
     		this.currentAtom.setPosition(new Position(this.position,gameHeight-10*L));;
     	}
@@ -60,7 +64,10 @@ public class Shooter extends Observable {
     	int L=KUVidGame.getInstance().getL();
     	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
     	double angle=Math.toRadians(this.getAngle());
-        setAngle(getAngle() + angleChange);
+    	int newAngle = getAngle() + angleChange;
+    	if(newAngle > 180) newAngle = 180;
+    	if(newAngle < 0) newAngle = 0;
+        setAngle(newAngle);
         if (this.currentAtom!= null) {
         	int x=this.position-(int)(10*L*Math.cos(angle));
         	int y=gameHeight-(int)(10*L*Math.sin(angle));
@@ -83,13 +90,15 @@ public class Shooter extends Observable {
     }
 
     public void shootAtom() {
-    	int L=KUVidGame.getInstance().getL();
-    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
-    	double angle=Math.toRadians(this.getAngle()); 
-        Position direction=new Position((int)(-10*L*Math.cos(angle)),(int)(-10*L*Math.sin(angle)));
-        this.currentAtom.setDirection(direction);
-        this.currentAtom=null;
-        this.pickAtom();
+    	if (this.currentAtom!= null) {
+    		int L=KUVidGame.getInstance().getL();
+    		int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+    		double angle=Math.toRadians(this.getAngle()); 
+    		Position direction=new Position((int)(-10*L*Math.cos(angle)),(int)(-10*L*Math.sin(angle)));
+    		this.currentAtom.setDirection(direction);
+    		this.currentAtom=null;
+    		this.pickAtom();
+    	}
     }
 
 }
