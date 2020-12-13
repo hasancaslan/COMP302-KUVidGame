@@ -13,10 +13,6 @@ public abstract class Atom extends GameObject{
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void addPropertyListener(String string, AtomUI atomUI) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public abstract void setAtomType();
 	

@@ -1,6 +1,9 @@
 package dmme.kuvid.ui;
 
+import dmme.kuvid.Application;
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
+import dmme.kuvid.lib.types.GameLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,11 +14,13 @@ import java.awt.event.ItemListener;
 
 public class BuildingWindow extends JFrame {
     private final String DEFAULT_COMPONENT_AMOUNT = "50";
-    private final String DEFAULT_SIZE = "14";
+    private final String DEFAULT_SIZE = "5";
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
     String difficulty;
+    
+    
     JTextField AtomNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField ReactionBlockerNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField PowerUpNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
@@ -73,7 +78,7 @@ public class BuildingWindow extends JFrame {
         movementGroup.add(LinearButton);
         movementGroup.add(NoNLinearButton);
 
-        this.add(new JLabel("Game size in terms of L: "));
+        this.add(new JLabel("Default Distance L ratio: "));
         this.add(this.LTextField);
 
         this.add(new JLabel("GameDifficulty"));
@@ -95,12 +100,16 @@ public class BuildingWindow extends JFrame {
                 KUVidGame.getInstance().setNumMolecules(moleculeNumber);
                 KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
                 KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
+
                 KUVidGame.getInstance().setL(L);
                 KUVidGame.getInstance().shooterStart();
-
+                KUVidGame.getInstance().setDifficulty(difficulty);
+                KUVidGame.getInstance().setLinearity(linear);
+                
                 dispose();
 
                 new GameFrame();
+                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
             }
         });
 

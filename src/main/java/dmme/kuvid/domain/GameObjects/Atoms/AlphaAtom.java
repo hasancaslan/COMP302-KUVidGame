@@ -26,4 +26,11 @@ public class AlphaAtom extends Atom{
 		
 	}
 
+	@Override
+	public void setPosition(Position position) {
+		// TODO Auto-generated method stub
+		publishPropertyEvent("position",this.position,position);
+		this.position = position;
+	}
+
 }

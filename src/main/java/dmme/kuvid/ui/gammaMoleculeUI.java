@@ -1,31 +1,61 @@
 package dmme.kuvid.ui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class gammaMoleculeUI extends MoleculeUI{
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.GameObject;
+import dmme.kuvid.utils.IconImporter;
+import dmme.kuvid.utils.observer.PropertyEvent;
+import dmme.kuvid.utils.observer.PropertyListener;
+
+public class gammaMoleculeUI extends MoleculeUI implements PropertyListener{
 	
-	public gammaMoleculeUI() {
-		super();
-//		this.type = ALPHA;
-		this.x=super.x;
-		this.y=super.y;
-		try{
-        	img = ImageIO.read(new File("./assets/molecules/gamma.png"));
-        	BufferedImage resized = resize(img, L, L);
-        	img = resized;
-        } catch(IOException e) {
-        System.out.printf("%s",e.getMessage());
-        }	
+	private static int L=KUVidGame.getInstance().getL();
+	
+	private GameObject mol;
+	private GamePanel panel;
+	private Dimension dim;
+	private int id;
+	
+	public gammaMoleculeUI(GameObject mol, GamePanel panel2) {
+		super(IconImporter.getIconFromFileName("gamma-.png","molecules",new Dimension((int) (10 * L), (int) (10 * L))));
+        Dimension dimension = new Dimension((int) (10 * L), (int) (10 * L));
+        this.setSize(dimension);
+        
+        mol.addPropertyListener("active",this);
+        mol.addPropertyListener("position",this);
+        this.mol=mol;
+        this.panel=panel2;
+        this.dim=dimension;
+        Random rand= new Random();
+        this.id=rand.nextInt(20);
+        
 	}
+	
 	
 	@Override
-	public void draw(Graphics g) {
-		g.drawImage(img,x,y,null);	
-	}
+    public void onPropertyEvent(PropertyEvent e) {
+        if (e.getPropertyName().equals("active")) {
+        	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
+        	if((boolean) e.getNewValue()) {
+        		this.panel.add(this);
+        	}else {
+        		this.panel.remove(this);
+        	}
+        }else if (e.getPropertyName().equals("position")) {
+        	this.setLocation(this.mol.getPosition().getX(),this.mol.getPosition().getY());
+        }
+    }
 	
 }

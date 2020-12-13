@@ -17,7 +17,8 @@ public class ScorePanel extends JPanel implements PropertyListener {
 
     public ScorePanel() {
         super(new GridLayout(3, 2));
-        setOpaque(false);
+        setOpaque(true);
+        this.setBackground(new Color(204, 230, 255));
         this.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0, 0, 0, 120)));
 
         Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
@@ -66,6 +67,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
         String secStr = (sec < 10 ? "0" : "") + sec;
         String timeText = minStr + ":" + secStr;
         timeLabel.setText("  " + timeText);
+        
     }
 
     public void setHealthLabel(int health) {

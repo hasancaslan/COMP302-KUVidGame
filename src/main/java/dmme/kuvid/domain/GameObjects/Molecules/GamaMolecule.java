@@ -22,5 +22,21 @@ public class GamaMolecule extends Molecule{
 		// TODO Auto-generated method stub
 		this.subtype=MoleculeType.GAMMA;
 	}
+	
+	public void move() {
+		this.setPattern(new StraightPatternStrategy());
+		if(this.getPosition().getY() > (gameField.height)/2) {
+			this.setPattern(new ZigZagPatternStrategy());
+		}
+		this.strategy.move(this, count);		
+		this.count++;
+	}
+
+	@Override
+	public void setPosition(Position position) {
+		// TODO Auto-generated method stub
+		publishPropertyEvent("position",this.position,position);
+		this.position = position;
+	}
 
 }

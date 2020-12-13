@@ -22,5 +22,21 @@ public class BetaMolecule extends Molecule{
 		// TODO Auto-generated method stub
 		this.subtype=MoleculeType.BETA;
 	}
+	
+	public void move() {
+		this.setPattern(new StraightPatternStrategy());
+		if(this.getPosition().getY() > (gameField.height)/4) {
+			this.setPattern(new ZigZagPatternStrategy());
+		}
+		this.strategy.move(this, count);	
+		this.count++;
+	}
+
+	@Override
+	public void setPosition(Position position) {
+		// TODO Auto-generated method stub
+		publishPropertyEvent("position",this.position,position);
+		this.position = position;
+	}
 
 }

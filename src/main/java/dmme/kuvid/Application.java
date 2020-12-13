@@ -10,6 +10,8 @@ import javax.swing.*;
 public class Application implements Runnable {
     private static volatile Application _instance = null;
     private final Logger logger;
+    
+    private boolean start=false;
 
     public Application() {
         LoggerFactory loggerFactory = new LoggerFactory();
@@ -40,6 +42,7 @@ public class Application implements Runnable {
 
     public void initGame() {
         new BuildingWindow();
+        
     }
 
     public boolean startClient(String clientName, String ip, int port) {
@@ -50,6 +53,7 @@ public class Application implements Runnable {
         return false;
     }
 
-    public void startGame() {
+    public void startGame(Thread t) {
+    	t.start();
     }
 }

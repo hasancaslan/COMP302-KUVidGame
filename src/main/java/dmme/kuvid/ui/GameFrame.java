@@ -1,5 +1,6 @@
 package dmme.kuvid.ui;
 
+import dmme.kuvid.Application;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.ui.menu.MenuPanel;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 public class GameFrame extends JFrame {
     private final ShooterUI shooterUI;
     public GamePanel gamePanel;
+    private static MenuPanel menu;
 
     public GameFrame() {
         this(KUVidGame.getInstance().getScreenSize());
@@ -27,11 +29,13 @@ public class GameFrame extends JFrame {
             e.printStackTrace();
         }
 
+        
         getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
-        this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter());
-        this.gamePanel = new GamePanel(KUVidGame.getInstance(), this.shooterUI, this);
+        
+        this.gamePanel = new GamePanel(KUVidGame.getInstance(), this);
+        this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter(), gamePanel);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -41,7 +45,8 @@ public class GameFrame extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         getContentPane().add(gamePanel, constraints);
 
-        JPanel menuPanel = new MenuPanel();
+        MenuPanel menuPanel = new MenuPanel();
+        this.menu=menuPanel;
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.weightx = 0.1;
@@ -50,6 +55,9 @@ public class GameFrame extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         getContentPane().add(menuPanel, constraints);
 
+        menuPanel.getBlenderPanel().updateAtomCounts();
+        JFrame pause= new PauseWindow();
+        
         this.setSize(size);
         this.setTitle("KUVid Game");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,6 +65,8 @@ public class GameFrame extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         validate();
+        
+        
 
         this.addKeyListener(new KeyListener() {
             @Override
@@ -64,30 +74,68 @@ public class GameFrame extends JFrame {
 
                 char key = e.getKeyChar();
                 switch (key) {
-                    case 'a':
-                        KUVidGame.getInstance().moveShooter(-10);
-                        break;
                     case 's':
-                        KUVidGame.getInstance().aimShooter(-10);
-                        break;
-                    case 'd':
-                        KUVidGame.getInstance().moveShooter(10);
+                        KUVidGame.getInstance().aimShooter(-10);//check
                         break;
                     case 'w':
-                        KUVidGame.getInstance().aimShooter(10);
+                        KUVidGame.getInstance().aimShooter(10);//check
                         break;
+                    case 'c':
+                    	KUVidGame.getInstance().selectAtom();
+                    	break;
+                    case 'p':
+                    	KUVidGame.getInstance().pauseGame();
+                    	pause.setVisible(true);
+                    	break;
+                    case 'r':
+                    	pause.dispose();
+                    	KUVidGame.getInstance().resumeGame();
+                    	break;
+                    case 'b':
+                    	KUVidGame.getInstance().pauseGame();
+                    	new BlenderWindow();
+                    	break;
+                    default:
+                    	System.out.println(e.getKeyCode());
                 }
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
+            	int key = e.getKeyCode();
+                switch (key) {
+                    case KeyEvent.VK_LEFT:
+                        KUVidGame.getInstance().moveShooter(-10);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        KUVidGame.getInstance().moveShooter(10);
+                        break;
+                    	
+                }
 
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
+            	int key = e.getKeyCode();
+                switch (key) {
+                    case KeyEvent.VK_UP:
+                    	KUVidGame.getInstance().shoot();
+                    	break;
+                    	
+                }
 
             }
         });
+        
+        
+    }
+    
+    public static void updateNumAtoms() {
+    	GameFrame.menu.getBlenderPanel().updateAtomCounts();
+    }
+    
+    public static void finishedGame() {
+    	new FinishWindow();
     }
 }

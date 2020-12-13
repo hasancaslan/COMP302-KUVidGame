@@ -18,7 +18,8 @@ public class BlenderPanel extends JPanel implements PropertyListener {
 
     public BlenderPanel() {
         super(new GridLayout(5, 2));
-        setOpaque(false);
+        setOpaque(true);
+        this.setBackground(new Color(204, 230, 255));
         this.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0, 0, 0, 120)));
 
         Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
@@ -59,7 +60,7 @@ public class BlenderPanel extends JPanel implements PropertyListener {
         this.add(sigmaCountLabel);
     }
 
-    private void updateAtomCounts() {
+    public void updateAtomCounts() {
         for (AtomType type : AtomType.values()) {
             setAtomCount(type, KUVidGame.getInstance().getNumAtom(type));
         }

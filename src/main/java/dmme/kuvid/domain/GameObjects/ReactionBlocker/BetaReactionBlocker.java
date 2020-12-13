@@ -22,4 +22,10 @@ public class BetaReactionBlocker extends ReactionBlocker {
 		return null;
 	}
 
+	@Override
+	public void setPosition(Position position) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

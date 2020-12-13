@@ -2,6 +2,7 @@ package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.*;
+import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Shooter extends Observable {
@@ -47,26 +48,64 @@ public class Shooter extends Observable {
     }
 
     public void moveShooter(int displacement) {
-        setPosition(getPosition() + displacement);
+    	int L=KUVidGame.getInstance().getL();
+    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+    	int gameWidth=KUVidGame.getInstance().getPlayableArea().width;
+    	int newPosition = getPosition() + displacement;
+    	if(newPosition > gameWidth) newPosition = gameWidth;
+    	if(newPosition < -5*L) newPosition = -5*L;
+        setPosition(newPosition);
+        if (this.currentAtom!= null) {
+    		this.currentAtom.setPosition(new Position(this.position,gameHeight-10*L));;
+    	}
+        
     }
 
     public void rotateShooter(int angleChange) {
-        setAngle(getAngle() + angleChange);
+    	int L=KUVidGame.getInstance().getL();
+    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+    	double angle=Math.toRadians(this.getAngle());
+    	int newAngle = getAngle() + angleChange;
+    	if(newAngle > 180) newAngle = 180;
+    	if(newAngle < 0) newAngle = 0;
+        setAngle(newAngle);
+        if (this.currentAtom!= null) {
+        	int x=this.position-(int)(10*L*Math.cos(angle));
+        	int y=gameHeight-(int)(10*L*Math.sin(angle));
+    		this.currentAtom.setPosition(new Position(x,y));
+    	}
     }
 
     public void pickAtom() {
-        this.currentAtom=KUVidGame.getInstance().getRandomAtom();
+    	if(KUVidGame.getInstance().getRemAtoms()>0) {
+	    	int L=KUVidGame.getInstance().getL();
+	    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+	    	if (this.currentAtom!= null) {
+	    		this.currentAtom.setActive(false);
+	    	}
+	        this.currentAtom=KUVidGame.getInstance().getRandomAtom();
+	        double angle=Math.toRadians(this.getAngle());
+	        int x=this.position-10*(int)(L*Math.cos(angle));
+	    	int y=gameHeight-(int)(10*L*Math.sin(angle));
+	        this.currentAtom.setPosition(new Position(x,y));
+	        this.currentAtom.setActive(true);
+    	}
     }
 
     public void shootAtom() {
-        // TODO: CONFIGURE FOR SCREENSIZE NOT N
-    	//int L=KUVidGame.getInstance().getL();
-    	//int N=KUVidGame.getInstance().getN();
-    	double angle=this.getAngle();
-        //this.currentAtom.setPosition(new Position(this.position,N*L-3*L));
-        this.currentAtom.setDirection(new Position((int)Math.cos(angle),(int)Math.sin(angle)));
-        this.currentAtom.setActive(true);
-        this.pickAtom();
+    	if (this.currentAtom!= null) {
+    		int L=KUVidGame.getInstance().getL();
+    		int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+    		double angle=Math.toRadians(this.getAngle()); 
+    		Position direction=new Position((int)(-L*Math.cos(angle)),(int)(-L*Math.sin(angle)));
+    		this.currentAtom.setDirection(direction);
+    		
+    		KUVidGame.getShootedAtom().add(this.currentAtom);
+    		KUVidGame.getGameObjectMap().get(new Key(this.currentAtom.getType(),this.currentAtom.getSubType())).remove(this.currentAtom);
+    		GameFrame.updateNumAtoms();
+    		this.currentAtom=null;
+    		this.pickAtom();
+    	}
     }
 
 }
