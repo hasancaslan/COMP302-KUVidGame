@@ -6,6 +6,7 @@ import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.lib.types.*;
+import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.util.Random;
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
     private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
+    private static List<GameObject> shootedAtom = new ArrayList<>();
     public boolean active = true;
     public boolean blendingMode;
     private Dimension screenSize;
@@ -37,7 +39,7 @@ public class KUVidGame extends Observable implements Runnable {
     private Blender blender;
     private createHandler creator;
     private destroyHandler destroyer;
-    private int time=600;
+    private int time=60;//600;
     private Player p1;
     private Random rand = new Random();
     private int throwMolecule;
@@ -48,6 +50,7 @@ public class KUVidGame extends Observable implements Runnable {
     private int sigmaNo=1;
     private int MOLNO=0;
     private int count = 0;
+    private int RemAtoms=0;
 
     private KUVidGame() {
         this.shooter = new Shooter();
@@ -226,11 +229,20 @@ public class KUVidGame extends Observable implements Runnable {
     public int getNumAtom(AtomType type) {
         return KUVidGame.gameObjectMap.get(new Key(ObjectType.ATOM, type)).size();
     }
+    
+    public int getNumMol(MoleculeType type) {
+        return KUVidGame.gameObjectMap.get(new Key(ObjectType.MOLECULE, type)).size();
+    }
 
     public GameObject getRandomAtom() {
         List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
+        
+        while(list.size()==0) {
+        	list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
+        }
+        
         GameObject atom = list.get(this.rand.nextInt(list.size()));
-
+        
         while (atom.isActive()) {
             atom = list.get(this.rand.nextInt(list.size()));
         }
@@ -240,8 +252,8 @@ public class KUVidGame extends Observable implements Runnable {
 
     public void runGame(){ //main loop
     	
-    	int num=Math.floorDiv(this.numAtoms,4);
-        int numMol=Math.floorDiv(this.numMolecules, 4);
+    	int num=(int) Math.ceil((this.numAtoms/4.0));
+        int numMol=(int) Math.ceil((this.numMolecules/4.0));
         this.throwMolecule=numMol*4;
         this.MOLNO=numMol;
         
@@ -264,6 +276,10 @@ public class KUVidGame extends Observable implements Runnable {
             if (getTime() <= 0) {
                 break;
             }
+            if(this.getRemMolecules()==0) {
+            	break;
+            }
+            
 
             if(this.active) {
             	movementHandler.getInstance().run();
@@ -296,6 +312,8 @@ public class KUVidGame extends Observable implements Runnable {
             
 
         }
+        
+        GameFrame.finishedGame();
     }
 
     public void pauseGame() {
@@ -376,4 +394,21 @@ public class KUVidGame extends Observable implements Runnable {
 		System.out.print("]");
 		System.out.println("");
 	}
+
+	public static List<GameObject> getShootedAtom() {
+		return shootedAtom;
+	}
+
+	public int getRemAtoms() {
+		return this.getNumAtom(AtomType.ALPHA)+this.getNumAtom(AtomType.BETA)+this.getNumAtom(AtomType.SIGMA)+this.getNumAtom(AtomType.GAMMA);
+	}
+	
+	public int getRemMolecules() {
+		return this.getNumMol(MoleculeType.ALPHA)+this.getNumMol(MoleculeType.BETA)+this.getNumMol(MoleculeType.SIGMA)+this.getNumMol(MoleculeType.GAMMA);
+	}
+	
+	public int getScore() {
+		return this.p1.getPoint();
+	}
+
 }

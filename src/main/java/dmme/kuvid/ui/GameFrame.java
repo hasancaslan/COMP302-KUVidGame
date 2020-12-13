@@ -56,7 +56,7 @@ public class GameFrame extends JFrame {
         getContentPane().add(menuPanel, constraints);
 
         menuPanel.getBlenderPanel().updateAtomCounts();
-        JDialog pausePanel=PauseWindow.infoBox("PAUSED", "Pause Window");
+        JFrame pause= new PauseWindow();
         
         this.setSize(size);
         this.setTitle("KUVid Game");
@@ -85,10 +85,10 @@ public class GameFrame extends JFrame {
                     	break;
                     case 'p':
                     	KUVidGame.getInstance().pauseGame();
-                    	pausePanel.setVisible(true);
+                    	pause.setVisible(true);
                     	break;
                     case 'r':
-                    	pausePanel.dispose();
+                    	pause.dispose();
                     	KUVidGame.getInstance().resumeGame();
                     	break;
                     case 'b':
@@ -110,14 +110,6 @@ public class GameFrame extends JFrame {
                     case KeyEvent.VK_RIGHT:
                         KUVidGame.getInstance().moveShooter(10);
                         break;
-                    case KeyEvent.VK_UP:
-                    	KUVidGame.getInstance().shoot();
-                        try {
-                        	Thread.sleep(1000);
-                        } catch (InterruptedException e1) {
-                        	e1.printStackTrace();
-                        }
-                    	break;
                     	
                 }
 
@@ -125,6 +117,13 @@ public class GameFrame extends JFrame {
 
             @Override
             public void keyReleased(KeyEvent e) {
+            	int key = e.getKeyCode();
+                switch (key) {
+                    case KeyEvent.VK_UP:
+                    	KUVidGame.getInstance().shoot();
+                    	break;
+                    	
+                }
 
             }
         });
@@ -134,5 +133,9 @@ public class GameFrame extends JFrame {
     
     public static void updateNumAtoms() {
     	GameFrame.menu.getBlenderPanel().updateAtomCounts();
+    }
+    
+    public static void finishedGame() {
+    	new FinishWindow();
     }
 }

@@ -17,7 +17,11 @@ public class destroyHandler {
 
     public static boolean destroyObject(GameObject object1) {
         if (object1 == null) return false;
-        GameObject.getGameObjectList(object1.getType(), object1.getSubType()).remove(object1);
+        if(object1.getType().equals(ObjectType.ATOM)) {
+        	KUVidGame.getShootedAtom().remove(object1);
+        }else {
+        	GameObject.getGameObjectList(object1.getType(), object1.getSubType()).remove(object1);
+        }
         object1.setActive(false);
         GameFrame.updateNumAtoms();
         return true;
