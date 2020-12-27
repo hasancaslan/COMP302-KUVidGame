@@ -5,6 +5,7 @@ import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
+import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
@@ -44,6 +45,11 @@ public class KUVidGame extends Observable implements Runnable {
     private Random rand = new Random();
     private int throwMolecule;
     
+    private int alphaBlockNo=1;
+    private int betaBlockNo=1;
+    private int gammaBlockNo=1;
+    private int sigmaBlockNo=1;
+    private int BLOCKNO=0;
     private int alphaNo=1;
     private int betaNo=1;
     private int gammaNo=1;
@@ -71,7 +77,10 @@ public class KUVidGame extends Observable implements Runnable {
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.GAMMA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA), new ArrayList<GameObject>());
-        
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.ALPHA_R), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.BETA_R), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.GAMMA_R), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.SIGMA_R), new ArrayList<GameObject>());
         
     }
 
@@ -254,8 +263,10 @@ public class KUVidGame extends Observable implements Runnable {
     	
     	int num=(int) Math.ceil((this.numAtoms/4.0));
         int numMol=(int) Math.ceil((this.numMolecules/4.0));
+        int numBlock=(int) Math.ceil((this.numBlocker/4.0));
         this.throwMolecule=numMol*4;
         this.MOLNO=numMol;
+        this.BLOCKNO=numBlock;
         
         DomainFactory.createAtom(AtomType.ALPHA,num);
         DomainFactory.createAtom(AtomType.BETA,num);
@@ -267,6 +278,11 @@ public class KUVidGame extends Observable implements Runnable {
         DomainFactory.createMolecule(MoleculeType.BETA, numMol);
         DomainFactory.createMolecule(MoleculeType.GAMMA, numMol);
         DomainFactory.createMolecule(MoleculeType.SIGMA, numMol);
+        
+        DomainFactory.createReactionBlocker(ReactionType.ALPHA_R, numBlock);
+        DomainFactory.createReactionBlocker(ReactionType.BETA_R, numBlock);
+        DomainFactory.createReactionBlocker(ReactionType.SIGMA_R, numBlock);
+        DomainFactory.createReactionBlocker(ReactionType.GAMMA_R, numBlock);
         
 
         while (true) {
@@ -370,6 +386,43 @@ public class KUVidGame extends Observable implements Runnable {
         this.throwMolecule--;
         
        
+    }
+    
+    public void throwBlocker() {
+    	ReactionType t=ReactionType.randomReactionType();
+    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
+    	
+    	while(list.size()==0) {
+    		t=ReactionType.randomReactionType();
+    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
+    	}
+    	
+    	ReactionBlocker blocker=null;
+    	while(blocker==null) {
+    		
+	    	if(t.equals(ReactionType.ALPHA_R) && this.alphaBlockNo<=this.BLOCKNO) {
+	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.alphaBlockNo);
+	    		this.alphaBlockNo++;
+	    	}else if(t.equals(ReactionType.BETA_R) && this.betaBlockNo<=this.BLOCKNO) {
+	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.betaBlockNo);
+	    		this.betaBlockNo++;
+	    	}else if(t.equals(ReactionType.GAMMA_R) && this.gammaBlockNo<=this.BLOCKNO) {
+	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.gammaBlockNo);
+	    		this.gammaBlockNo++;
+	    	}else if(t.equals(ReactionType.SIGMA_R) && this.sigmaBlockNo<=this.BLOCKNO) {
+	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.sigmaBlockNo);
+	    		this.sigmaBlockNo++;
+	    	}
+        
+        	t=ReactionType.randomReactionType();
+    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
+    		
+        }
+        
+        blocker.setPosition(new Position(this.rand.nextInt(this.playableArea.width - 30*L) + 10 * L ,0));
+        blocker.setActive(true);
+        //this.throwMolecule--;
+    	
     }
     
     public void shoot() {
