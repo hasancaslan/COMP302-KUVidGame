@@ -12,7 +12,6 @@ import java.util.List;
 
 public class SaveLoadLocal implements Saveable, Loadable {
     private final HashMap<Key, List<GameObject>> gameObjectMap = KUVidGame.getGameObjectMap();
-    private ArrayList<GameObject> gameObjects;
     private Player player;
 
     public SaveLoadLocal() {
@@ -21,9 +20,6 @@ public class SaveLoadLocal implements Saveable, Loadable {
     @Override
     public boolean save() {
         JSONArray jsonArray = new JSONArray();
-        for (Key key : gameObjectMap.keySet()) {
-            System.out.println(key.toString());
-        }
         return false;
     }
 
