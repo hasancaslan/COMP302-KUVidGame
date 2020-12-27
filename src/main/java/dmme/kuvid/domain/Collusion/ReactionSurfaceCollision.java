@@ -12,14 +12,10 @@ public class ReactionSurfaceCollision implements collisionHandler {
 			int shooterPosition= KUVidGame.getInstance().getShooter().getPosition();
 			int objectPosition= object.getPosition().getX();
 			
-			System.out.println("dist: "+Math.abs(shooterPosition - objectPosition));
 			if (Math.abs(shooterPosition - objectPosition) <10*KUVidGame.getInstance().getL()) {
-				damage = 100;
-				System.out.println("KAFAMA DÜŞTÜ");
-				//DOES NOT ENTER HERE CHECK!!!!!
+				damage = 1000;
 			}else {
 				damage = KUVidGame.getInstance().getPlayableArea().width / Math.abs(shooterPosition - objectPosition);
-				System.out.println("YAKINA DÜŞTÜ: "+damage);
 			}
 			Player.getInstance().decrementHealth(damage);
 			destroyHandler.destroyObject(object);

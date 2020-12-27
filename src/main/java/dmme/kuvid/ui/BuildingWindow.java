@@ -13,7 +13,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class BuildingWindow extends JFrame {
-    private final String DEFAULT_COMPONENT_AMOUNT = "50";
+    private final String DEFAULT_COMPONENT_AMOUNT = "400";
+    private final String DEFAULT_BLOCKER_AMOUNT = "40";
+    private final String DEFAULT_POWER_AMOUNT = "80";
     private final String DEFAULT_SIZE = "5";
     public boolean Spinning = false;    //for Alpha and Beta
     public boolean linear = true;
@@ -22,8 +24,8 @@ public class BuildingWindow extends JFrame {
     
     
     JTextField AtomNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
-    JTextField ReactionBlockerNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
-    JTextField PowerUpNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
+    JTextField ReactionBlockerNumber = new JTextField(DEFAULT_BLOCKER_AMOUNT, 8);
+    JTextField PowerUpNumber = new JTextField(DEFAULT_POWER_AMOUNT, 8);
     JTextField MoleculeNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField LTextField = new JTextField(DEFAULT_SIZE, 8);
     ButtonGroup spinGroup;

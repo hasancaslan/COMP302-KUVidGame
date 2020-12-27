@@ -9,6 +9,7 @@ import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
+import dmme.kuvid.lib.types.ReactionType;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class movementHandler {
     private List<GameObject> garbage=new ArrayList<GameObject>();
     private List<GameObject> collidedMol=new ArrayList<GameObject>();
     private List<GameObject> collidedAtom=new ArrayList<GameObject>();
+    private List<GameObject> collidedBlocker=new ArrayList<GameObject>();
 
     private movementHandler() {}
 
@@ -85,6 +87,7 @@ public class movementHandler {
            int y1 = atom.getPosition().getY();
     	   for(MoleculeType Mtype: MoleculeType.values()) {
     		   List<GameObject> MolList = map.get(new Key(ObjectType.MOLECULE,Mtype));
+    		   List<GameObject> BlockList = map.get(new Key(ObjectType.REACTION_BLOCKER,ReactionType.valueOf(Mtype.toString()+"_R")));
     		   for(GameObject mol : MolList) {
     			   if (!mol.isActive()) continue;
     			   int x2 = mol.getPosition().getX();
@@ -93,6 +96,21 @@ public class movementHandler {
                       
                       this.collidedMol.add(mol);
                       this.collidedAtom.add(atom);
+                      
+                      boolean added=false;
+                      for(GameObject block : BlockList) {
+           			   if (!block.isActive()) continue;
+           			   int xb = block.getPosition().getX();
+           	           int yb = block.getPosition().getY();
+           	           if (Math.abs(x1 - xb) < 15*L && Math.abs(y1 - yb) < 15*L) { 
+                             
+                             this.collidedBlocker.add(block);
+                             added=true;
+           	           }
+                      }
+                      if(!added) {
+                    	  this.collidedBlocker.add(null);
+                      }
     		   }
     	   }
     	   //for loop (ReactionBlocker)
@@ -100,10 +118,24 @@ public class movementHandler {
        }
        
        for(int i=0; i<this.collidedMol.size();i++) {
-    	   new AtomMoleculeCollision(this.collidedAtom.get(i), this.collidedMol.get(i));
+    	   
+    	   if(this.collidedBlocker.get(i)==null) {
+    		   new AtomMoleculeCollision(this.collidedAtom.get(i), this.collidedMol.get(i),false);
+    	   }else {
+    		   if((this.collidedMol.get(i).getSubType().toString()+"_R").equals(this.collidedBlocker.get(i).getSubType().toString())) {
+    			   new AtomMoleculeCollision(this.collidedAtom.get(i), this.collidedMol.get(i),true);
+    			   System.out.println("BLOCKED");
+    			   destroyHandler.destroyObject(this.collidedBlocker.get(i));
+    		   }else {
+    			   new AtomMoleculeCollision(this.collidedAtom.get(i), this.collidedMol.get(i),false);
+    			   System.out.println("TYPE MISS");
+    		   }
+    	   }
+    	   
        }
        this.collidedAtom.clear();
        this.collidedMol.clear();
+       this.collidedBlocker.clear();
     }
 
     public void move() {
