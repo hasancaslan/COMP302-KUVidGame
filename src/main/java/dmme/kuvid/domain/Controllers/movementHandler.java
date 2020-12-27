@@ -111,9 +111,12 @@ public class movementHandler {
         for (Key k: map.keySet()) {
         	 List<GameObject> gameObjectList = map.get(k);
 	        for (GameObject gameObject : gameObjectList) {
-	            gameObject.move();
-	            if(gameObject.getPosition().getY()>KUVidGame.getInstance().getPlayableArea().height && gameObject.isActive()) {
-	            	this.garbage.add(gameObject);
+	        	if(gameObject.isActive()) {
+	        		gameObject.move();
+	        	
+		            if(gameObject.getPosition().getY()>KUVidGame.getInstance().getPlayableArea().height && gameObject.isActive()) {
+		            	this.garbage.add(gameObject);
+		        	}
 	        	}
 	        }
         }
@@ -126,7 +129,11 @@ public class movementHandler {
         }
         
         for(GameObject gameObject: garbage) {
-        	destroyHandler.destroyObject(gameObject);
+        	if(gameObject.getType().equals(ObjectType.REACTION_BLOCKER)) {
+        		new ReactionSurfaceCollision(gameObject);
+        	}else {
+        		destroyHandler.destroyObject(gameObject);
+        	}
         }
         garbage.clear();
         this.search();

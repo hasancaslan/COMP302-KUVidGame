@@ -44,6 +44,7 @@ public class KUVidGame extends Observable implements Runnable {
     private Player p1;
     private Random rand = new Random();
     private int throwMolecule;
+    private int throwBlocker;
     
     private int alphaBlockNo=1;
     private int betaBlockNo=1;
@@ -266,6 +267,7 @@ public class KUVidGame extends Observable implements Runnable {
         int numBlock=(int) Math.ceil((this.numBlocker/4.0));
         this.throwMolecule=numMol*4;
         this.MOLNO=numMol;
+        this.throwBlocker=numBlock*4;
         this.BLOCKNO=numBlock;
         
         DomainFactory.createAtom(AtomType.ALPHA,num);
@@ -306,8 +308,15 @@ public class KUVidGame extends Observable implements Runnable {
         			} catch (InterruptedException e) {
         				e.printStackTrace();
         			}
-                	if(count == 10 && this.throwMolecule>0) {
-                    	throwMolecule();
+                	if(count == 10) {
+                		int select=this.rand.nextInt(3);
+                		if(select==0 && this.throwMolecule>0) {
+                			throwMolecule();
+                		}else if(select==1 && this.throwBlocker>0){
+                			throwBlocker();
+                		}else {
+                			//throwPowerUp();
+                		}
                 	}
             	}
             	if(count == 10) {
@@ -421,7 +430,7 @@ public class KUVidGame extends Observable implements Runnable {
         
         blocker.setPosition(new Position(this.rand.nextInt(this.playableArea.width - 30*L) + 10 * L ,0));
         blocker.setActive(true);
-        //this.throwMolecule--;
+        this.throwBlocker--;
     	
     }
     

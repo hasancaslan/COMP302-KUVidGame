@@ -45,5 +45,23 @@ public class Factory {
 		sigmaMoleculeUI sigma= new sigmaMoleculeUI(mol,Factory.panel);
 		
 	}
+	
+	public static void createAlphaBlockerUI(GameObject mol) {
+		alphaBlockerUI alpha=new alphaBlockerUI(mol,Factory.panel);
+		
+	}
+	public static void createGammaBlockerUI(GameObject mol) {
+		gammaBlockerUI gamma=new gammaBlockerUI(mol,Factory.panel);
+		
+	}
+	
+	public static void createBetaBlockerUI(GameObject mol) {
+		betaBlockerUI beta=new betaBlockerUI(mol,Factory.panel);
+		
+	}
+	public static void createSigmaBlockerUI(GameObject mol) {
+		sigmaBlockerUI sigma= new sigmaBlockerUI(mol,Factory.panel);
+		
+	}
 
 }
