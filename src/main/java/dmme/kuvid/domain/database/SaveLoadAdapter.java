@@ -1,6 +1,6 @@
 package dmme.kuvid.domain.database;
 
-public class SaveLoadAdapter implements Saveable, Loadable{
+public class SaveLoadAdapter implements Saveable, Loadable {
 
     public SaveLoadAdapter() {
     }

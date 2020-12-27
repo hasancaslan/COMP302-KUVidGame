@@ -1,6 +1,6 @@
 package dmme.kuvid.domain.database;
 
-public class SaveLoadLocal implements Saveable, Loadable{
+public class SaveLoadLocal implements Saveable, Loadable {
     @Override
     public boolean save() {
         return false;
