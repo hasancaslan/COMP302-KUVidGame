@@ -13,4 +13,5 @@ public interface MovementStrategy {
 	
 	public void move(GameObject m, int count);
 
+
 }

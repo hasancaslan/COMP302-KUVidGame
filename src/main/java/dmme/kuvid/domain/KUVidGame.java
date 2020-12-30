@@ -21,8 +21,8 @@ public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
     private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
     private static List<GameObject> shootedAtom = new ArrayList<>();
-    public boolean active = true;
-    public boolean blendingMode;
+    private boolean active = true;
+    private boolean blendingMode;
     private Dimension screenSize;
     private Dimension playableArea;
     private int L;
@@ -33,6 +33,7 @@ public class KUVidGame extends Observable implements Runnable {
     private final int range = 10;
 
     private boolean linearity;
+    private boolean spinning;
     private int difficulty=1;
     private int sleepTime=100;
     private GameObject objects;
@@ -149,12 +150,21 @@ public class KUVidGame extends Observable implements Runnable {
     	}
     }
 
-    public boolean getLinearity() {
-        return linearity;
+    public int getLinearity() {
+    	if(linearity) return 1;
+        return 0;
     }
 
     public void setLinearity(boolean linearity) {
     	this.linearity = linearity;
+    }
+    
+    public boolean getSpinning() {
+    	return this.spinning;
+    }
+
+    public void setSpinning(boolean spinning) {
+    	this.spinning=spinning;
     }
 
     public boolean isActive() {
