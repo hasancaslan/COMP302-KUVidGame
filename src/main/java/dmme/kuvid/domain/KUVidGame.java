@@ -36,6 +36,7 @@ public class KUVidGame extends Observable implements Runnable {
     private final int range = 10;
 
     private boolean linearity;
+    private boolean spinning;
     private int difficulty=1;
     private int sleepTime=100;
     private GameObject objects;
@@ -170,12 +171,21 @@ public class KUVidGame extends Observable implements Runnable {
     	}
     }
 
-    public boolean getLinearity() {
-        return linearity;
+    public int getLinearity() {
+    	if(linearity) return 1;
+        return 0;
     }
 
     public void setLinearity(boolean linearity) {
     	this.linearity = linearity;
+    }
+    
+    public boolean getSpinning() {
+    	return this.spinning;
+    }
+
+    public void setSpinning(boolean spinning) {
+    	this.spinning=spinning;
     }
 
     public boolean isActive() {

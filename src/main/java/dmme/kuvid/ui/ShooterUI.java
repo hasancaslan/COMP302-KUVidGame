@@ -50,12 +50,7 @@ public class ShooterUI extends JLabel implements PropertyListener {
         	this.panel.add(this);
         } else if (e.getPropertyName().equals("angle")) {
         	int angle=(this.shooter.getAngle()-90);
-/*        	if(angle>=90) {
-        		angle=90;
-        	}else if(angle<=-90) {
-        		angle=-90;
-        	}
-*/       	String s = "shooter"+angle+".png";
+        	String s = "shooter"+angle+".png";
         	ImageIcon icon =IconImporter.getIconFromFileName(s,"shooter",new Dimension((int) (10 * L), (int) (20 * L)));
         	this.setIcon(icon);
         	this.panel.add(this);
