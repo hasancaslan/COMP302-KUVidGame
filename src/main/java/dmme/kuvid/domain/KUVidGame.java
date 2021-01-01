@@ -213,7 +213,7 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void selectPowerUp(PowerType type) {
-
+    	this.shooter.pickPowerUp(type);
     }
 
     public int getRange() {
@@ -545,6 +545,10 @@ public class KUVidGame extends Observable implements Runnable {
 	
 	public int getScore() {
 		return this.p1.getPoint();
+	}
+
+	public static List<GameObject> getShootedPower() {
+		return shootedPower;
 	}
 
 }

@@ -41,7 +41,7 @@ public class alphaPowerUI extends AtomUI implements PropertyListener{
         	}
         }else if (e.getPropertyName().equals("position")) {
         	if(this.power.isActive()) {
-        		this.setLocation(this.power.getPosition().getX(),this.power.getPosition().getY());
+        		this.setLocation(this.power.getPosition().getX(),this.power.getPosition().getY()-10*L);
         	}
         }
     }

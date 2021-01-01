@@ -13,10 +13,14 @@ public interface collisionHandler {
 			if(KUVidGame.getShootedAtom().contains(object1)) {
 				destroyHandler.destroyObject(object1);
 			}
+		}else if(object1.getType().equals(ObjectType.POWER_UP)) {
+			if(KUVidGame.getShootedPower().contains(object1)) {
+				KUVidGame.getShootedPower().remove(object1);
+				object1.setActive(false);
+			}
 		}
 		destroyHandler.destroyObject(object2);
 	};
 	
-//	istanceof(GameObject)
 
 }
