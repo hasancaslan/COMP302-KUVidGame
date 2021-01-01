@@ -135,6 +135,10 @@ public class GameFrame extends JFrame {
     	GameFrame.menu.getBlenderPanel().updateAtomCounts();
     }
     
+    public static void updateNumPower() {
+    	GameFrame.menu.getPowerUpPanel().updatePowerCounts();
+    }
+    
     public static void finishedGame() {
     	new FinishWindow();
     }

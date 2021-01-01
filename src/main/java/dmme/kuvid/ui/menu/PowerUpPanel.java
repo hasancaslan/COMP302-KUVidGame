@@ -1,6 +1,8 @@
 package dmme.kuvid.ui.menu;
 
 import dmme.kuvid.constants.Config;
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.PowerType;
 import dmme.kuvid.utils.IconImporter;
 import dmme.kuvid.utils.observer.PropertyEvent;
@@ -56,6 +58,12 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         this.add(gammaBCountLabel);
         this.add(sigmaBIconLabel);
         this.add(sigmaBCountLabel);
+    }
+    
+    public void updatePowerCounts() {
+        for (PowerType type : PowerType.values()) {
+            setPowerUpCount(type, KUVidGame.getInstance().getNumPower(type));
+        }
     }
 
     public void setPowerUpCount(PowerType type, int count) {

@@ -5,11 +5,13 @@ import dmme.kuvid.domain.Collusion.*;
 import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.domain.GameObjects.Shooter;
+import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
 import dmme.kuvid.lib.types.ReactionType;
+import dmme.kuvid.ui.GameFrame;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -139,16 +141,37 @@ public class movementHandler {
     }
 
     public void move() {
+    	int L=KUVidGame.getInstance().getL();
     	HashMap<Key,List<GameObject>> map= KUVidGame.getGameObjectMap();
         for (Key k: map.keySet()) {
         	 List<GameObject> gameObjectList = map.get(k);
 	        for (GameObject gameObject : gameObjectList) {
 	        	if(gameObject.isActive()) {
 	        		gameObject.move();
-	        	
-		            if(gameObject.getPosition().getY()>KUVidGame.getInstance().getPlayableArea().height && gameObject.isActive()) {
-		            	this.garbage.add(gameObject);
-		        	}
+	        		
+	        		if(gameObject.getType().equals(ObjectType.REACTION_BLOCKER)) {
+	        			int shooterPosition= KUVidGame.getInstance().getShooter().getPosition();
+	        			int objectPosition= gameObject.getPosition().getX();
+	        			if((Math.abs(shooterPosition-objectPosition)<5*L)&& gameObject.isActive()&&gameObject.getPosition().getY()>(KUVidGame.getInstance().getPlayableArea().height-20*L)) {
+	        				this.garbage.add(gameObject);
+	        			}else if(gameObject.getPosition().getY()>(KUVidGame.getInstance().getPlayableArea().height-10*L) && gameObject.isActive()) {
+			            	this.garbage.add(gameObject);
+			        	}
+	        		}else if(gameObject.getType().equals(ObjectType.POWER_UP)) {
+	        			int shooterPosition= KUVidGame.getInstance().getShooter().getPosition();
+	        			int objectPosition= gameObject.getPosition().getX();
+	        			if((Math.abs(shooterPosition-objectPosition)<5*L)&& gameObject.isActive()&&gameObject.getPosition().getY()>(KUVidGame.getInstance().getPlayableArea().height-20*L)) {
+	        				this.garbage.add(gameObject);
+	        				KUVidGame.getPowerArsenal().get(gameObject.getSubType()).add((PowerUp) gameObject);
+	        				GameFrame.updateNumPower();
+	        			}else if(gameObject.getPosition().getY()>(KUVidGame.getInstance().getPlayableArea().height-10*L) && gameObject.isActive()) {
+			            	this.garbage.add(gameObject);
+			        	}
+	        		}else {
+	        			if(gameObject.getPosition().getY()>KUVidGame.getInstance().getPlayableArea().height && gameObject.isActive()) {
+			            	this.garbage.add(gameObject);
+			        	}
+	        		}
 	        	}
 	        }
         }
