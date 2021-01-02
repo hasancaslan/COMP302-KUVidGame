@@ -8,16 +8,29 @@ public abstract class Atom extends GameObject{
 	
 	public AtomType subtype;
 
+	protected double stability_constant;
+	protected int protons;
+	protected int neutrons;
+	protected double efficiency;
+
+
 	public Atom(Position position, Position direction, boolean active, ObjectType type) {
 		super(position, direction, active, type);
-		// TODO Auto-generated constructor stub
 	}
 
-	
+	//TODO
+	protected Atom() {
+	}
+
+
 	public abstract void setAtomType();
+
 	
 	public Enum getSubType() {
 		return this.subtype;
 	}
+
+	public abstract void initStabilityFeatures(); //TODO may be deprecated
+	public abstract double getStability();
 
 }

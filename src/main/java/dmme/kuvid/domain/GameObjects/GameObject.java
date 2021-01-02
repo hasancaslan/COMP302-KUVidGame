@@ -18,6 +18,7 @@ public abstract class GameObject extends Observable{
 	protected Dimension gameField = KUVidGame.getInstance().getPlayableArea(); 
 	protected Position position;
 	protected Position direction;
+	protected double paceFactor=1; //if we need to change speed of particular objects at run time, unlike difficulty
 
 	private ObjectType type;
 
@@ -84,8 +85,10 @@ public abstract class GameObject extends Observable{
 			int dy = this.getDirection().getY();
 			
 			if(dx!=0 | dy!=0) {
-				int newX = x1 + dx;
-				int newY = y1 + dy;
+				//int newX = x1 + dx;
+				int newX = x1 +  (int)(dx*(this.paceFactor));
+				//int newY = y1 + dy;
+				int newY = y1 +  (int)(dy*(this.paceFactor));
 
 				if(newX > KUVidGame.getInstance().getPlayableArea().width || newX < 0) {
 					newX = x1 - dx;

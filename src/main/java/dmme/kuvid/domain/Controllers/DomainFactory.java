@@ -1,11 +1,8 @@
 package dmme.kuvid.domain.Controllers;
 
-import dmme.kuvid.domain.KUVidGame;
-
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.GameObjects.Molecules.*;
-import dmme.kuvid.domain.GameObjects.Powerup.*;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.*;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.Factory;
@@ -39,7 +36,7 @@ public class DomainFactory {
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
-                    atom = new GamaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
+                    atom = new GammaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.GAMMA).add(atom);
                     Factory.createGammaUI(atom);
                 }
