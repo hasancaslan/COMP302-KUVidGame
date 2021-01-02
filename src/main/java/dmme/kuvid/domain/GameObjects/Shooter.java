@@ -1,6 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
@@ -83,7 +84,7 @@ public class Shooter extends Observable {
 	    	if (this.currentAtom!= null) {
 	    		this.currentAtom.setActive(false);
 	    	}
-	        this.currentAtom=KUVidGame.getInstance().getRandomAtom();
+	        this.currentAtom = movementHandler.getInstance().getRandomAtom();
 	        double angle=Math.toRadians(this.getAngle());
 	        int x=this.position-10*(int)(L*Math.cos(angle));
 	    	int y=gameHeight-(int)(10*L*Math.sin(angle));
