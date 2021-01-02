@@ -23,8 +23,8 @@ public class ZigZagPatternStrategy implements MovementStrategy {
 			X += distance;
 			Y += distance;
 		}
-		Position nextPosition = new Position(X, Y);	
-		m.setPosition(nextPosition); 
+		Position nextPosition = new Position(X, Y);
+		m.setPosition(nextPosition);
 
 	}
 
