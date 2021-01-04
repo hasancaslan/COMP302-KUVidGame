@@ -373,6 +373,8 @@ public class KUVidGame extends Observable implements Runnable {
             		count = 0;
             		setTime(getTime() - 1);
             	}
+
+                Type type = new TypeToken<HashMap<Key, List<?>>>(){}.getType();
             	toBeLoaded = save();
 
             } else {
@@ -566,4 +568,15 @@ public class KUVidGame extends Observable implements Runnable {
 		return shootedPower;
 	}
 
+    private String save() {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(getGameObjectMap());
+        //System.out.println("SERIALIZED");
+        //System.out.println("Company Info: " + jsonString);
+        return "";
+    }
+
+
+    private void load(String toBeLoaded) {
+    }
 }
