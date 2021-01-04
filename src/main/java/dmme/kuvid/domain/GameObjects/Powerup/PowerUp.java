@@ -5,8 +5,7 @@ import dmme.kuvid.lib.types.ObjectType;
 import dmme.kuvid.lib.types.PowerType;
 
 public abstract class PowerUp extends GameObject{
-	
-	public ObjectType type= ObjectType.POWER_UP;
+
 	
 	public PowerType subtype;
 
