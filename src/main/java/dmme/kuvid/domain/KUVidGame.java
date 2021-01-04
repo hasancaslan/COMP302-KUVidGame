@@ -1,5 +1,7 @@
 package dmme.kuvid.domain;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
@@ -10,6 +12,7 @@ import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -267,8 +270,8 @@ public class KUVidGame extends Observable implements Runnable {
         DomainFactory.createMolecule(MoleculeType.BETA, numMol);
         DomainFactory.createMolecule(MoleculeType.GAMMA, numMol);
         DomainFactory.createMolecule(MoleculeType.SIGMA, numMol);
-        
 
+        String toBeLoaded = null;
         while (true) {
             if (this.p1.getHealth() <= 0) {
                 break;
@@ -298,9 +301,10 @@ public class KUVidGame extends Observable implements Runnable {
             		count = 0;
             		setTime(getTime() - 1);
             	}
-            	
+            	toBeLoaded = save();
 
-            }else {
+            } else {
+                load(toBeLoaded);
             	try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
@@ -410,5 +414,23 @@ public class KUVidGame extends Observable implements Runnable {
 	public int getScore() {
 		return this.p1.getPoint();
 	}
+
+	public String save() {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(getGameObjectMap());
+        System.out.println("SERIALIZED");
+        System.out.println("Company Info: " + jsonString);
+        System.out.println(jsonString);
+        return jsonString;
+    }
+
+    public void load(String jsonString) {
+        // Deserialization
+        Gson gson = new Gson();
+        System.out.println("DESERIALIZED");
+        Type type = new TypeToken<HashMap<Key, List<?>>>(){}.getType();
+        gameObjectMap = gson.fromJson(jsonString, type);
+        System.out.println("Company Info: " + gameObjectMap);
+    }
 
 }
