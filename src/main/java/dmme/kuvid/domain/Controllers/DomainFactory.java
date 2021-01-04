@@ -82,64 +82,72 @@ public class DomainFactory {
         }
     }
 
-  /*  public static void createPowerup(PowerType type, int amount) {
+    public static void createPowerup(PowerType type, int amount) {
         GameObject powerUp;
         switch (type) {
             case ALPHA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new AlphaPowerUp(null, null, false, ObjectType.POWER_UP);
-                    GameObject.getGameObjectList().add(powerUp);
+                    GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(powerUp);
+                    Factory.createAlphaPowerUI(powerUp);
                 }
                 break;
             case BETA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new BetaPowerUp(null, null,false, ObjectType.POWER_UP);
-                    GameObject.getGameObjectList().add(powerUp);
+                    GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(powerUp);
+                    Factory.createBetaPowerUI(powerUp);
                 }
                 break;
             case SIGMA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new SigmaPowerUp(null, null, false, ObjectType.POWER_UP);
-                    GameObject.getGameObjectList().add(powerUp);
+                    GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(powerUp);
+                    Factory.createSigmaPowerUI(powerUp);
                 }
                 break;
             case GAMMA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new GammaPowerUp(null, null, false, ObjectType.POWER_UP);
-                    GameObject.getGameObjectList().add(powerUp);
+                    GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(powerUp);
+                    Factory.createGammaPowerUI(powerUp);
                 }
                 break;
         }
-    }*/
+    }
 
-  /*  public static void createReactionBlocker(ReactionType type, int amount) {
+  public static void createReactionBlocker(ReactionType type, int amount) {
         GameObject reactionBlocker;
         switch (type) {
             case ALPHA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new AlphaReactionBlocker(null, null,false, ObjectType.REACTION_BLOCKER);
-                    GameObject.getGameObjectList().add(reactionBlocker);
+                    GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.ALPHA_R).add(reactionBlocker);
+                    Factory.createAlphaBlockerUI(reactionBlocker);
                 }
                 break;
             case BETA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new BetaReactionBlocker(null, null, false, ObjectType.REACTION_BLOCKER);
-                    GameObject.getGameObjectList().add(reactionBlocker);
+                    GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.BETA_R).add(reactionBlocker);
+                    Factory.createBetaBlockerUI(reactionBlocker);
                 }
                 break;
             case SIGMA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new SigmaReactionBlocker(null, null, false, ObjectType.REACTION_BLOCKER);
-                    GameObject.getGameObjectList().add(reactionBlocker);
+                    GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.SIGMA_R).add(reactionBlocker);
+                    Factory.createSigmaBlockerUI(reactionBlocker);
                 }
                 break;
             case GAMMA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new GammaReactionBlocker(null, null, false, ObjectType.REACTION_BLOCKER);
-                    GameObject.getGameObjectList().add(reactionBlocker);
+                    GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.GAMMA_R).add(reactionBlocker);
+                    Factory.createGammaBlockerUI(reactionBlocker);
                 }
                 break;
         }
-    }*/
+    }
 
 }

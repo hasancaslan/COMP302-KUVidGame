@@ -1,12 +1,13 @@
 package dmme.kuvid.domain.GameObjects.Molecules;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.domain.GameObjects.Position;
 
 public class StraightPatternStrategy implements MovementStrategy {
 	
 	@Override
-	public void move(Molecule m, int count){
+	public void move(GameObject m, int count){
 		int Y = m.getPosition().getY();
 		int X = m.getPosition().getX();
 		Y += L; 

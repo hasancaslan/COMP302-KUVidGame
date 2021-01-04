@@ -25,7 +25,6 @@ import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.BlenderAction;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.ObjectType;
-import dmme.kuvid.ui.BuildingWindow.SpinHandler;
 import dmme.kuvid.utils.IconImporter;
 
 public class BlenderWindow extends JFrame {
