@@ -470,7 +470,9 @@ public class KUVidGame extends Observable implements Runnable {
 	}
 	
 	public int getScore() {
-		return this.p1.getPoint();
+		//return this.p1.getPoint();
+        //TODO
+        return (int) this.p1.getPoint();
 	}
 
 }

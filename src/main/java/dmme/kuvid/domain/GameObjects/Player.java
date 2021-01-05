@@ -5,7 +5,7 @@ import dmme.kuvid.utils.observer.Observable;
 public class Player extends Observable {
     private static Player instance = null;
     private int health = 100;
-    private int point = 0;
+    private double point = 0;
 
     private Player() {
     }
@@ -26,16 +26,16 @@ public class Player extends Observable {
         this.health = health;
     }
 
-    public int getPoint() {
+    public double getPoint() {
         return point;
     }
 
-    private void setPoint(int point) {
+    private void setPoint(double point) {
         publishPropertyEvent("point", this.point, point);
         this.point = point;
     }
 
-    public void incrementPoint(int increment) {
+    public void incrementPoint(double increment) {
         this.setPoint(this.getPoint() + increment);
     }
 

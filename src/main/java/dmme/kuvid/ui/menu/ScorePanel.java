@@ -31,7 +31,11 @@ public class ScorePanel extends JPanel implements PropertyListener {
         timeLabel.setFont(defaultFont);
         healthLabel.setFont(defaultFont);
 
-        setScoreLabel(Player.getInstance().getPoint());
+        //setScoreLabel(Player.getInstance().getPoint());
+        //TODO
+        setScoreLabel((int)Player.getInstance().getPoint());
+
+
         setHealthLabel(Player.getInstance().getHealth());
         setTimeLabel(KUVidGame.getInstance().getTime());
 

@@ -30,7 +30,7 @@ public abstract class Atom extends GameObject{
 		return this.subtype;
 	}
 
-	public abstract void initStabilityFeatures(); //TODO may be deprecated
+	public abstract void initStabilityFeatures(); //TODO may be deprecated, or renamed to setStability()
 	public abstract double getStability();
 
 }
