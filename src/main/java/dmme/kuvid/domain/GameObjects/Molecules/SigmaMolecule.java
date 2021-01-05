@@ -25,8 +25,12 @@ public class SigmaMolecule extends Molecule{
 	
 	public void move() {
 		this.setPattern(new StraightPatternStrategy());
-		this.strategy.move(this, count);	
+		this.strategy.move(this, count);
 		this.count++;
+		if(spinning) {
+			this.spin = this.count/2;
+			this.spin = this.spin % 4;	
+		}
 	}
 
 	@Override

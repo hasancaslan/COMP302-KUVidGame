@@ -2,6 +2,8 @@ package dmme.kuvid.domain.GameObjects.Powerup;
 
 import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.lib.types.ObjectType;
+import dmme.kuvid.lib.types.PowerType;
+import dmme.kuvid.lib.types.ReactionType;
 
 public class AlphaPowerUp extends PowerUp {
 
@@ -17,15 +19,16 @@ public class AlphaPowerUp extends PowerUp {
 	}
 
 	@Override
-	public Enum getSubType() {
+	public void setPosition(Position position) {
 		// TODO Auto-generated method stub
-		return null;
+		publishPropertyEvent("position",this.position,position);
+		this.position = position;
 	}
 
 	@Override
-	public void setPosition(Position position) {
+	public void setPowerType() {
 		// TODO Auto-generated method stub
-		
+		this.subtype=PowerType.ALPHA_B;
 	}
 
 }

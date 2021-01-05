@@ -1,6 +1,8 @@
 package dmme.kuvid.ui.menu;
 
 import dmme.kuvid.constants.Config;
+import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.PowerType;
 import dmme.kuvid.lib.types.ShieldType;
 import dmme.kuvid.utils.IconImporter;
@@ -9,6 +11,8 @@ import dmme.kuvid.utils.observer.PropertyListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PowerUpPanel extends JPanel implements PropertyListener {
     private final JLabel alphaBCountLabel;
@@ -58,6 +62,34 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         JLabel betaBIconLabel = new JLabel(betaBIcon, JLabel.TRAILING);
         JLabel gammaBIconLabel = new JLabel(gammaBIcon, JLabel.TRAILING);
         JLabel sigmaBIconLabel = new JLabel(sigmaBIcon, JLabel.TRAILING);
+        
+        alphaBIconLabel.addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+        		KUVidGame.getInstance().selectPowerUp(PowerType.ALPHA_B);
+        	}
+        });
+        
+        betaBIconLabel.addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+        		KUVidGame.getInstance().selectPowerUp(PowerType.BETA_B);
+        	}
+        });
+        
+        gammaBIconLabel.addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+        		KUVidGame.getInstance().selectPowerUp(PowerType.GAMMA_B);
+        	}
+        });
+        
+        sigmaBIconLabel.addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+        		KUVidGame.getInstance().selectPowerUp(PowerType.SIGMA_B);
+        	}
+        });
 
         this.add(alphaBIconLabel);
         this.add(alphaBCountLabel);
@@ -106,6 +138,12 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
 
 
 
+    }
+    
+    public void updatePowerCounts() {
+        for (PowerType type : PowerType.values()) {
+            setPowerUpCount(type, KUVidGame.getInstance().getNumPower(type));
+        }
     }
 
     public void setPowerUpCount(PowerType type, int count) {
