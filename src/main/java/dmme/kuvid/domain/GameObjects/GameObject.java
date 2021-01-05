@@ -97,4 +97,17 @@ public abstract class GameObject extends Observable{
 
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "GameObject [" +
+				"L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", type=" + type +
+				", active=" + active +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

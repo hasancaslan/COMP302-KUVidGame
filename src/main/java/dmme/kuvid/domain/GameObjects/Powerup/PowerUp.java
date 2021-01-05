@@ -20,4 +20,15 @@ public abstract class PowerUp extends GameObject{
 		return this.subtype;
 	}
 
+	@Override
+	public String toString() {
+		return "PowerUp [" +
+				"subtype=" + subtype +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

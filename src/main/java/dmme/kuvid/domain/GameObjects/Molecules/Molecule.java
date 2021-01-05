@@ -50,4 +50,20 @@ public abstract class Molecule extends GameObject{
 
 
 	public abstract void setMoleculeType();
+
+	@Override
+	public String toString() {
+		return "Molecule [" +
+				"spinning=" + spinning +
+				", subtype=" + subtype +
+				", count=" + count +
+				", spin=" + spin +
+				", strategy=" + strategy +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

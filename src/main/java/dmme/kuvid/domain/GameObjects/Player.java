@@ -47,5 +47,12 @@ public class Player extends Observable {
     	}
     }
 
-
+    @Override
+    public String toString() {
+        return "Player [" +
+                "health=" + health +
+                ", point=" + point +
+                ", propertyListenersMap=" + propertyListenersMap +
+                ']';
+    }
 }

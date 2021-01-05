@@ -31,4 +31,18 @@ public abstract class ReactionBlocker extends GameObject{
 	}
 	
 	public abstract void setBlockerType();
+
+	@Override
+	public String toString() {
+		return "ReactionBlocker [" +
+				"subtype=" + subtype +
+				", count=" + count +
+				", strategy=" + strategy +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }
