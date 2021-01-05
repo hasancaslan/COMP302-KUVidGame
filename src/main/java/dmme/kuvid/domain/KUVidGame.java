@@ -1,11 +1,14 @@
 package dmme.kuvid.domain;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.domain.GameObjects.Atoms.AlphaAtom;
+import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
@@ -348,6 +351,9 @@ public class KUVidGame extends Observable implements Runnable {
             
 
             if(this.active) {
+                toBeLoaded = save();
+
+
             	movementHandler.getInstance().run();
             	count++;
             	for(int i = this.difficulty; i>0 ;i--) {
@@ -373,10 +379,6 @@ public class KUVidGame extends Observable implements Runnable {
             		count = 0;
             		setTime(getTime() - 1);
             	}
-
-                Type type = new TypeToken<HashMap<Key, List<?>>>(){}.getType();
-            	toBeLoaded = save();
-
             } else {
                 load(toBeLoaded);
             	try {
@@ -570,13 +572,19 @@ public class KUVidGame extends Observable implements Runnable {
 
     private String save() {
         Gson gson = new Gson();
-        String jsonString = gson.toJson(getGameObjectMap());
-        //System.out.println("SERIALIZED");
-        //System.out.println("Company Info: " + jsonString);
-        return "";
+        String jsonString = gson.toJson(getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA)));
+        System.out.println("SERIALIZED");
+        System.out.println("Alpha Atom Info: " + jsonString);
+        return jsonString;
     }
 
 
     private void load(String toBeLoaded) {
+        System.out.println("ALPHA ATOMS");
+        Gson gson = new GsonBuilder().create();
+        Type type = new TypeToken<List<AlphaAtom>>(){}.getType();
+        List<GameObject> cloned = gson.fromJson(toBeLoaded, type);
+        System.out.println("GameObjectMap Info: " + cloned);
+        getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.ALPHA), cloned);
     }
 }
