@@ -26,12 +26,14 @@ public class ThrowMoleculeTest {
 
     @Test
     public void checkMoleculeNum() {
-        KUVidGame.getInstance().setNumMolecules(10);
-        DomainFactory.createMolecule(MoleculeType.ALPHA, 10);
-        DomainFactory.createMolecule(MoleculeType.BETA, 10);
-        DomainFactory.createMolecule(MoleculeType.GAMMA, 10);
-        DomainFactory.createMolecule(MoleculeType.SIGMA, 10);
+        KUVidGame.getInstance().setNumMolecules(4);
+        DomainFactory.createMolecule(MoleculeType.ALPHA, 1);
+        DomainFactory.createMolecule(MoleculeType.BETA, 1);
+        DomainFactory.createMolecule(MoleculeType.GAMMA, 1);
+        DomainFactory.createMolecule(MoleculeType.SIGMA, 1);
         movementHandler.getInstance().throwMolecule();
-        assertTrue(molecule.getPosition().getX() == 0 && molecule.getPosition().getY() == 0);
+
+        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA));
+        assertEquals(4, list.size());
     }
 }
