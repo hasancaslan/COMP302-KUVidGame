@@ -3,6 +3,7 @@ package dmme.kuvid.domain;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import dmme.kuvid.constants.Config;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
@@ -14,9 +15,14 @@ import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.GameFrame;
+import dmme.kuvid.utils.PathHandler;
 import dmme.kuvid.utils.observer.Observable;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -351,7 +357,7 @@ public class KUVidGame extends Observable implements Runnable {
             
 
             if(this.active) {
-                toBeLoaded = save();
+                toBeLoaded = save(ObjectType.ATOM, AtomType.ALPHA, "atomAlpha");
 
 
             	movementHandler.getInstance().run();
@@ -570,9 +576,26 @@ public class KUVidGame extends Observable implements Runnable {
 		return shootedPower;
 	}
 
-    private String save() {
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA)));
+    private String save(ObjectType objectType, Enum<?> subType, String name) {
+        PathHandler pathHandler = PathHandler.getInstance();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        String saveFolder = "snapshots";
+        String saveFolderPath = pathHandler.makePath(".",saveFolder,"");
+        File f = new File(saveFolderPath);
+
+        if (!f.exists()) {
+            f.mkdir();
+        }
+
+        String jsonString = "";
+        try {
+            jsonString = gson.toJson(KUVidGame.getGameObjectMap().get(new Key(objectType, subType)));
+            gson.toJson(KUVidGame.getGameObjectMap().get(new Key(objectType, subType)),
+                    new FileWriter(pathHandler.makePath(f.getAbsolutePath(), name)+".json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("SERIALIZED");
         System.out.println("Alpha Atom Info: " + jsonString);
         return jsonString;
@@ -581,7 +604,9 @@ public class KUVidGame extends Observable implements Runnable {
 
     private void load(String toBeLoaded) {
         System.out.println("ALPHA ATOMS");
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
         Type type = new TypeToken<List<AlphaAtom>>(){}.getType();
         List<GameObject> cloned = gson.fromJson(toBeLoaded, type);
         System.out.println("GameObjectMap Info: " + cloned);
