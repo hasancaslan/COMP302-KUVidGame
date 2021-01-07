@@ -91,28 +91,7 @@ public class BuildingWindow extends JFrame {
 
         this.StartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-
-                atomNumber = Integer.parseInt((String) AtomNumber.getText());
-                reactionBlockerNumber = Integer.parseInt((String) ReactionBlockerNumber.getText());
-                powerUpNumber = Integer.parseInt((String) PowerUpNumber.getText());
-                moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
-                L = Integer.parseInt((String) LTextField.getText());
-                difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
-
-                buildHandler.getInstance().setNumAtoms(atomNumber);
-                buildHandler.getInstance().setNumMolecules(moleculeNumber);
-                buildHandler.getInstance().setNumBlocker(reactionBlockerNumber);
-                buildHandler.getInstance().setNumPowerUp(powerUpNumber);
-                buildHandler.getInstance().setL(L);
-                buildHandler.getInstance().setDifficulty(difficulty);
-                buildHandler.getInstance().setLinearity(linear);
-                buildHandler.getInstance().setSpinning(spinning);
-                
-                KUVidGame.getInstance().shooterStart();
-                dispose();
-
-                new GameFrame();
-                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
+                createGame();
             }
         });
 
@@ -121,6 +100,30 @@ public class BuildingWindow extends JFrame {
         LinearButton.addItemListener(new StructureHandler(true));
         NoNLinearButton.addItemListener(new StructureHandler(false));
 
+    }
+
+    public void createGame() {
+        atomNumber = Integer.parseInt((String) AtomNumber.getText());
+        reactionBlockerNumber = Integer.parseInt((String) ReactionBlockerNumber.getText());
+        powerUpNumber = Integer.parseInt((String) PowerUpNumber.getText());
+        moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
+        L = Integer.parseInt((String) LTextField.getText());
+        difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
+
+        buildHandler.getInstance().setNumAtoms(atomNumber);
+        buildHandler.getInstance().setNumMolecules(moleculeNumber);
+        buildHandler.getInstance().setNumBlocker(reactionBlockerNumber);
+        buildHandler.getInstance().setNumPowerUp(powerUpNumber);
+        buildHandler.getInstance().setL(L);
+        buildHandler.getInstance().setDifficulty(difficulty);
+        buildHandler.getInstance().setLinearity(linear);
+        buildHandler.getInstance().setSpinning(spinning);
+
+        KUVidGame.getInstance().shooterStart();
+        dispose();
+
+        new GameFrame();
+        Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
     }
 
     // private inner class to handle the movement of the molecules
