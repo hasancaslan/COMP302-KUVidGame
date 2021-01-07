@@ -1,6 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.KUVidGame;
+
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;

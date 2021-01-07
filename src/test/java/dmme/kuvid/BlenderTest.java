@@ -2,6 +2,8 @@ package dmme.kuvid;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,14 @@ class BlenderTest {
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		new GameFrame();
+	}
+	
+	@BeforeEach
+	void setUp() throws Exception {
+		 KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA)).clear();
+	     KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.BETA)).clear();
+	     KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.GAMMA)).clear();
+	     KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.SIGMA)).clear();
 	}
 	
 	@Test
@@ -50,7 +60,7 @@ class BlenderTest {
 	@Test
 	void testBlendALPHAToSIGMA() {
 		
-		DomainFactory.createAtom(AtomType.ALPHA, 10);
+		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 10);
 		
 		int numAlpha=KUVidGame.getInstance().getNumAtom(AtomType.ALPHA);
 		int numSigma=KUVidGame.getInstance().getNumAtom(AtomType.SIGMA);
@@ -66,7 +76,7 @@ class BlenderTest {
 	
 	@Test
 	void testBlendBETAToSIGMA() {
-		DomainFactory.createAtom(AtomType.BETA, 10);
+		DomainFactory.getInstance().createAtom(AtomType.BETA, 10);
 		int numBeta=KUVidGame.getInstance().getNumAtom(AtomType.BETA);
 		int numSigma=KUVidGame.getInstance().getNumAtom(AtomType.SIGMA);
 		
@@ -80,7 +90,7 @@ class BlenderTest {
 	
 	@Test
 	void testBlendGAMMAToSIGMA() {
-		DomainFactory.createAtom(AtomType.GAMMA, 10);
+		DomainFactory.getInstance().createAtom(AtomType.GAMMA, 10);
 		int numGamma=KUVidGame.getInstance().getNumAtom(AtomType.GAMMA);
 		int numSigma=KUVidGame.getInstance().getNumAtom(AtomType.SIGMA);
 		
@@ -94,7 +104,7 @@ class BlenderTest {
 	
 	@Test
 	void testBlendALPHAToGAMMA() {
-		DomainFactory.createAtom(AtomType.ALPHA, 10);
+		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 10);
 		int numGamma=KUVidGame.getInstance().getNumAtom(AtomType.GAMMA);
 		int numAlpha=KUVidGame.getInstance().getNumAtom(AtomType.ALPHA);
 		
@@ -108,7 +118,7 @@ class BlenderTest {
 	
 	@Test
 	void testBlendBETAToGAMMA() {
-		DomainFactory.createAtom(AtomType.BETA, 10);
+		DomainFactory.getInstance().createAtom(AtomType.BETA, 10);
 		int numGamma=KUVidGame.getInstance().getNumAtom(AtomType.GAMMA);
 		int numBeta=KUVidGame.getInstance().getNumAtom(AtomType.BETA);
 		
@@ -123,7 +133,7 @@ class BlenderTest {
 	@Test
 	void testBlendALPHAToBETA() {
 		
-		DomainFactory.createAtom(AtomType.ALPHA, 10);
+		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 10);
 		
 		int numAlpha=KUVidGame.getInstance().getNumAtom(AtomType.ALPHA);
 		int numBeta=KUVidGame.getInstance().getNumAtom(AtomType.BETA);

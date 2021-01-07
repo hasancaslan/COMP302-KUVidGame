@@ -34,21 +34,21 @@ public class Blender {
 
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				DomainFactory.createAtom(typeCreate, 4);
+				DomainFactory.getInstance().createAtom(typeCreate, 4);
 
 
 			}else if(typeCreate.equals(AtomType.BETA)) {
 				
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				DomainFactory.createAtom(typeCreate, 3);
+				DomainFactory.getInstance().createAtom(typeCreate, 3);
 
 			}else if(typeCreate.equals(AtomType.GAMMA)) {
 
 				
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				DomainFactory.createAtom(typeCreate, 2);
+				DomainFactory.getInstance().createAtom(typeCreate, 2);
 			}
 
 		}else if (typeDestroy.equals(AtomType.GAMMA)&KUVidGame.getInstance().getNumAtom(AtomType.GAMMA)>=1) {
@@ -57,14 +57,14 @@ public class Blender {
 				
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				DomainFactory.createAtom(typeCreate, 3);
+				DomainFactory.getInstance().createAtom(typeCreate, 3);
 
 
 			}else if(typeCreate.equals(AtomType.BETA)) {
 
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				DomainFactory.createAtom(typeCreate, 2);
+				DomainFactory.getInstance().createAtom(typeCreate, 2);
 			}
 
 		}else if(typeDestroy.equals(AtomType.BETA)&KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=1) {
@@ -73,7 +73,7 @@ public class Blender {
 
 				destroyHandler.blenderDestroy(typeDestroy);
 				
-				DomainFactory.createAtom(typeCreate, 2);
+				DomainFactory.getInstance().createAtom(typeCreate, 2);
 
 
 			}
@@ -103,7 +103,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				DomainFactory.createAtom(typeCreate, 1);
+				DomainFactory.getInstance().createAtom(typeCreate, 1);
 
 			}else if(typeDestroy.equals(AtomType.BETA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=3)) {
@@ -112,7 +112,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				DomainFactory.createAtom(typeCreate, 1);
+				DomainFactory.getInstance().createAtom(typeCreate, 1);
 			}else if(typeDestroy.equals(AtomType.GAMMA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.GAMMA)>=2)) {
 
@@ -120,7 +120,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				DomainFactory.createAtom(typeCreate, 1);
+				DomainFactory.getInstance().createAtom(typeCreate, 1);
 			}
 
 		}else if(typeCreate.equals(AtomType.GAMMA)) {
@@ -132,7 +132,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				DomainFactory.createAtom(typeCreate, 1);
+				DomainFactory.getInstance().createAtom(typeCreate, 1);
 			}else if(typeDestroy.equals(AtomType.BETA) &
 					(KUVidGame.getInstance().getNumAtom(AtomType.BETA)>=2)) {
 
@@ -140,7 +140,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				DomainFactory.createAtom(typeCreate, 1);
+				DomainFactory.getInstance().createAtom(typeCreate, 1);
 			}
 
 		}else if(typeCreate.equals(AtomType.BETA)) {
@@ -151,7 +151,7 @@ public class Blender {
 					destroyHandler.blenderDestroy(typeDestroy);
 				}
 
-				DomainFactory.createAtom(typeCreate, 1);
+				DomainFactory.getInstance().createAtom(typeCreate, 1);
 			}
 
 		}else {

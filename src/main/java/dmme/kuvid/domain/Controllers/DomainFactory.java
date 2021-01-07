@@ -2,149 +2,162 @@ package dmme.kuvid.domain.Controllers;
 
 import dmme.kuvid.domain.KUVidGame;
 
+
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.GameObjects.Molecules.*;
 import dmme.kuvid.domain.GameObjects.Powerup.*;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.*;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.Factory;
 import dmme.kuvid.ui.GameFrame;
+import dmme.kuvid.utils.observer.Observable;
 
-public class DomainFactory {
+public class DomainFactory extends Observable{
+	 private static DomainFactory instance = null;
+	 
+	private DomainFactory() {
+		
+	}
+	
+	 public static DomainFactory getInstance() {
+	        if (instance == null)
+	            instance = new DomainFactory();
 
-    public static void createAtom(AtomType type, int amount) {
+	        return instance;
+	    }
+
+    public void createAtom(AtomType type, int amount) {
         GameObject atom;
         switch (type) {
             case ALPHA:
                 for (int i = 0; i < amount; i++) {
                     atom = new AlphaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.ALPHA).add(atom);
-                    Factory.createAlphaUI(atom);
+                    publishPropertyEvent("alpha", null, atom);
                 }
                 break;
             case BETA:
                 for (int i = 0; i < amount; i++) {
                     atom = new BetaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.BETA).add(atom);
-                    Factory.createBetaUI(atom);
+                    publishPropertyEvent("beta", null, atom);
                 }
                 break;
             case SIGMA:
                 for (int i = 0; i < amount; i++) {
                     atom = new SigmaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.SIGMA).add(atom);
-                    Factory.createSigmaUI(atom);
+                    publishPropertyEvent("sigma", null, atom);
                 }
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
                     atom = new GamaAtom(new Position(0,0), new Position(0,0),false, ObjectType.ATOM);
                     GameObject.getGameObjectList(ObjectType.ATOM,AtomType.GAMMA).add(atom);
-                    Factory.createGammaUI(atom);
+                    publishPropertyEvent("gamma", null, atom);
                 }
                 break;
         }
         GameFrame.updateNumAtoms();
     }
 
-    public static void createMolecule(MoleculeType type, int amount) {
+    public void createMolecule(MoleculeType type, int amount) {
         GameObject molecule;
         switch (type) {
             case ALPHA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new AlphaMolecule(new Position(0,0), new Position(0,0),false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.ALPHA).add(molecule);
-                    Factory.createAlphaMoleculUI(molecule);
+                    publishPropertyEvent("alphaMol", null, molecule);
                 }
                 break;
             case BETA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new BetaMolecule(new Position(0,0), new Position(0,0),false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.BETA).add(molecule);
-                    Factory.createBetaMoleculUI(molecule);
+                    publishPropertyEvent("betaMol", null, molecule);
                 }
                 break;
             case SIGMA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new SigmaMolecule(new Position(0,0), new Position(0,0),false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.SIGMA).add(molecule);
-                    Factory.createSigmaMoleculUI(molecule);
+                    publishPropertyEvent("sigmaMol", null, molecule);
                 }
                 break;
             case GAMMA:
                 for (int i = 0; i < amount; i++) {
                     molecule = new GamaMolecule(new Position(0,0), new Position(0,0),false, ObjectType.MOLECULE);
                     GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.GAMMA).add(molecule);
-                    Factory.createGammaMoleculUI(molecule);
+                    publishPropertyEvent("gammaMol", null, molecule);
                 }
                 break;
         }
     }
 
-    public static void createPowerup(PowerType type, int amount) {
+    public void createPowerup(PowerType type, int amount) {
         GameObject powerUp;
         switch (type) {
             case ALPHA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new AlphaPowerUp(null, null, false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(powerUp);
-                    Factory.createAlphaPowerUI(powerUp);
+                    publishPropertyEvent("alphaPower", null, powerUp);
                 }
                 break;
             case BETA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new BetaPowerUp(null, null,false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(powerUp);
-                    Factory.createBetaPowerUI(powerUp);
+                    publishPropertyEvent("betaPower", null, powerUp);
                 }
                 break;
             case SIGMA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new SigmaPowerUp(null, null, false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(powerUp);
-                    Factory.createSigmaPowerUI(powerUp);
+                    publishPropertyEvent("sigmaPower", null, powerUp);
                 }
                 break;
             case GAMMA_B:
                 for (int i = 0; i < amount; i++) {
                     powerUp = new GammaPowerUp(null, null, false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(powerUp);
-                    Factory.createGammaPowerUI(powerUp);
+                    publishPropertyEvent("gammaPower", null, powerUp);
                 }
                 break;
         }
     }
 
-  public static void createReactionBlocker(ReactionType type, int amount) {
+  public void createReactionBlocker(ReactionType type, int amount) {
         GameObject reactionBlocker;
         switch (type) {
             case ALPHA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new AlphaReactionBlocker(null, null,false, ObjectType.REACTION_BLOCKER);
                     GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.ALPHA_R).add(reactionBlocker);
-                    Factory.createAlphaBlockerUI(reactionBlocker);
+                    publishPropertyEvent("alphaBlocker", null, reactionBlocker);
                 }
                 break;
             case BETA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new BetaReactionBlocker(null, null, false, ObjectType.REACTION_BLOCKER);
                     GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.BETA_R).add(reactionBlocker);
-                    Factory.createBetaBlockerUI(reactionBlocker);
+                    publishPropertyEvent("betaBlocker", null, reactionBlocker);
                 }
                 break;
             case SIGMA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new SigmaReactionBlocker(null, null, false, ObjectType.REACTION_BLOCKER);
                     GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.SIGMA_R).add(reactionBlocker);
-                    Factory.createSigmaBlockerUI(reactionBlocker);
+                    publishPropertyEvent("sigmaBlocker", null, reactionBlocker);
                 }
                 break;
             case GAMMA_R:
                 for (int i = 0; i < amount; i++) {
                     reactionBlocker = new GammaReactionBlocker(null, null, false, ObjectType.REACTION_BLOCKER);
                     GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.GAMMA_R).add(reactionBlocker);
-                    Factory.createGammaBlockerUI(reactionBlocker);
+                    publishPropertyEvent("gammaBlocker", null, reactionBlocker);
                 }
                 break;
         }

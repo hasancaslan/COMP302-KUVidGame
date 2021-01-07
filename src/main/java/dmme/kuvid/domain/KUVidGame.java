@@ -1,6 +1,7 @@
 package dmme.kuvid.domain;
 
 import dmme.kuvid.domain.Controllers.DomainFactory;
+
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
@@ -77,7 +78,7 @@ public class KUVidGame extends Observable implements Runnable {
         		//Toolkit.getDefaultToolkit().getScreenSize();
         this.playableArea = new Dimension(this.screenSize.width*7/10,this.screenSize.height);
         this.L=Math.floorDiv(screenSize.height,10);
-        this.creator=new DomainFactory();
+        this.creator=DomainFactory.getInstance();
         
 
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.ALPHA), new ArrayList<GameObject>());
@@ -308,26 +309,26 @@ public class KUVidGame extends Observable implements Runnable {
         this.throwPower=numPower*4;
         this.POWERNO=numPower;
         
-        DomainFactory.createAtom(AtomType.ALPHA,num);
-        DomainFactory.createAtom(AtomType.BETA,num);
-        DomainFactory.createAtom(AtomType.GAMMA,num);
-        DomainFactory.createAtom(AtomType.SIGMA,num);
+        DomainFactory.getInstance().createAtom(AtomType.ALPHA,num);
+        DomainFactory.getInstance().createAtom(AtomType.BETA,num);
+        DomainFactory.getInstance().createAtom(AtomType.GAMMA,num);
+        DomainFactory.getInstance().createAtom(AtomType.SIGMA,num);
         
         
-        DomainFactory.createMolecule(MoleculeType.ALPHA, numMol);
-        DomainFactory.createMolecule(MoleculeType.BETA, numMol);
-        DomainFactory.createMolecule(MoleculeType.GAMMA, numMol);
-        DomainFactory.createMolecule(MoleculeType.SIGMA, numMol);
+        DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, numMol);
+        DomainFactory.getInstance().createMolecule(MoleculeType.BETA, numMol);
+        DomainFactory.getInstance().createMolecule(MoleculeType.GAMMA, numMol);
+        DomainFactory.getInstance().createMolecule(MoleculeType.SIGMA, numMol);
         
-        DomainFactory.createReactionBlocker(ReactionType.ALPHA_R, numBlock);
-        DomainFactory.createReactionBlocker(ReactionType.BETA_R, numBlock);
-        DomainFactory.createReactionBlocker(ReactionType.SIGMA_R, numBlock);
-        DomainFactory.createReactionBlocker(ReactionType.GAMMA_R, numBlock);
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.ALPHA_R, numBlock);
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.BETA_R, numBlock);
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.SIGMA_R, numBlock);
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.GAMMA_R, numBlock);
         
-        DomainFactory.createPowerup(PowerType.ALPHA_B, numPower);
-        DomainFactory.createPowerup(PowerType.BETA_B, numPower);
-        DomainFactory.createPowerup(PowerType.SIGMA_B, numPower);
-        DomainFactory.createPowerup(PowerType.GAMMA_B, numPower);
+        DomainFactory.getInstance().createPowerup(PowerType.ALPHA_B, numPower);
+        DomainFactory.getInstance().createPowerup(PowerType.BETA_B, numPower);
+        DomainFactory.getInstance().createPowerup(PowerType.SIGMA_B, numPower);
+        DomainFactory.getInstance().createPowerup(PowerType.GAMMA_B, numPower);
         
         int select=0;
 
@@ -561,10 +562,6 @@ public class KUVidGame extends Observable implements Runnable {
 		return shootedPower;
 	}
 	
-	public boolean createAtom(AtomType type,int num) {
-		DomainFactory.createAtom(type, num);
-		return true;
-	}
 	
 	public Blender getBlender() {
 		return this.blender;
