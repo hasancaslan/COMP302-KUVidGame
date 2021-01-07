@@ -39,7 +39,8 @@ class SaveLoadFileTest {
         @Test
         void testProduceCorrectJSON() {
             String jsonStringFromMethod = saveLoadFile.gameObjectToJson(ObjectType.ATOM, AtomType.ALPHA);
-            String jsonStringManual = new GsonBuilder().setPrettyPrinting().create().toJson(KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA)));
+            List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA));
+            String jsonStringManual = new GsonBuilder().setPrettyPrinting().create().toJson(list);
 
             Assertions.assertEquals(jsonStringManual, jsonStringFromMethod);
         }
@@ -47,7 +48,9 @@ class SaveLoadFileTest {
         @Test
         void testProduceCorruptedJSON() {
             String jsonStringFromMethod = saveLoadFile.gameObjectToJson(ObjectType.ATOM, AtomType.ALPHA);
-            String jsonStringManual = new GsonBuilder().setPrettyPrinting().create().toJson(KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.BETA)));
+            List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.BETA));
+
+            String jsonStringManual = new GsonBuilder().setPrettyPrinting().create().toJson(list);
 
             Assertions.assertNotEquals(jsonStringManual, jsonStringFromMethod);
         }
