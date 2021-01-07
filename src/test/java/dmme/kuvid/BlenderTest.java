@@ -148,5 +148,44 @@ class BlenderTest {
 		assertEquals(numAlpha,KUVidGame.getInstance().getNumAtom(AtomType.ALPHA));
 		assertEquals(numBeta,KUVidGame.getInstance().getNumAtom(AtomType.BETA));
 	}
+	
+	@Test
+	void testNoMatchingType() {
+		
+		int numAlpha=KUVidGame.getInstance().getNumAtom(AtomType.ALPHA);
+		int numBeta=KUVidGame.getInstance().getNumAtom(AtomType.BETA);
+		
+		assertEquals(numAlpha,0);
+		
+		KUVidGame.getInstance().useBlender(BlenderAction.Blend, AtomType.ALPHA, AtomType.BETA);
+		
+		assertEquals(numAlpha,KUVidGame.getInstance().getNumAtom(AtomType.ALPHA));
+		assertEquals(numBeta,KUVidGame.getInstance().getNumAtom(AtomType.BETA));
+	}
+	
+	@Test
+	void testSameType() {
+		int numAlpha=KUVidGame.getInstance().getNumAtom(AtomType.ALPHA);
+		int numBeta=KUVidGame.getInstance().getNumAtom(AtomType.BETA);
+		int numGamma=KUVidGame.getInstance().getNumAtom(AtomType.GAMMA);
+		int numSigma=KUVidGame.getInstance().getNumAtom(AtomType.SIGMA);
+		
+		assertEquals(numAlpha,0);
+		assertEquals(numBeta,0);
+		assertEquals(numGamma,0);
+		assertEquals(numSigma,0);
+		
+		KUVidGame.getInstance().useBlender(BlenderAction.Blend, AtomType.SIGMA, AtomType.SIGMA);
+		KUVidGame.getInstance().useBlender(BlenderAction.Blend, AtomType.BETA, AtomType.BETA);
+		KUVidGame.getInstance().useBlender(BlenderAction.Blend, AtomType.GAMMA, AtomType.GAMMA);
+		KUVidGame.getInstance().useBlender(BlenderAction.Blend, AtomType.ALPHA, AtomType.ALPHA);
+		
+		
+		assertEquals(numAlpha,KUVidGame.getInstance().getNumAtom(AtomType.ALPHA));
+		assertEquals(numBeta,KUVidGame.getInstance().getNumAtom(AtomType.BETA));
+		assertEquals(numGamma,KUVidGame.getInstance().getNumAtom(AtomType.GAMMA));
+		assertEquals(numSigma,KUVidGame.getInstance().getNumAtom(AtomType.SIGMA));
+
+	}
 
 }
