@@ -24,6 +24,9 @@ public class KUVidGame extends Observable implements Runnable {
     private static List<GameObject> shootedAtom = new ArrayList<>();
     private static List<GameObject> shootedPower= new ArrayList<>();
     private static HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
+    //TODO added this
+    private static HashMap<ShieldType, Integer> shieldArsenal = new HashMap<ShieldType, Integer>();
+
     public boolean active = true;
     public boolean blendingMode;
     private Dimension screenSize;
@@ -100,6 +103,11 @@ public class KUVidGame extends Observable implements Runnable {
         KUVidGame.powerArsenal.put(PowerType.BETA_B, new ArrayList<PowerUp>());
         KUVidGame.powerArsenal.put(PowerType.GAMMA_B, new ArrayList<PowerUp>());
         KUVidGame.powerArsenal.put(PowerType.SIGMA_B, new ArrayList<PowerUp>());
+        //TODO added
+        KUVidGame.shieldArsenal.put(ShieldType.ETA, 5);
+        KUVidGame.shieldArsenal.put(ShieldType.LOTA, 5);
+        KUVidGame.shieldArsenal.put(ShieldType.THETA, 5);
+        KUVidGame.shieldArsenal.put(ShieldType.ZETA, 5);
         
     }
 
@@ -123,6 +131,11 @@ public class KUVidGame extends Observable implements Runnable {
     
     public static HashMap<PowerType, List<PowerUp>> getPowerArsenal(){
 		return powerArsenal;
+    }
+
+    //TODO added this
+    public static HashMap<ShieldType, Integer> getShieldArsenal(){
+        return shieldArsenal;
     }
 
     public Dimension getScreenSize() {
@@ -224,6 +237,11 @@ public class KUVidGame extends Observable implements Runnable {
 
     public void selectPowerUp(PowerType type) {
     	this.shooter.pickPowerUp(type);
+    }
+
+    //TODO added this
+    public void selectShield(ShieldType type) {
+        this.shooter.pickShield(type);
     }
 
     public int getRange() {
@@ -520,7 +538,7 @@ public class KUVidGame extends Observable implements Runnable {
     
     public void shoot() {
     	if(this.active) {
-    		this.shooter.shootAtom();
+    		this.shooter.shootAmmo();
     	}
     }
     

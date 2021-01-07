@@ -29,8 +29,8 @@ public abstract class ShieldDecorator extends Atom{
     public void initStabilityFeatures() { }
 
 
-    //
-    //public abstract double addShield();
+
+    //public abstract Atom addShield(Atom atom);
     public abstract double getStability();
 
 }

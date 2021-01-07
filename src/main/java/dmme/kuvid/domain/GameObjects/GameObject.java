@@ -18,7 +18,7 @@ public abstract class GameObject extends Observable{
 	protected Dimension gameField = KUVidGame.getInstance().getPlayableArea(); 
 	protected Position position;
 	protected Position direction;
-	protected double paceFactor=1; //if we need to change speed of particular objects at run time, unlike difficulty
+	public double paceFactor=1.0; //if we need to change speed of particular objects at run time, unlike difficulty
 
 	private ObjectType type;
 

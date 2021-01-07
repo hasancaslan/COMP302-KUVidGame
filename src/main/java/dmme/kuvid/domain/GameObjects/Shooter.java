@@ -1,5 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
+
+import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.GameFrame;
@@ -9,7 +11,7 @@ public class Shooter extends Observable {
     private int position;
     private int angle;
     public AmmoType ammoType;
-    public GameObject currentAtom;
+    public GameObject currentAmmo;
 
     public Shooter(int position, int angle, AmmoType ammoType) {
         this.position = position;
@@ -55,8 +57,8 @@ public class Shooter extends Observable {
     	if(newPosition > gameWidth) newPosition = gameWidth;
     	if(newPosition < -5*L) newPosition = -5*L;
         setPosition(newPosition);
-        if (this.currentAtom!= null) {
-    		this.currentAtom.setPosition(new Position(this.position,gameHeight-10*L));;
+        if (this.currentAmmo != null) {
+    		this.currentAmmo.setPosition(new Position(this.position,gameHeight-10*L));;
     	}
         
     }
@@ -69,10 +71,10 @@ public class Shooter extends Observable {
     	if(newAngle > 180) newAngle = 180;
     	if(newAngle < 0) newAngle = 0;
         setAngle(newAngle);
-        if (this.currentAtom!= null) {
+        if (this.currentAmmo != null) {
         	int x=this.position-(int)(10*L*Math.cos(angle));
         	int y=gameHeight-(int)(10*L*Math.sin(angle));
-    		this.currentAtom.setPosition(new Position(x,y));
+    		this.currentAmmo.setPosition(new Position(x,y));
     	}
     }
 
@@ -80,15 +82,15 @@ public class Shooter extends Observable {
     	if(KUVidGame.getInstance().getRemAtoms()>0) {
 	    	int L=KUVidGame.getInstance().getL();
 	    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
-	    	if (this.currentAtom!= null) {
-	    		this.currentAtom.setActive(false);
+	    	if (this.currentAmmo != null) {
+	    		this.currentAmmo.setActive(false);
 	    	}
-	        this.currentAtom=KUVidGame.getInstance().getRandomAtom();
+	        this.currentAmmo =KUVidGame.getInstance().getRandomAtom();
 	        double angle=Math.toRadians(this.getAngle());
 	        int x=this.position-10*(int)(L*Math.cos(angle));
 	    	int y=gameHeight-(int)(10*L*Math.sin(angle));
-	        this.currentAtom.setPosition(new Position(x,y));
-	        this.currentAtom.setActive(true);
+	        this.currentAmmo.setPosition(new Position(x,y));
+	        this.currentAmmo.setActive(true);
     	}
     }
     
@@ -96,38 +98,100 @@ public class Shooter extends Observable {
     	if(KUVidGame.getPowerArsenal().get(type).size()>0) {
     		int L=KUVidGame.getInstance().getL();
 	    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
-	    	if (this.currentAtom!= null) {
-	    		this.currentAtom.setActive(false);
+	    	if (this.currentAmmo != null) {
+	    		this.currentAmmo.setActive(false);
 	    	}
-	    	this.currentAtom=KUVidGame.getPowerArsenal().get(type).get(KUVidGame.getPowerArsenal().get(type).size()-1);
+	    	this.currentAmmo =KUVidGame.getPowerArsenal().get(type).get(KUVidGame.getPowerArsenal().get(type).size()-1);
 	    	double angle=Math.toRadians(this.getAngle());
 		    int x=this.position-10*(int)(L*Math.cos(angle));
 		    int y=gameHeight-(int)(10*L*Math.sin(angle));
-		    this.currentAtom.setPosition(new Position(x,y));
-		    this.currentAtom.setDirection(null);
-		    this.currentAtom.setActive(true);
+		    this.currentAmmo.setPosition(new Position(x,y));
+		    this.currentAmmo.setDirection(null);
+		    this.currentAmmo.setActive(true);
     	}
     	
     }
 
-    public void shootAtom() {
-    	if (this.currentAtom!= null) {
+    //TODO refactoring for Shooter current'Atom' needed
+	//TODO added
+	public void pickShield(ShieldType type) {
+		if(KUVidGame.getShieldArsenal().get(type)>0) {
+			int L=KUVidGame.getInstance().getL();
+			int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+			if (this.currentAmmo != null) {
+				this.currentAmmo.setActive(false);
+			}
+			//Atom
+			//ShieldDecorator temp = KUVidGame.getShieldArsenal().get(type).get(KUVidGame.getShieldArsenal().get(type).size() - 1);
+			//this.currentAtom = temp.addShield();
+
+			int curr = KUVidGame.getShieldArsenal().get(type);
+			KUVidGame.getShieldArsenal().put(type, curr-1);
+
+
+			switch(type) {
+				case ETA:
+					//TODO trying to take a shield with PowerUp ammo
+
+					//System.out.println(((Atom)this.currentAtom).getStability());
+
+					this.currentAmmo = new EtaShield((Atom)this.currentAmmo);
+					//System.out.println(this.currentAtom instanceof Atom);
+					//System.out.println("stability ->"+ ((Atom)this.currentAtom).getStability());
+					//TODO currentAtom stability = ((Atom)this.currentAtom).getStability()) etc?
+					//System.out.println("pace factor ->" +((Atom)this.currentAtom).paceFactor);
+
+					//this.currentAtom = new EtaShield((Atom)this.currentAtom);
+					//System.out.println(this.currentAtom instanceof Atom);
+					//System.out.println("stability ->"+ ((Atom)this.currentAtom).getStability());
+					//System.out.println("pace factor ->" +((Atom)this.currentAtom).paceFactor);
+
+					break;
+				case LOTA:
+					this.currentAmmo = new LotaShield((Atom)this.currentAmmo);
+					break;
+				case THETA:
+					this.currentAmmo = new ThetaShield((Atom)this.currentAmmo);
+					break;
+				case ZETA:
+					this.currentAmmo = new ZetaShield((Atom)this.currentAmmo);
+					break;
+			}
+
+			/*
+			double angle=Math.toRadians(this.getAngle());
+			int x=this.position-10*(int)(L*Math.cos(angle));
+			int y=gameHeight-(int)(10*L*Math.sin(angle));
+			this.currentAtom.setPosition(new Position(x,y));
+			this.currentAtom.setDirection(null);
+			this.currentAtom.setActive(true);
+
+			 */
+
+
+		}
+
+	}
+
+    //TODO refactor the name of the method
+    public void shootAmmo() {
+    	if (this.currentAmmo != null) {
     		int L=KUVidGame.getInstance().getL();
     		int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
     		double angle=Math.toRadians(this.getAngle()); 
     		Position direction=new Position((int)(-L*Math.cos(angle)),(int)(-L*Math.sin(angle)));
-    		this.currentAtom.setDirection(direction);
+    		this.currentAmmo.setDirection(direction);
     		
-    		if(this.currentAtom.getType().equals(ObjectType.POWER_UP)) {
-    			KUVidGame.getShootedPower().add(this.currentAtom);
-    			KUVidGame.getPowerArsenal().get(this.currentAtom.getSubType()).remove(this.currentAtom);
+    		if(this.currentAmmo.getType().equals(ObjectType.POWER_UP)) {
+    			KUVidGame.getShootedPower().add(this.currentAmmo);
+    			KUVidGame.getPowerArsenal().get(this.currentAmmo.getSubType()).remove(this.currentAmmo);
     			GameFrame.updateNumPower();
     		}else {
-    			KUVidGame.getShootedAtom().add(this.currentAtom);
-        		KUVidGame.getGameObjectMap().get(new Key(this.currentAtom.getType(),this.currentAtom.getSubType())).remove(this.currentAtom);
+    			KUVidGame.getShootedAtom().add(this.currentAmmo);
+        		KUVidGame.getGameObjectMap().get(new Key(this.currentAmmo.getType(),this.currentAmmo.getSubType())).remove(this.currentAmmo);
         		GameFrame.updateNumAtoms();
     		}
-    		this.currentAtom=null;
+    		this.currentAmmo =null;
     		this.pickAtom();
     	}
     }

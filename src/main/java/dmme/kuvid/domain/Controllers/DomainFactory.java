@@ -3,6 +3,7 @@ package dmme.kuvid.domain.Controllers;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.GameObjects.Molecules.*;
+import dmme.kuvid.domain.GameObjects.Powerup.*;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.*;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.Factory;

@@ -46,12 +46,10 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         gammaBCountLabel.setFont(defaultFont);
         sigmaBCountLabel.setFont(defaultFont);
 
-
-        //TODO change to zero
-        setPowerUpCount(PowerType.ALPHA_B, 10);
-        setPowerUpCount(PowerType.BETA_B, 10);
-        setPowerUpCount(PowerType.GAMMA_B, 10);
-        setPowerUpCount(PowerType.SIGMA_B, 10);
+        setPowerUpCount(PowerType.ALPHA_B, 0);
+        setPowerUpCount(PowerType.BETA_B, 0);
+        setPowerUpCount(PowerType.GAMMA_B, 0);
+        setPowerUpCount(PowerType.SIGMA_B, 0);
 
         ImageIcon alphaBIcon = IconImporter.getIconFromFileName("+alpha-b.png", "powerups", new Dimension(30, 30));
         ImageIcon betaBIcon = IconImporter.getIconFromFileName("+beta-b.png", "powerups", new Dimension(30, 30));
@@ -124,6 +122,34 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         JLabel thetaIcon = new JLabel("THETA Shield",JLabel.TRAILING);
         JLabel zetaIcon = new JLabel("ZETA Shield",JLabel.TRAILING);
 
+
+        etaIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                KUVidGame.getInstance().selectShield(ShieldType.ETA);
+            }
+        });
+
+        lotaIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                KUVidGame.getInstance().selectShield(ShieldType.LOTA);
+            }
+        });
+
+        thetaIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                KUVidGame.getInstance().selectShield(ShieldType.THETA);
+            }
+        });
+
+        zetaIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                KUVidGame.getInstance().selectShield(ShieldType.ZETA);
+            }
+        });
 
         this.add(etaIcon);
         this.add(etaCountLabel);
