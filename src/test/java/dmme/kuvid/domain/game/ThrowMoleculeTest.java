@@ -21,7 +21,7 @@ public class ThrowMoleculeTest {
         KUVidGame.getInstance().setNumMolecules(10);
         DomainFactory.createMolecule(MoleculeType.ALPHA, 10);
         List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA));
-        assertNotNull(list, "Game Object list is null");
+        assertNotNull(list, "GameObject list is null.");
     }
 
     @Test
@@ -31,9 +31,17 @@ public class ThrowMoleculeTest {
         DomainFactory.createMolecule(MoleculeType.BETA, 1);
         DomainFactory.createMolecule(MoleculeType.GAMMA, 1);
         DomainFactory.createMolecule(MoleculeType.SIGMA, 1);
-        movementHandler.getInstance().throwMolecule();
+//        movementHandler.getInstance().throwMolecule();
 
-        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA));
-        assertEquals(4, list.size());
+        List<GameObject> alphaList = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA));
+        List<GameObject> betaList = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.BETA));
+        List<GameObject> gammaList = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.GAMMA));
+        List<GameObject> sigmaList = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA));
+
+        assertEquals(1, alphaList.size(), "List Size don't match.");
+        assertEquals(1, betaList.size(), "List Size don't match.");
+        assertEquals(1, gammaList.size(), "List Size don't match.");
+        assertEquals(1, sigmaList.size(), "List Size don't match.");
+
     }
 }
