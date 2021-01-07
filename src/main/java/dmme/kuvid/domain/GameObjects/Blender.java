@@ -84,6 +84,16 @@ public class Blender {
 	}
 
 	private void blendAtoms(AtomType typeCreate,AtomType typeDestroy) {
+		//@requires: gameObject map and alpha,beta,gamma, sigma lists to be created
+		//@modifies: typeCreate and typeDestroy list from gameObject map
+		//            deletes predefined number of atoms and creates new instance of the specified atom
+		//@effects:  This procedure takes two atomType's and creates first type of atom by destroying
+		//				second type of atom specified.
+		//
+		//	Type to create			Type to destroy(blend)
+		//            SIGMA -> 4 ALPHA or 3 BETA or 2 GAMMA
+		//			  GAMMA -> 3 ALPHA or 2 BETA
+		//			  BETA  -> 2 ALPHA
 		if (typeCreate.equals(AtomType.SIGMA)) {
 
 			if(typeDestroy.equals(AtomType.ALPHA) &

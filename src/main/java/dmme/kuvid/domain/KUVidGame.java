@@ -560,5 +560,14 @@ public class KUVidGame extends Observable implements Runnable {
 	public static List<GameObject> getShootedPower() {
 		return shootedPower;
 	}
+	
+	public boolean createAtom(AtomType type,int num) {
+		DomainFactory.createAtom(type, num);
+		return true;
+	}
+	
+	public Blender getBlender() {
+		return this.blender;
+	}
 
 }

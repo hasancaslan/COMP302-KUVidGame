@@ -85,7 +85,7 @@ public class BuildingWindow extends JFrame {
 
         this.add(new JLabel("GameDifficulty"));
         this.add(this.ComboBox);
-
+ 
         this.add(this.StartButton);
 
         this.StartButton.addActionListener(new ActionListener() {
