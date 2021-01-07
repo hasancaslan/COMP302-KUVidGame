@@ -1,7 +1,6 @@
 package dmme.kuvid.domain;
 
 import dmme.kuvid.domain.Controllers.DomainFactory;
-
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
@@ -9,7 +8,6 @@ import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
@@ -385,7 +383,7 @@ public class KUVidGame extends Observable implements Runnable {
 
         }
         
-        GameFrame.finishedGame();
+        publishPropertyEvent("finishGame",null,null);
     }
 
     public void pauseGame() {

@@ -9,7 +9,6 @@ import dmme.kuvid.domain.GameObjects.Molecules.*;
 import dmme.kuvid.domain.GameObjects.Powerup.*;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.*;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 public class DomainFactory extends Observable{
@@ -58,7 +57,8 @@ public class DomainFactory extends Observable{
                 }
                 break;
         }
-        GameFrame.updateNumAtoms();
+
+        publishPropertyEvent("updateAtom",null,null);
     }
 
     public void createMolecule(MoleculeType type, int amount) {

@@ -2,7 +2,6 @@ package dmme.kuvid.domain.GameObjects.Molecules;
 
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.GameObjects.*;
-import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
 

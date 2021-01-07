@@ -1,9 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.KUVidGame;
-
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Shooter extends Observable {
@@ -122,11 +120,11 @@ public class Shooter extends Observable {
     		if(this.currentAtom.getType().equals(ObjectType.POWER_UP)) {
     			KUVidGame.getShootedPower().add(this.currentAtom);
     			KUVidGame.getPowerArsenal().get(this.currentAtom.getSubType()).remove(this.currentAtom);
-    			GameFrame.updateNumPower();
+    			publishPropertyEvent("updatePower",null,null);
     		}else {
     			KUVidGame.getShootedAtom().add(this.currentAtom);
         		KUVidGame.getGameObjectMap().get(new Key(this.currentAtom.getType(),this.currentAtom.getSubType())).remove(this.currentAtom);
-        		GameFrame.updateNumAtoms();
+        		publishPropertyEvent("updateAtom",null,null);
     		}
     		this.currentAtom=null;
     		this.pickAtom();

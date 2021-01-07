@@ -8,6 +8,6 @@ public class PowerShooterCollision implements collisionHandler {
 	
 	public PowerShooterCollision(GameObject object) {
 		KUVidGame.getInstance().setNumPowerUp(KUVidGame.getInstance().getNumPowerUp() + 1);
-		destroyHandler.destroyObject(object);
+		destroyHandler.getInstance().destroyObject(object);
 	}
 }

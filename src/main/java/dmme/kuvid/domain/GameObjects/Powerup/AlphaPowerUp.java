@@ -3,7 +3,6 @@ package dmme.kuvid.domain.GameObjects.Powerup;
 import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.lib.types.ObjectType;
 import dmme.kuvid.lib.types.PowerType;
-import dmme.kuvid.lib.types.ReactionType;
 
 public class AlphaPowerUp extends PowerUp {
 

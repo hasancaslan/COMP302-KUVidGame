@@ -3,22 +3,17 @@ package dmme.kuvid.domain.Controllers;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.Collusion.*;
 import dmme.kuvid.domain.GameObjects.GameObject;
-import dmme.kuvid.domain.GameObjects.Position;
-import dmme.kuvid.domain.GameObjects.Shooter;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
-import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
 import dmme.kuvid.lib.types.ReactionType;
-import dmme.kuvid.ui.GameFrame;
-
-import java.sql.Time;
+import dmme.kuvid.utils.observer.Observable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class movementHandler {
+public class movementHandler extends Observable{
 
     private static movementHandler instance = null;
     
@@ -88,7 +83,7 @@ public class movementHandler {
     		   if((this.collidedMol.get(i).getSubType().toString()+"_R").equals(this.collidedBlocker.get(i).getSubType().toString())) {
     			   new AtomMoleculeCollision(this.collidedAtom.get(i), this.collidedMol.get(i),true);
     			   System.out.println("BLOCKED");
-    			   destroyHandler.destroyObject(this.collidedBlocker.get(i));
+    			   destroyHandler.getInstance().destroyObject(this.collidedBlocker.get(i));
     		   }else {
     			   new AtomMoleculeCollision(this.collidedAtom.get(i), this.collidedMol.get(i),false);
     			   System.out.println("TYPE MISS");
@@ -147,7 +142,7 @@ public class movementHandler {
 	        			if((Math.abs(shooterPosition-objectPosition)<5*L)&& gameObject.isActive()&&gameObject.getPosition().getY()>(KUVidGame.getInstance().getPlayableArea().height-20*L)&&(!KUVidGame.getPowerArsenal().get(gameObject.getSubType()).contains(gameObject))) {
 	        				this.garbage.add(gameObject);
 	        				KUVidGame.getPowerArsenal().get(gameObject.getSubType()).add((PowerUp) gameObject);
-	        				GameFrame.updateNumPower();
+	        				publishPropertyEvent("updatePower",null,null);
 	        			}else if(gameObject.getPosition().getY()>(KUVidGame.getInstance().getPlayableArea().height-10*L) && gameObject.isActive()) {
 			            	this.garbage.add(gameObject);
 			        	}
@@ -178,7 +173,7 @@ public class movementHandler {
         	if(gameObject.getType().equals(ObjectType.REACTION_BLOCKER)) {
         		new ReactionSurfaceCollision(gameObject);
         	}else {
-        		destroyHandler.destroyObject(gameObject);
+        		destroyHandler.getInstance().destroyObject(gameObject);
         	}
         }
         garbage.clear();
