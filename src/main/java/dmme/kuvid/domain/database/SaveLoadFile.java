@@ -33,8 +33,8 @@ public class SaveLoadFile implements SaveMode {
 
     public String save(ObjectType objectType, Enum<?> subType, String name) {
         /*
-        REQUIRES: this not null, objectType not null, subType not null, name not null
-        EFFECTS: Generates a JSON string from properties of the given specified List of GameObjects.
+        @requires: this not null, objectType not null, subType not null, name not null
+        @effects: Generates a JSON string from properties of the given specified List of GameObjects.
             Returns generated String and saves corresponding String as a ".json" file
          */
         PathHandler pathHandler = PathHandler.getInstance();
@@ -62,8 +62,8 @@ public class SaveLoadFile implements SaveMode {
 
     public String gameObjectToJson(ObjectType objectType, Enum<?> subType) {
         /*
-        REQUIRES: this not null, objectType not null, subType not null
-        EFFECTS: Generates a JSON string from properties of the given specified List of GameObjects.
+        @requires: this not null, objectType not null, subType not null
+        @effects: Generates a JSON string from properties of the given specified List of GameObjects.
             Returns generated String.
          */
         return new GsonBuilder().setPrettyPrinting().create()
@@ -71,6 +71,11 @@ public class SaveLoadFile implements SaveMode {
     }
 
     public String load(String fileName) {
+        /*
+        @requires: this not null, fileName not null
+        @effects: finds corresponding json file, creates an object from list
+        and returns the object as a JSON string.
+         */
         PathHandler pathHandler = PathHandler.getInstance();
 
         String saveFolder = "snapshots";
@@ -97,6 +102,11 @@ public class SaveLoadFile implements SaveMode {
     }
 
     public List<GameObject> jsonToGameObject(String jsonString, ObjectType objectType, Enum<?> subType) {
+        /*
+        @requires: this not null, objectType not null, subType not null, jsonString not null
+        @effects: Generates a List object from properties of the given jsonString.
+            Returns generated object as a GameObject List.
+         */
         Type type = null;
         if (objectType == ObjectType.ATOM) {
             if (subType == AtomType.ALPHA) {
