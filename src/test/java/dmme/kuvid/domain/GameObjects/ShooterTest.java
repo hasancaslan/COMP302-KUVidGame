@@ -46,20 +46,33 @@ class ShooterTest {
     }
 
     @Test
-    void testAtomRemains() {
-        DomainFactory.createAtom(AtomType.ALPHA, 2);
-        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),2);
+    void testConsecutiveDiffPicking() {
+        DomainFactory.createAtom(AtomType.ALPHA, 1);
+        DomainFactory.createAtom(AtomType.SIGMA, 1);
+
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),1);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),1);
+
+
+
+        KUVidGame.getInstance().getShooter().pickAtom();
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA
+                    || KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.SIGMA);
+
+
+        Enum currAmmoType = KUVidGame.getInstance().getShooter().currentAtom.getSubType();
+        KUVidGame.getInstance().getShooter().shootAtom();
+        assertEquals(KUVidGame.getInstance().getNumAtom((AtomType) currAmmoType ),0);
+
 
         KUVidGame.getInstance().getShooter().pickAtom();
         assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
         assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA);
 
         KUVidGame.getInstance().getShooter().shootAtom();
-        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),1);
-
-        KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),0);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),0);
     }
 
 
@@ -76,22 +89,70 @@ class ShooterTest {
     }
 
         @Test
-    void pickAtomALPHA() { //TODO
+    void pickAtomALPHA() {
+            DomainFactory.createAtom(AtomType.ALPHA, 2);
+            assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),2);
 
+            KUVidGame.getInstance().getShooter().pickAtom();
+            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA);
+
+            KUVidGame.getInstance().getShooter().shootAtom();
+            assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),1);
+
+            KUVidGame.getInstance().getShooter().pickAtom();
+            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA);
     }
 
     @Test
     void pickAtomBETA() {
+        DomainFactory.createAtom(AtomType.BETA, 2);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.BETA),2);
 
+        KUVidGame.getInstance().getShooter().pickAtom();
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.BETA);
+
+        KUVidGame.getInstance().getShooter().shootAtom();
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.BETA),1);
+
+        KUVidGame.getInstance().getShooter().pickAtom();
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.BETA);
     }
 
     @Test
     void pickAtomGAMMA() {
+        DomainFactory.createAtom(AtomType.GAMMA, 2);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.GAMMA),2);
 
+        KUVidGame.getInstance().getShooter().pickAtom();
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.GAMMA);
+
+        KUVidGame.getInstance().getShooter().shootAtom();
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.GAMMA),1);
+
+        KUVidGame.getInstance().getShooter().pickAtom();
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.GAMMA);
     }
 
     @Test
     void pickAtomSIGMA() {
+        DomainFactory.createAtom(AtomType.SIGMA, 2);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),2);
 
+        KUVidGame.getInstance().getShooter().pickAtom();
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.SIGMA);
+
+        KUVidGame.getInstance().getShooter().shootAtom();
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),1);
+
+        KUVidGame.getInstance().getShooter().pickAtom();
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.SIGMA);
     }
 }
