@@ -1,6 +1,7 @@
 package dmme.kuvid.domain.database;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import dmme.kuvid.domain.GameObjects.Atoms.AlphaAtom;
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.GameObject;
@@ -34,7 +35,7 @@ class SaveLoadFileTest {
     }
 
     @Nested
-    @DisplayName("Tests for the method save")
+    @DisplayName("Tests for saving")
     class Save {
         @Test
         void testProduceCorrectJSON() {
@@ -66,10 +67,45 @@ class SaveLoadFileTest {
         }
     }
 
+    @Nested
+    @DisplayName("Tests for loading")
+    class Load {
 
-    @Test
-    @Disabled("Not Implemented yet")
-    void loadGame() {
+        @Test
+        void testFileLoaded() {
+            String json = new GsonBuilder().setPrettyPrinting().create()
+                    .toJson(list,new TypeToken<List<AlphaAtom>>(){}.getType());
 
+            saveLoadFile.save(ObjectType.ATOM, AtomType.ALPHA, "test_alpha");
+            String loaded = saveLoadFile.load("test_alpha");
+
+            Assertions.assertEquals(loaded, json);
+            String path = pathHandler.makePath("./snapshots", "test_alpha" + ".json");
+            File tmpDir = new File(path);
+            Assertions.assertTrue(tmpDir.delete());
+        }
+
+        @Test
+        void testObjectDeserializedCorrectly() {
+            saveLoadFile.save(ObjectType.ATOM, AtomType.ALPHA, "test_alpha");
+            String loaded = saveLoadFile.load("test_alpha");
+            List<GameObject> alphaAtomList = saveLoadFile.jsonToGameObject(loaded, ObjectType.ATOM, AtomType.ALPHA);
+
+            System.out.println(list);
+            System.out.println("======");
+            System.out.println(alphaAtomList);
+
+            Assertions.assertSame(list.get(0).getDirection().getX(), alphaAtomList.get(0).getDirection().getX());
+            Assertions.assertSame(list.get(0).getPosition().getX(), alphaAtomList.get(0).getPosition().getX());
+            Assertions.assertSame(list.get(0).getDirection().getY(), alphaAtomList.get(0).getDirection().getY());
+            Assertions.assertSame(list.get(0).getPosition().getY(), alphaAtomList.get(0).getPosition().getY());
+            Assertions.assertSame(list.get(0).getType(), alphaAtomList.get(0).getType());
+            Assertions.assertSame(list.get(0).getSubType(), alphaAtomList.get(0).getSubType());
+
+            String path = pathHandler.makePath("./snapshots", "test_alpha" + ".json");
+            File tmpDir = new File(path);
+            Assertions.assertTrue(tmpDir.delete());
+        }
     }
+
 }
