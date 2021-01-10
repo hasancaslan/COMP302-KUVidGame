@@ -348,7 +348,6 @@ public class KUVidGame extends Observable implements Runnable {
             }
 
             if(this.active) {
-                toBeLoaded = save(ObjectType.ATOM, AtomType.ALPHA, "atomAlpha");
 
 
             	movementHandler.getInstance().run();
@@ -381,7 +380,6 @@ public class KUVidGame extends Observable implements Runnable {
             		publishPropertyEvent("tick",getTime()+1,getTime());
             	}
             } else {
-                load(toBeLoaded);
             	try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
