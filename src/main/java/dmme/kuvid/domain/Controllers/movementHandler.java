@@ -66,7 +66,7 @@ public class movementHandler {
         return atom;
     }
 
-    //@requires: gameObject map and alpha,beta,gamma, sigma molecule lists to be created
+    //@requires: gameObject map and alpha, beta, gamma, sigma molecule lists to be created
     //@modifies: molecule instance fields from random list from gameObject map
     //           makes active boolean true and gives a random position in x since y is fixed top of screen.
     //@effects:  This procedure selects a random molecule type gets that types list and activates the first molecule
