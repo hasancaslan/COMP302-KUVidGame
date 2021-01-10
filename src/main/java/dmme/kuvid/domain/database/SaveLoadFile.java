@@ -92,9 +92,7 @@ public class SaveLoadFile implements SaveMode {
             outputData = new String(Files.readAllBytes(Paths.get(pathHandler.makePath(f.getAbsolutePath(), fileName) + ".json")));
             list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.ALPHA);
 
-            System.out.println(outputData);
-            System.out.println(list.get(0).getType());
-            System.out.println(list.get(0).getSubType());
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
