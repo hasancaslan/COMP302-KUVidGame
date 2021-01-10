@@ -71,10 +71,10 @@ public class ThrowMoleculeTest {
         KUVidGame.getInstance().setPlayableArea(new Dimension(1000, 1000));
         KUVidGame.getInstance().setL(10);
 
-        DomainFactory.createMolecule(MoleculeType.ALPHA, 1);
-        DomainFactory.createMolecule(MoleculeType.BETA, 1);
-        DomainFactory.createMolecule(MoleculeType.GAMMA, 1);
-        DomainFactory.createMolecule(MoleculeType.SIGMA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.BETA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.GAMMA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.SIGMA, 1);
 
         movementHandler.getInstance().throwMolecule();
 
@@ -104,10 +104,10 @@ public class ThrowMoleculeTest {
         KUVidGame.getInstance().setPlayableArea(new Dimension(1000, 1000));
         KUVidGame.getInstance().setL(10);
 
-        DomainFactory.createMolecule(MoleculeType.ALPHA, 1);
-        DomainFactory.createMolecule(MoleculeType.BETA, 1);
-        DomainFactory.createMolecule(MoleculeType.GAMMA, 1);
-        DomainFactory.createMolecule(MoleculeType.SIGMA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.BETA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.GAMMA, 1);
+        DomainFactory.getInstance().createMolecule(MoleculeType.SIGMA, 1);
 
         List<GameObject> alphaList = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA));
         List<GameObject> betaList = KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE, MoleculeType.BETA));

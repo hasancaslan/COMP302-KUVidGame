@@ -8,6 +8,7 @@ import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
+import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.MoleculeType;
