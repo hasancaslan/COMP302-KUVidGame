@@ -1,28 +1,19 @@
 package dmme.kuvid.domain.GameObjects;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
-import org.junit.Test;
-
-import dmme.kuvid.domain.KUVidGame;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import dmme.kuvid.domain.GameObjects.GameObject;
+import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.domain.GameObjects.Atoms.AlphaAtom;
 import dmme.kuvid.lib.types.AtomType;
-import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.ObjectType;
 
-public class GameObjectTest2{
+
+public class GameObjectTest{
 	Position position = new Position(0,0);
 	Position direction = new Position(10,10);
 	ObjectType type = ObjectType.ATOM;	
 	GameObject atom;
-	
-	@Test
-	public void testList() {
-		List<GameObject> GameObjectList = GameObject.getGameObjectList(ObjectType.ATOM , AtomType.ALPHA);
-		assert(true);
-	}
 	
 
 	@Test
@@ -65,6 +56,13 @@ public class GameObjectTest2{
 		assertTrue(atom.getPosition().getX() == 100 * (1) && atom.getPosition().getY() == 100 * (1));
 		atom.move();
 		assertTrue(atom.getPosition().getX() == 100 * (0) && atom.getPosition().getY() == 100 * (0));
+	}
+	
+	@Test
+	public void testWallBounce() {
+		atom = new AlphaAtom(position, direction, true, type);
+		atom.setPosition(new Position(0,0));
+		atom.setDirection(new Position(-100,-100));
 		atom.move();
 		assertFalse(atom.getDirection().getX() == -100);
 		assertFalse(atom.getPosition().getX() == -100);

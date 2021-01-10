@@ -44,7 +44,6 @@ public class KUVidGame extends Observable implements Runnable {
     private final int range = 10;
     private int linearity= 1;
     private boolean spinning;
-    private int linearity= 1;
     private int difficulty=1;
     private int sleepTime=100;
     private Shooter shooter;
