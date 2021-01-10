@@ -119,15 +119,16 @@ public class Shooter extends Observable {
 			int L=KUVidGame.getInstance().getL();
 			int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
 			if (this.currentAmmo != null) {
-				this.currentAmmo.setActive(false);
-			}
+				//this.currentAmmo.setActive(false);
+			
 			//Atom
 			//ShieldDecorator temp = KUVidGame.getShieldArsenal().get(type).get(KUVidGame.getShieldArsenal().get(type).size() - 1);
 			//this.currentAtom = temp.addShield();
 
 			int curr = KUVidGame.getShieldArsenal().get(type);
 			KUVidGame.getShieldArsenal().put(type, curr-1);
-
+			
+			
 
 			switch(type) {
 				case ETA:
@@ -167,9 +168,11 @@ public class Shooter extends Observable {
 			this.currentAtom.setActive(true);
 
 			 */
+			}
 
 
 		}
+			
 
 	}
 
@@ -179,7 +182,8 @@ public class Shooter extends Observable {
     		int L=KUVidGame.getInstance().getL();
     		int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
     		double angle=Math.toRadians(this.getAngle()); 
-    		Position direction=new Position((int)(-L*Math.cos(angle)),(int)(-L*Math.sin(angle)));
+    		double coeff=this.currentAmmo.paceFactor;
+    		Position direction=new Position((int)(-L*Math.cos(angle)*coeff),(int)(-L*Math.sin(angle)*coeff));
     		this.currentAmmo.setDirection(direction);
     		
     		if(this.currentAmmo.getType().equals(ObjectType.POWER_UP)) {
@@ -191,6 +195,9 @@ public class Shooter extends Observable {
         		KUVidGame.getGameObjectMap().get(new Key(this.currentAmmo.getType(),this.currentAmmo.getSubType())).remove(this.currentAmmo);
         		GameFrame.updateNumAtoms();
     		}
+    		System.out.println(this.currentAmmo);
+    		System.out.println("ammo dy:"+this.currentAmmo.getDirection().getY());
+    		System.out.println("ammo pace factor:"+this.currentAmmo.paceFactor);
     		this.currentAmmo =null;
     		this.pickAtom();
     	}

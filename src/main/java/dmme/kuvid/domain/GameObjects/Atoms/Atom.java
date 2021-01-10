@@ -19,7 +19,8 @@ public abstract class Atom extends GameObject{
 	}
 
 	//TODO
-	protected Atom() {
+	public Atom() {
+		super();
 	}
 
 

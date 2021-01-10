@@ -104,7 +104,7 @@ public class KUVidGame extends Observable implements Runnable {
         KUVidGame.powerArsenal.put(PowerType.GAMMA_B, new ArrayList<PowerUp>());
         KUVidGame.powerArsenal.put(PowerType.SIGMA_B, new ArrayList<PowerUp>());
         //TODO added
-        KUVidGame.shieldArsenal.put(ShieldType.ETA, 5);
+        KUVidGame.shieldArsenal.put(ShieldType.ETA, 40);
         KUVidGame.shieldArsenal.put(ShieldType.LOTA, 5);
         KUVidGame.shieldArsenal.put(ShieldType.THETA, 5);
         KUVidGame.shieldArsenal.put(ShieldType.ZETA, 5);

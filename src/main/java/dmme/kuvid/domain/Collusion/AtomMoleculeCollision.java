@@ -2,6 +2,7 @@ package dmme.kuvid.domain.Collusion;
 
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
+import dmme.kuvid.domain.GameObjects.Atoms.ShieldDecorator;
 
 public class AtomMoleculeCollision implements collisionHandler{
 	private boolean blocked=false;
@@ -11,7 +12,7 @@ public class AtomMoleculeCollision implements collisionHandler{
         this.blocked=blocked;
         if(object1.getSubType().toString().equals(object2.getSubType().toString()) && !this.blocked) {
         	 //Player.getInstance().incrementPoint(1);
-            Player.getInstance().incrementPoint( ((Atom) object1).getStability());
+            Player.getInstance().incrementPoint(((ShieldDecorator)object1).getStability());
         }
     }
 

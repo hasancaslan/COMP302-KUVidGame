@@ -59,7 +59,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
     }
 
     public void setScoreLabel(double score) { //TODO changed int to double
-        scoreLabel.setText("  " + (int)score);
+        scoreLabel.setText("  " + (int)(score*100.0));
     }
 
     public void setTimeLabel(int seconds) {
@@ -87,6 +87,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
                 //df.format(temp);
                 //double score = temp;
                 double score = (double) e.getNewValue(); //TODO actually double
+                System.out.println("point:"+score);
                 this.setScoreLabel(score);
                 break;
             case "health":
