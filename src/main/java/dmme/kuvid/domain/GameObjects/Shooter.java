@@ -76,6 +76,13 @@ public class Shooter extends Observable {
     	}
     }
 
+    /*
+    REQUIRES: Domain factory have created some Atoms and current numOfAtoms is > 0.
+    MODIFIES: Shooter's current atom is set to randomly picked atom, current atom becomes active,
+    the current position of the shooter ammo assigned to selected atom
+    EFFECTS: The previously selected but replaced ammo's (either power-up or atom)
+     		 position and activeness properties are changed
+     */
     public void pickAtom() {
     	if(KUVidGame.getInstance().getRemAtoms()>0) {
 	    	int L=KUVidGame.getInstance().getL();
