@@ -2,7 +2,6 @@ package dmme.kuvid.domain.GameObjects.Atoms;
 
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.AtomUI;
 
 public abstract class Atom extends GameObject{
 	
@@ -20,4 +19,15 @@ public abstract class Atom extends GameObject{
 		return this.subtype;
 	}
 
+	@Override
+	public String toString() {
+		return "Atom [" +
+				"subtype=" + subtype +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

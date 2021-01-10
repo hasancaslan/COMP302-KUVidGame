@@ -4,11 +4,13 @@ import dmme.kuvid.domain.KUVidGame;
 
 public class buildHandler {
 	
-	private KUVidGame Game = KUVidGame.getInstance();
+	private KUVidGame Game;
 	
 	private static buildHandler instance = null;
 	
-    private buildHandler() {}
+    private buildHandler() {
+    	Game =  KUVidGame.getInstance();
+    }
 
     public static buildHandler getInstance() {
         if (instance == null)

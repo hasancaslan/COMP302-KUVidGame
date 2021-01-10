@@ -3,7 +3,6 @@ package dmme.kuvid.domain.GameObjects;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Shooter extends Observable {
@@ -77,6 +76,13 @@ public class Shooter extends Observable {
     	}
     }
 
+    /*
+    REQUIRES: Domain factory have created some Atoms and current numOfAtoms is > 0.
+    MODIFIES: Shooter's current atom is set to randomly picked atom, current atom becomes active,
+    the current position of the shooter ammo assigned to selected atom
+    EFFECTS: The previously selected but replaced ammo's (either power-up or atom)
+     		 position and activeness properties are changed
+     */
     public void pickAtom() {
     	if(KUVidGame.getInstance().getRemAtoms()>0) {
 	    	int L=KUVidGame.getInstance().getL();
@@ -122,15 +128,25 @@ public class Shooter extends Observable {
     		if(this.currentAtom.getType().equals(ObjectType.POWER_UP)) {
     			KUVidGame.getShootedPower().add(this.currentAtom);
     			KUVidGame.getPowerArsenal().get(this.currentAtom.getSubType()).remove(this.currentAtom);
-    			GameFrame.updateNumPower();
+    			publishPropertyEvent("updatePower",null,null);
     		}else {
     			KUVidGame.getShootedAtom().add(this.currentAtom);
         		KUVidGame.getGameObjectMap().get(new Key(this.currentAtom.getType(),this.currentAtom.getSubType())).remove(this.currentAtom);
-        		GameFrame.updateNumAtoms();
+        		publishPropertyEvent("updateAtom",null,null);
     		}
     		this.currentAtom=null;
     		this.pickAtom();
     	}
     }
 
+	@Override
+	public String toString() {
+		return "Shooter [" +
+				"position=" + position +
+				", angle=" + angle +
+				", ammoType=" + ammoType +
+				", currentAtom=" + currentAtom +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

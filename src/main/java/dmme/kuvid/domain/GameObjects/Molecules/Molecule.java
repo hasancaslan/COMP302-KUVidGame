@@ -2,7 +2,6 @@ package dmme.kuvid.domain.GameObjects.Molecules;
 
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.GameObjects.*;
-import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
 
@@ -50,4 +49,20 @@ public abstract class Molecule extends GameObject{
 
 
 	public abstract void setMoleculeType();
+
+	@Override
+	public String toString() {
+		return "Molecule [" +
+				"spinning=" + spinning +
+				", subtype=" + subtype +
+				", count=" + count +
+				", spin=" + spin +
+				", strategy=" + strategy +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }
