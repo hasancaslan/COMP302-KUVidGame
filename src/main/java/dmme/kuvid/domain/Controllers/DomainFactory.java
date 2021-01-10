@@ -1,8 +1,6 @@
 package dmme.kuvid.domain.Controllers;
 
 import dmme.kuvid.domain.KUVidGame;
-
-
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.GameObjects.Molecules.*;

@@ -1,6 +1,5 @@
 package dmme.kuvid.domain.GameObjects.Molecules;
 
-
 import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.domain.GameObjects.Position;
 

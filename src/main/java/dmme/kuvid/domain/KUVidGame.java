@@ -14,8 +14,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
@@ -33,40 +31,21 @@ public class KUVidGame extends Observable implements Runnable {
     private int numBlocker = 1;
     private int numPowerUp = 1;
     private final int range = 10;
-
-    private boolean linearity;
+    private int linearity= 1;
     private boolean spinning;
     private int difficulty=1;
     private int sleepTime=100;
-    private GameObject objects;
     private Shooter shooter;
     private Blender blender;
     private DomainFactory creator;
     private destroyHandler destroyer;
     private int time=60;//600;
     private Player p1;
-    private Random rand = new Random();
     private int throwMolecule;
     private int throwBlocker;
     private int throwPower;
     
-    private int alphaPowerNo=1;
-    private int betaPowerNo=1;
-    private int gammaPowerNo=1;
-    private int sigmaPowerNo=1;
-    private int POWERNO=0;
-    private int alphaBlockNo=1;
-    private int betaBlockNo=1;
-    private int gammaBlockNo=1;
-    private int sigmaBlockNo=1;
-    private int BLOCKNO=0;
-    private int alphaNo=1;
-    private int betaNo=1;
-    private int gammaNo=1;
-    private int sigmaNo=1;
-    private int MOLNO=0;
     private int count = 0;
-    private int RemAtoms=0;
 
     private KUVidGame() {
         this.shooter = new Shooter();
@@ -77,7 +56,6 @@ public class KUVidGame extends Observable implements Runnable {
         this.playableArea = new Dimension(this.screenSize.width*7/10,this.screenSize.height);
         this.L=Math.floorDiv(screenSize.height,10);
         this.creator=DomainFactory.getInstance();
-        
 
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.ALPHA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.BETA), new ArrayList<GameObject>());
@@ -110,9 +88,8 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public static KUVidGame getInstance() {
-        if (instance == null)
-            instance = new KUVidGame();
-
+        if (instance == null) 
+        	instance = new KUVidGame();
         return instance;
     }
 
@@ -153,30 +130,24 @@ public class KUVidGame extends Observable implements Runnable {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
-    	switch(difficulty) {
-    	case "Easy":
-    		this.difficulty = 1;
-    		sleepTime= 100;
-    		break;
-    	case "Medium":
-    		this.difficulty = 2;
-    		sleepTime= 50;
-    		break;
-    	case "Hard":
-    		this.difficulty = 4;
-    		sleepTime= 25;
-    		break;
-    	}
+    public void setDifficulty(int difficulty) {
+    	this.difficulty=difficulty;
     }
 
     public int getLinearity() {
-    	if(linearity) return 1;
-        return 0;
+    	return this.linearity;
     }
 
-    public void setLinearity(boolean linearity) {
+    public void setLinearity(int linearity) {
     	this.linearity = linearity;
+    }
+    
+    public int getSleepTime() {
+    	return this.sleepTime;
+    }
+
+    public void setSleepTime(int sleepTime) {
+    	this.sleepTime = sleepTime;
     }
     
     public boolean getSpinning() {
@@ -204,21 +175,15 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void aimShooter(int angleChange) {
-    	if(this.active) {
-    		shooter.rotateShooter(angleChange);
-    	}
+    	if(this.active) shooter.rotateShooter(angleChange);
     }
 
     public void moveShooter(int displacement) {
-    	if(this.active) {
-    		shooter.moveShooter(displacement);
-    	}
+    	if(this.active) shooter.moveShooter(displacement);
     }
 
     public void selectAtom() {
-    	if(this.active) {
-    		shooter.pickAtom();
-    	}
+    	if(this.active) shooter.pickAtom();
     }
 
     public void selectPowerUp(PowerType type) {
@@ -240,11 +205,15 @@ public class KUVidGame extends Observable implements Runnable {
     public void setNumPowerUp(int numPowerUp) {
         this.numPowerUp = numPowerUp;
     }
+    
+    public int getNumBlocker() {
+        return numBlocker;
+    }
 
     public void setNumBlocker(int numBlocker) {
         this.numBlocker = numBlocker;
     }
-
+    
     public int getNumMolecules() {
         return numMolecules;
     }
@@ -255,6 +224,26 @@ public class KUVidGame extends Observable implements Runnable {
 
     public void setNumAtoms(int numAtoms) {
         this.numAtoms = numAtoms;
+    }
+    
+    public void pauseGame() {
+        this.setActive(false);
+    }
+
+    public void resumeGame() {
+        this.setActive(true);
+    }
+
+    public int getL() {
+        return L;
+    }
+
+    public void setL(int l) {
+        L = l;
+    }
+    
+    public void shoot() {
+    	if(this.active) this.shooter.shootAtom();
     }
 
     public Shooter getShooter() {
@@ -277,22 +266,30 @@ public class KUVidGame extends Observable implements Runnable {
     public int getNumPower(PowerType type) {
     	return KUVidGame.powerArsenal.get(type).size();
     }
+    
+	public static List<GameObject> getShootedAtom() {
+		return shootedAtom;
+	}
 
-    public GameObject getRandomAtom() {
-        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
-        
-        while(list.size()==0) {
-        	list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
-        }
-        
-        GameObject atom = list.get(this.rand.nextInt(list.size()));
-        
-        while (atom.isActive()) {
-            atom = list.get(this.rand.nextInt(list.size()));
-        }
+	public int getRemAtoms() {
+		return this.getNumAtom(AtomType.ALPHA)+this.getNumAtom(AtomType.BETA)+this.getNumAtom(AtomType.SIGMA)+this.getNumAtom(AtomType.GAMMA);
+	}
+	
+	public int getRemMolecules() {
+		return this.getNumMol(MoleculeType.ALPHA)+this.getNumMol(MoleculeType.BETA)+this.getNumMol(MoleculeType.SIGMA)+this.getNumMol(MoleculeType.GAMMA);
+	}
+	
+	public int getScore() {
+		return this.p1.getPoint();
+	}
 
-        return atom;
-    }
+	public static List<GameObject> getShootedPower() {
+		return shootedPower;
+	}
+	
+	public Blender getBlender() {
+		return this.blender;
+	}
 
     public void runGame(){ //main loop
     	
@@ -300,18 +297,15 @@ public class KUVidGame extends Observable implements Runnable {
         int numMol=(int) Math.ceil((this.numMolecules/4.0));
         int numBlock=(int) Math.ceil((this.numBlocker/4.0));
         int numPower=(int) Math.ceil((this.numPowerUp/4.0));
-        this.throwMolecule=numMol*4;
-        this.MOLNO=numMol;
-        this.throwBlocker=numBlock*4;
-        this.BLOCKNO=numBlock;
-        this.throwPower=numPower*4;
-        this.POWERNO=numPower;
         
+        this.throwMolecule = numMol*4;
+        this.throwPower = numPower * 4;
+        this.throwBlocker = numBlock * 4;
+
         DomainFactory.getInstance().createAtom(AtomType.ALPHA,num);
         DomainFactory.getInstance().createAtom(AtomType.BETA,num);
         DomainFactory.getInstance().createAtom(AtomType.GAMMA,num);
         DomainFactory.getInstance().createAtom(AtomType.SIGMA,num);
-        
         
         DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, numMol);
         DomainFactory.getInstance().createMolecule(MoleculeType.BETA, numMol);
@@ -340,7 +334,6 @@ public class KUVidGame extends Observable implements Runnable {
             if(this.getRemMolecules()==0) {
             	break;
             }
-            
 
             if(this.active) {
             	movementHandler.getInstance().run();
@@ -353,13 +346,16 @@ public class KUVidGame extends Observable implements Runnable {
         			}
                 	if(count == 10) {
                 		if(select==0 && this.throwMolecule>0) {
-                			throwMolecule();
+                			movementHandler.getInstance().throwMolecule();
+                			this.throwMolecule--;
                 			select++;
                 		}else if(select==1 && this.throwBlocker>0){
-                			throwBlocker();
+                			movementHandler.getInstance().throwBlocker();
+                			this.throwBlocker--;
                 			select++;
-                		}else {
-                			throwPower();
+                		}else if(this.throwPower>0){
+                			movementHandler.getInstance().throwPower();
+                			this.throwPower--;
                 			select=0;
                 		}
                 	}
@@ -374,159 +370,15 @@ public class KUVidGame extends Observable implements Runnable {
             	try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             }
-
-            
-
         }
-        
         publishPropertyEvent("finishGame",null,null);
     }
-
-    public void pauseGame() {
-        this.setActive(false);
-    }
-
-    public void resumeGame() {
-        this.setActive(true);
-    }
-
-    public int getL() {
-        return L;
-    }
-
-    public void setL(int l) {
-        L = l;
-    }
-
-    public void throwMolecule() {
-    	
-    	
-    	MoleculeType t=MoleculeType.randomMoleculeType();
-    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
-    	
-    	while(list.size()==0) {
-    		t=MoleculeType.randomMoleculeType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
-    	}
-    	
-    	Molecule molecule=null;
-    	while(molecule==null) {
-    		
-	    	if(t.equals(MoleculeType.ALPHA) && this.alphaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.alphaNo);
-	    		this.alphaNo++;
-	    	}else if(t.equals(MoleculeType.BETA) && this.betaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.betaNo);
-	    		this.betaNo++;
-	    	}else if(t.equals(MoleculeType.GAMMA) && this.gammaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.gammaNo);
-	    		this.gammaNo++;
-	    	}else if(t.equals(MoleculeType.SIGMA) && this.sigmaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.sigmaNo);
-	    		this.sigmaNo++;
-	    	}
-        
-        	t=MoleculeType.randomMoleculeType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
-    		
-        }
-        
-        molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width - 30*L) + 10 * L ,0));
-        molecule.setActive(true);
-        this.throwMolecule--;
-        
-       
-    }
     
-    public void throwBlocker() {
-    	ReactionType t=ReactionType.randomReactionType();
-    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
-    	
-    	while(list.size()==0) {
-    		t=ReactionType.randomReactionType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
-    	}
-    	
-    	ReactionBlocker blocker=null;
-    	while(blocker==null) {
-    		
-	    	if(t.equals(ReactionType.ALPHA_R) && this.alphaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.alphaBlockNo);
-	    		this.alphaBlockNo++;
-	    	}else if(t.equals(ReactionType.BETA_R) && this.betaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.betaBlockNo);
-	    		this.betaBlockNo++;
-	    	}else if(t.equals(ReactionType.GAMMA_R) && this.gammaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.gammaBlockNo);
-	    		this.gammaBlockNo++;
-	    	}else if(t.equals(ReactionType.SIGMA_R) && this.sigmaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.sigmaBlockNo);
-	    		this.sigmaBlockNo++;
-	    	}
-        
-        	t=ReactionType.randomReactionType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
-    		
-        }
-        
-        blocker.setPosition(new Position(this.rand.nextInt(this.playableArea.width - 30*L) + 10 * L ,0));
-        blocker.setActive(true);
-        this.throwBlocker--;
-    	
-    }
-    
-    public void throwPower() {
-    	PowerType t=PowerType.randomPowerType();
-    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP,t));
-    	
-    	while(list.size()==0) {
-    		t=PowerType.randomPowerType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP,t));
-    	}
-    	
-    	PowerUp power=null;
-    	while(power==null) {
-    		
-	    	if(t.equals(PowerType.ALPHA_B) && this.alphaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.alphaPowerNo);
-	    		this.alphaPowerNo++;
-	    	}else if(t.equals(PowerType.BETA_B) && this.betaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.betaPowerNo);
-	    		this.betaPowerNo++;
-	    	}else if(t.equals(PowerType.GAMMA_B) && this.gammaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.gammaPowerNo);
-	    		this.gammaPowerNo++;
-	    	}else if(t.equals(PowerType.SIGMA_B) && this.sigmaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.sigmaPowerNo);
-	    		this.sigmaPowerNo++;
-	    	}
-        
-        	t=PowerType.randomPowerType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP,t));
-    		
-        }
-        
-    	power.setPosition(new Position(this.rand.nextInt(this.playableArea.width - 30*L) + 10 * L ,0));
-    	power.setDirection(new Position(0,L));
-    	power.setActive(true);
-        this.throwPower--;
-    	
-    }
-    
-    public void shoot() {
-    	if(this.active) {
-    		this.shooter.shootAtom();
-    	}
-    }
-    
-
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		this.runGame();
 	}
 	
@@ -539,30 +391,4 @@ public class KUVidGame extends Observable implements Runnable {
 		System.out.print("]");
 		System.out.println("");
 	}
-
-	public static List<GameObject> getShootedAtom() {
-		return shootedAtom;
-	}
-
-	public int getRemAtoms() {
-		return this.getNumAtom(AtomType.ALPHA)+this.getNumAtom(AtomType.BETA)+this.getNumAtom(AtomType.SIGMA)+this.getNumAtom(AtomType.GAMMA);
-	}
-	
-	public int getRemMolecules() {
-		return this.getNumMol(MoleculeType.ALPHA)+this.getNumMol(MoleculeType.BETA)+this.getNumMol(MoleculeType.SIGMA)+this.getNumMol(MoleculeType.GAMMA);
-	}
-	
-	public int getScore() {
-		return this.p1.getPoint();
-	}
-
-	public static List<GameObject> getShootedPower() {
-		return shootedPower;
-	}
-	
-	
-	public Blender getBlender() {
-		return this.blender;
-	}
-
 }

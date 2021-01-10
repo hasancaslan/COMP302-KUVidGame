@@ -1,7 +1,6 @@
 package dmme.kuvid.domain.Controllers;
 
 import java.util.List;
-
 import java.util.Random;
 
 import dmme.kuvid.domain.KUVidGame;
