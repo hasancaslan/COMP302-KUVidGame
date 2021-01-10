@@ -99,7 +99,6 @@ public class BuildingWindow extends JFrame {
                 L = Integer.parseInt((String) LTextField.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
 
-
                 buildHandler.getInstance().setNumAtoms(atomNumber);
                 buildHandler.getInstance().setNumMolecules(moleculeNumber);
                 buildHandler.getInstance().setNumBlocker(reactionBlockerNumber);

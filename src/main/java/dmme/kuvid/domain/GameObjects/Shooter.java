@@ -83,7 +83,7 @@ public class Shooter extends Observable {
 	    	if (this.currentAtom!= null) {
 	    		this.currentAtom.setActive(false);
 	    	}
-	        this.currentAtom=movementHandler.getInstance().getRandomAtom();
+	        this.currentAtom = movementHandler.getInstance().getRandomAtom();
 	        double angle=Math.toRadians(this.getAngle());
 	        int x=this.position-10*(int)(L*Math.cos(angle));
 	    	int y=gameHeight-(int)(10*L*Math.sin(angle));

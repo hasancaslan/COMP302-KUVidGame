@@ -12,7 +12,7 @@ import dmme.kuvid.domain.GameObjects.Atoms.AlphaAtom;
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
-import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
+import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
 
@@ -44,13 +44,14 @@ public class KUVidGame extends Observable implements Runnable {
     private final int range = 10;
     private int linearity= 1;
     private boolean spinning;
+    private int linearity= 1;
     private int difficulty=1;
     private int sleepTime=100;
     private Shooter shooter;
     private Blender blender;
     private DomainFactory creator;
     private destroyHandler destroyer;
-    private int time=60;//600;
+    private int time=600;	//60;
     private Player p1;
     private int throwMolecule;
     private int throwBlocker;
@@ -201,10 +202,6 @@ public class KUVidGame extends Observable implements Runnable {
     	this.shooter.pickPowerUp(type);
     }
 
-    public int getRange() {
-        return range;
-    }
-
     public void useBlender(BlenderAction action, AtomType typeCreate, AtomType typeDestroy) {
         this.blender.useBlender(action, typeCreate, typeDestroy);
     }
@@ -231,6 +228,10 @@ public class KUVidGame extends Observable implements Runnable {
 
     public void setNumMolecules(int numMolecules) {
         this.numMolecules = numMolecules;
+    }
+    
+    public int getNumAtoms() {
+        return numAtoms;
     }
 
     public void setNumAtoms(int numAtoms) {

@@ -68,9 +68,11 @@ public abstract class GameObject extends Observable{
 
 	}
 
-
 	public void move() {
-
+		// REQUIRES: This is initialized with position and direction
+		// MODIFIES: This.Position and This.Direction
+		// EFFECTS:  Updates position from this, so that new position = This.Position + This.Direction
+		// 			 If position is out of playable area updates This.Direction so that This.Direction = -This.Direction
 		if(this.isActive()) {
 			int x1 = this.getPosition().getX();
 			int y1 = this.getPosition().getY();

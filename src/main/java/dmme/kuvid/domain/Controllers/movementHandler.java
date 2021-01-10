@@ -58,9 +58,22 @@ public class movementHandler extends Observable{
     public static movementHandler getInstance() {
         if (instance == null)
             instance = new movementHandler();
-
         return instance;
     }
+    
+    public GameObject getRandomAtom() {
+        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
+        while(list.size()==0) {
+        	list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
+        }        
+        GameObject atom = list.get(this.rand.nextInt(list.size()));
+        while (atom.isActive()) {
+            atom = list.get(this.rand.nextInt(list.size()));
+        }
+        return atom;
+    }
+    
+    public void throwMolecule() {
 
     public GameObject getRandomAtom() {
         List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
@@ -172,9 +185,7 @@ public class movementHandler extends Observable{
     }
 
     public void search() {
-        HashMap<Key,List<GameObject>> map= KUVidGame.getGameObjectMap();
-        
-       int L = KUVidGame.getInstance().getL();
+       HashMap<Key,List<GameObject>> map= KUVidGame.getGameObjectMap();
        
        for(GameObject atom : KUVidGame.getShootedAtom()) {
     	   int x1 = atom.getPosition().getX();
@@ -193,20 +204,19 @@ public class movementHandler extends Observable{
                       
                       boolean added=false;
                       for(GameObject block : BlockList) {
-           			   if (!block.isActive()) continue;
-           			   int xb = block.getPosition().getX();
-           	           int yb = block.getPosition().getY();
-           	           if (Math.abs(x1 - xb) < 15*L && Math.abs(y1 - yb) < 15*L) { 
-                             
-                             this.collidedBlocker.add(block);
-                             added=true;
-           	           }
+                    	  if (!block.isActive()) continue;
+           			      int xb = block.getPosition().getX();
+           	              int yb = block.getPosition().getY();
+           	              if (Math.abs(x1 - xb) < 15*L && Math.abs(y1 - yb) < 15*L) { 
+           	            	  this.collidedBlocker.add(block);
+                              added=true;
+           	              }
                       }
                       if(!added) {
                     	  this.collidedBlocker.add(null);
                       }
+    	           }
     		   }
-    	   }
     	   }
        }
        
@@ -225,7 +235,6 @@ public class movementHandler extends Observable{
     			   System.out.println("TYPE MISS");
     		   }
     	   }
-    	   
        }
        this.collidedAtom.clear();
        this.collidedMol.clear();
@@ -243,8 +252,8 @@ public class movementHandler extends Observable{
     	           if (Math.abs(x1 - xb) < 10*L && Math.abs(y1 - yb) < 10*L) {  
                       this.collidedPower.add(power);
                       this.eliminateBlocker.add(block);
+    	           }
     		   }
-    	      }
     	   }
        }
        
