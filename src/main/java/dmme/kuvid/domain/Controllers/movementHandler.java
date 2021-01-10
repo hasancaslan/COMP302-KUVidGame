@@ -1,12 +1,14 @@
 package dmme.kuvid.domain.Controllers;
 
-import dmme.kuvid.domain.KUVidGame;
-import dmme.kuvid.domain.Collusion.*;
+import dmme.kuvid.domain.Collusion.AtomMoleculeCollision;
+import dmme.kuvid.domain.Collusion.PowerReactionCollision;
+import dmme.kuvid.domain.Collusion.ReactionSurfaceCollision;
 import dmme.kuvid.domain.GameObjects.GameObject;
-import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
+import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
+import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.MoleculeType;
@@ -43,36 +45,42 @@ public class movementHandler extends Observable{
     private int L = KUVidGame.getInstance().getL();
     private int Width = KUVidGame.getInstance().getPlayableArea().width;
     private Random rand = new Random();
+    private List<GameObject> garbage = new ArrayList<GameObject>();
+    private List<GameObject> collidedMol = new ArrayList<GameObject>();
+    private List<GameObject> collidedAtom = new ArrayList<GameObject>();
+    private List<GameObject> collidedBlocker = new ArrayList<GameObject>();
+    private List<GameObject> collidedPower = new ArrayList<GameObject>();
+    private List<GameObject> eliminateBlocker = new ArrayList<GameObject>();
 
     private static movementHandler instance = null;
     
-    private List<GameObject> garbage=new ArrayList<GameObject>();
-    private List<GameObject> collidedMol=new ArrayList<GameObject>();
-    private List<GameObject> collidedAtom=new ArrayList<GameObject>();
-    private List<GameObject> collidedBlocker=new ArrayList<GameObject>();
-    private List<GameObject> collidedPower=new ArrayList<GameObject>();
-    private List<GameObject> eliminateBlocker=new ArrayList<GameObject>();
 
-    private movementHandler() {}
+    private movementHandler() {
+    }
 
     public static movementHandler getInstance() {
         if (instance == null)
             instance = new movementHandler();
         return instance;
     }
-    
+
     public GameObject getRandomAtom() {
         List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
-        while(list.size()==0) {
-        	list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
-        }        
+        while (list.size() == 0) {
+            list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
+        }
         GameObject atom = list.get(this.rand.nextInt(list.size()));
         while (atom.isActive()) {
             atom = list.get(this.rand.nextInt(list.size()));
         }
         return atom;
     }
-    
+
+    //@requires: gameObject map and alpha, beta, gamma, sigma molecule lists to be created
+    //@modifies: molecule instance fields from random list from gameObject map
+    //           makes active boolean true and gives a random position in x since y is fixed top of screen.
+    //@effects:  This procedure selects a random molecule type gets that types list and activates the first molecule
+    //			 that is not active in that list also sets a random x position for it.
     public void throwMolecule() {
     	//@requires: gameObject map and alpha,beta,gamma, sigma molecule lists to be created
     	//@modifies: molecule instance fields from random list from gameObject map
@@ -107,67 +115,67 @@ public class movementHandler extends Observable{
         molecule.setPosition(new Position(this.rand.nextInt(KUVidGame.getInstance().getPlayableArea().width - 30*L) + 10 * L ,0));
         molecule.setActive(true);
     }
-    
+
     public void throwBlocker() {
-    	
-    	ReactionType t=ReactionType.randomReactionType();
-    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
-    	while(list.size()==0) {
-    		t=ReactionType.randomReactionType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t));
-    	}   	
-    	ReactionBlocker blocker=null;
-    	while(blocker==null) {		
-	    	if(t.equals(ReactionType.ALPHA_R) && this.alphaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.alphaBlockNo);
-	    		this.alphaBlockNo++;
-	    	}else if(t.equals(ReactionType.BETA_R) && this.betaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.betaBlockNo);
-	    		this.betaBlockNo++;
-	    	}else if(t.equals(ReactionType.GAMMA_R) && this.gammaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.gammaBlockNo);
-	    		this.gammaBlockNo++;
-	    	}else if(t.equals(ReactionType.SIGMA_R) && this.sigmaBlockNo<=this.BLOCKNO) {
-	    		blocker=(ReactionBlocker)list.get(this.BLOCKNO-this.sigmaBlockNo);
-	    		this.sigmaBlockNo++;
-	    	}        
-        	t=ReactionType.randomReactionType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER,t)); 		
-        }     
-        blocker.setPosition(new Position(this.rand.nextInt(Width - 30*L) + 10 * L ,0));
-        blocker.setActive(true);	
+
+        ReactionType t = ReactionType.randomReactionType();
+        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER, t));
+        while (list.size() == 0) {
+            t = ReactionType.randomReactionType();
+            list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER, t));
+        }
+        ReactionBlocker blocker = null;
+        while (blocker == null) {
+            if (t.equals(ReactionType.ALPHA_R) && this.alphaBlockNo <= this.BLOCKNO) {
+                blocker = (ReactionBlocker) list.get(this.BLOCKNO - this.alphaBlockNo);
+                this.alphaBlockNo++;
+            } else if (t.equals(ReactionType.BETA_R) && this.betaBlockNo <= this.BLOCKNO) {
+                blocker = (ReactionBlocker) list.get(this.BLOCKNO - this.betaBlockNo);
+                this.betaBlockNo++;
+            } else if (t.equals(ReactionType.GAMMA_R) && this.gammaBlockNo <= this.BLOCKNO) {
+                blocker = (ReactionBlocker) list.get(this.BLOCKNO - this.gammaBlockNo);
+                this.gammaBlockNo++;
+            } else if (t.equals(ReactionType.SIGMA_R) && this.sigmaBlockNo <= this.BLOCKNO) {
+                blocker = (ReactionBlocker) list.get(this.BLOCKNO - this.sigmaBlockNo);
+                this.sigmaBlockNo++;
+            }
+            t = ReactionType.randomReactionType();
+            list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.REACTION_BLOCKER, t));
+        }
+        blocker.setPosition(new Position(this.rand.nextInt(Width - 30 * L) + 10 * L, 0));
+        blocker.setActive(true);
     }
-    
+
     public void throwPower() {
-    	
-    	PowerType t=PowerType.randomPowerType();
-    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP,t));	
-    	while(list.size()==0) {
-    		t=PowerType.randomPowerType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP,t));
-    	}	
-    	PowerUp power=null;
-    	while(power==null) {
-    		if(t.equals(PowerType.ALPHA_B) && this.alphaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.alphaPowerNo);
-	    		this.alphaPowerNo++;
-	    	}else if(t.equals(PowerType.BETA_B) && this.betaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.betaPowerNo);
-	    		this.betaPowerNo++;
-	    	}else if(t.equals(PowerType.GAMMA_B) && this.gammaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.gammaPowerNo);
-	    		this.gammaPowerNo++;
-	    	}else if(t.equals(PowerType.SIGMA_B) && this.sigmaPowerNo<=this.POWERNO) {
-	    		power=(PowerUp)list.get(this.POWERNO-this.sigmaPowerNo);
-	    		this.sigmaPowerNo++;
-	    	}   
-        	t=PowerType.randomPowerType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP,t));
-    		
-        }   
-    	power.setPosition(new Position(this.rand.nextInt(Width - 30*L) + 10 * L ,0));
-    	power.setDirection(new Position(0,L));
-    	power.setActive(true);
+
+        PowerType t = PowerType.randomPowerType();
+        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP, t));
+        while (list.size() == 0) {
+            t = PowerType.randomPowerType();
+            list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP, t));
+        }
+        PowerUp power = null;
+        while (power == null) {
+            if (t.equals(PowerType.ALPHA_B) && this.alphaPowerNo <= this.POWERNO) {
+                power = (PowerUp) list.get(this.POWERNO - this.alphaPowerNo);
+                this.alphaPowerNo++;
+            } else if (t.equals(PowerType.BETA_B) && this.betaPowerNo <= this.POWERNO) {
+                power = (PowerUp) list.get(this.POWERNO - this.betaPowerNo);
+                this.betaPowerNo++;
+            } else if (t.equals(PowerType.GAMMA_B) && this.gammaPowerNo <= this.POWERNO) {
+                power = (PowerUp) list.get(this.POWERNO - this.gammaPowerNo);
+                this.gammaPowerNo++;
+            } else if (t.equals(PowerType.SIGMA_B) && this.sigmaPowerNo <= this.POWERNO) {
+                power = (PowerUp) list.get(this.POWERNO - this.sigmaPowerNo);
+                this.sigmaPowerNo++;
+            }
+            t = PowerType.randomPowerType();
+            list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.POWER_UP, t));
+
+        }
+        power.setPosition(new Position(this.rand.nextInt(Width - 30 * L) + 10 * L, 0));
+        power.setDirection(new Position(0, L));
+        power.setActive(true);
     }
 
     public void search() {
@@ -286,19 +294,19 @@ public class movementHandler extends Observable{
 	        	}
 	        }
         }
-        
-        for(GameObject atom : KUVidGame.getShootedAtom()) {
-        	atom.move();
-        	if(atom.getPosition().getY()<0) {
-        		this.garbage.add(atom);
-        	}
+
+        for (GameObject atom : KUVidGame.getShootedAtom()) {
+            atom.move();
+            if (atom.getPosition().getY() < 0) {
+                this.garbage.add(atom);
+            }
         }
-        
-        for(GameObject power : KUVidGame.getShootedPower()) {
-        	power.move();
-        	if(power.getPosition().getY()<0) {
-        		this.garbage.add(power);
-        	}
+
+        for (GameObject power : KUVidGame.getShootedPower()) {
+            power.move();
+            if (power.getPosition().getY() < 0) {
+                this.garbage.add(power);
+            }
         }
         
         for(GameObject gameObject: garbage) {
@@ -333,7 +341,7 @@ public class movementHandler extends Observable{
     }
 
     public void run() {
-            search();
-            move();
+        search();
+        move();
     }
 }
