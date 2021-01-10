@@ -36,7 +36,7 @@ class ShooterTest {
 
     @AfterEach
     void tearDown() {
-        //TODO not needed for now
+        //TODO
         KUVidGame.getInstance().getShooter().pickAtom();
         while (KUVidGame.getInstance().getShooter().currentAtom!=null) {
             KUVidGame.getInstance().getShooter().pickAtom();
@@ -46,7 +46,39 @@ class ShooterTest {
     }
 
     @Test
-    void testConsecutiveDiffPicking() {
+    void testConsecutiveDifferentPicking() {
+        DomainFactory.createAtom(AtomType.ALPHA, 1);
+        DomainFactory.createAtom(AtomType.SIGMA, 1);
+
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),1);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),1);
+
+        boolean alphaPicked = false;
+        boolean sigmaPicked = false;
+
+        Enum currAmmoType ;
+
+        while (!(alphaPicked && sigmaPicked)) {
+            KUVidGame.getInstance().getShooter().pickAtom();
+            currAmmoType = KUVidGame.getInstance().getShooter().currentAtom.getSubType();
+            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+
+            if (currAmmoType == AtomType.ALPHA) {
+                alphaPicked = true;
+            } else if (currAmmoType == AtomType.SIGMA) {
+                sigmaPicked = true;
+            }
+        }
+
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),1);
+        assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),1);
+
+
+
+    }
+
+    @Test
+    void testConsecutiveDifferentPickingWithShooting() {
         DomainFactory.createAtom(AtomType.ALPHA, 1);
         DomainFactory.createAtom(AtomType.SIGMA, 1);
 
