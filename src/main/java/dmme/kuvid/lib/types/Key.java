@@ -22,4 +22,11 @@ public class Key {
         return type.hashCode()+subType.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "Key [" +
+                "type=" + type +
+                ", subType=" + subType +
+                ']';
+    }
 }

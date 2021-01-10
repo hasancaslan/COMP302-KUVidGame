@@ -159,4 +159,12 @@ public class Blender {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Blender [" +
+				"action=" + action +
+				", creator=" + creator +
+				", destroyer=" + destroyer +
+				']';
+	}
 }

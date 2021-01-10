@@ -19,4 +19,15 @@ public abstract class Atom extends GameObject{
 		return this.subtype;
 	}
 
+	@Override
+	public String toString() {
+		return "Atom [" +
+				"subtype=" + subtype +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

@@ -1,16 +1,27 @@
 package dmme.kuvid.domain;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import dmme.kuvid.constants.Config;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.domain.GameObjects.Atoms.AlphaAtom;
+import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -324,6 +335,7 @@ public class KUVidGame extends Observable implements Runnable {
         
         int select=0;
 
+        String toBeLoaded = null;
         while (true) {
             if (this.p1.getHealth() <= 0) {
                 break;
@@ -336,6 +348,9 @@ public class KUVidGame extends Observable implements Runnable {
             }
 
             if(this.active) {
+                toBeLoaded = save(ObjectType.ATOM, AtomType.ALPHA, "atomAlpha");
+
+
             	movementHandler.getInstance().run();
             	count++;
             	for(int i = this.difficulty; i>0 ;i--) {
@@ -365,9 +380,8 @@ public class KUVidGame extends Observable implements Runnable {
             		setTime(getTime() - 1);
             		publishPropertyEvent("tick",getTime()+1,getTime());
             	}
-            	
-
-            }else {
+            } else {
+                load(toBeLoaded);
             	try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {

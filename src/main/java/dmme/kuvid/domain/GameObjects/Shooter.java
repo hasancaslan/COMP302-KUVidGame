@@ -132,4 +132,14 @@ public class Shooter extends Observable {
     	}
     }
 
+	@Override
+	public String toString() {
+		return "Shooter [" +
+				"position=" + position +
+				", angle=" + angle +
+				", ammoType=" + ammoType +
+				", currentAtom=" + currentAtom +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }
