@@ -10,7 +10,7 @@ public class AtomMoleculeCollision implements collisionHandler{
         collisionHandler.collusion(object1, object2);
         this.blocked=blocked;
         if(object1.getSubType().toString().equals(object2.getSubType().toString()) && !this.blocked) {
-        	 //Player.getInstance().incrementPoint(1);
+        	 
             Player.getInstance().incrementPoint(((Atom)object1).getStability());
         }
     }

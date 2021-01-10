@@ -139,6 +139,10 @@ public class GameFrame extends JFrame {
     	GameFrame.menu.getPowerUpPanel().updatePowerCounts();
     }
     
+    public static void updateNumShield() {
+    	GameFrame.menu.getPowerUpPanel().updateShieldCounts();
+    }
+    
     public static void finishedGame() {
     	new FinishWindow();
     }

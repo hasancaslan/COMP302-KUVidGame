@@ -208,6 +208,11 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
     }
 
 
+    public void updateShieldCounts() {
+    	 for (ShieldType type : ShieldType.values()) {
+    		 setShieldCount(type, KUVidGame.getInstance().getShieldNum(type));
+         }
+    }
 
     @Override
     public void onPropertyEvent(PropertyEvent e) {

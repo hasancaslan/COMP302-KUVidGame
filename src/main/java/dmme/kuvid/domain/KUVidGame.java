@@ -580,5 +580,9 @@ public class KUVidGame extends Observable implements Runnable {
 	public static List<GameObject> getShootedPower() {
 		return shootedPower;
 	}
+	
+	public int getShieldNum(ShieldType type) {
+		return KUVidGame.shieldArsenal.get(type);
+	}
 
 }
