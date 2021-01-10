@@ -76,11 +76,6 @@ public class movementHandler extends Observable{
         return atom;
     }
 
-    //@requires: gameObject map and alpha, beta, gamma, sigma molecule lists to be created
-    //@modifies: molecule instance fields from random list from gameObject map
-    //           makes active boolean true and gives a random position in x since y is fixed top of screen.
-    //@effects:  This procedure selects a random molecule type gets that types list and activates the first molecule
-    //			 that is not active in that list also sets a random x position for it.
     public void throwMolecule() {
     	//@requires: gameObject map and alpha,beta,gamma, sigma molecule lists to be created
     	//@modifies: molecule instance fields from random list from gameObject map

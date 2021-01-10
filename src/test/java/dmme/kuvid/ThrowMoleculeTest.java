@@ -99,6 +99,7 @@ public class ThrowMoleculeTest {
         assertTrue(check);
     }
 
+    @Test
     public void checkMoleculeIsNotActive() {
         KUVidGame.getInstance().setNumMolecules(4);
         KUVidGame.getInstance().setPlayableArea(new Dimension(1000, 1000));
