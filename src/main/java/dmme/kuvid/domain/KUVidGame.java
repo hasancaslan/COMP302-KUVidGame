@@ -12,7 +12,7 @@ import dmme.kuvid.domain.GameObjects.Atoms.AlphaAtom;
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
-import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.domain.GameObjects.Shooter;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
 
@@ -28,10 +28,10 @@ import java.util.List;
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
-    private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
-    private static List<GameObject> shootedAtom = new ArrayList<>();
-    private static List<GameObject> shootedPower= new ArrayList<>();
-    private static HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
+    private static final HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
+    private static final List<GameObject> shootedAtom = new ArrayList<>();
+    private static final List<GameObject> shootedPower = new ArrayList<>();
+    private static final HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
     public boolean active = true;
     public boolean blendingMode;
     private Dimension screenSize;
@@ -50,7 +50,7 @@ public class KUVidGame extends Observable implements Runnable {
     private Blender blender;
     private DomainFactory creator;
     private destroyHandler destroyer;
-    private int time=600;	//60;
+    private int time = 600;    //60;
     private Player p1;
     private int throwMolecule;
     private int throwBlocker;
@@ -88,7 +88,7 @@ public class KUVidGame extends Observable implements Runnable {
         KUVidGame.powerArsenal.put(PowerType.BETA_B, new ArrayList<PowerUp>());
         KUVidGame.powerArsenal.put(PowerType.GAMMA_B, new ArrayList<PowerUp>());
         KUVidGame.powerArsenal.put(PowerType.SIGMA_B, new ArrayList<PowerUp>());
-        
+
     }
 
     private KUVidGame(int time, boolean active, boolean blendingMode) {
@@ -107,9 +107,17 @@ public class KUVidGame extends Observable implements Runnable {
     public static HashMap<Key, List<GameObject>> getGameObjectMap() {
         return gameObjectMap;
     }
-    
-    public static HashMap<PowerType, List<PowerUp>> getPowerArsenal(){
-		return powerArsenal;
+
+    public static HashMap<PowerType, List<PowerUp>> getPowerArsenal() {
+        return powerArsenal;
+    }
+
+    public static List<GameObject> getShootedAtom() {
+        return shootedAtom;
+    }
+
+    public static List<GameObject> getShootedPower() {
+        return shootedPower;
     }
 
     public Dimension getScreenSize() {
@@ -119,7 +127,7 @@ public class KUVidGame extends Observable implements Runnable {
     public void setScreenSize(Dimension screenSize) {
         this.screenSize = screenSize;
     }
-    
+
     public Dimension getPlayableArea() {
         return this.playableArea;
     }
@@ -136,37 +144,37 @@ public class KUVidGame extends Observable implements Runnable {
         publishPropertyEvent("time", this.time, time);
         this.time = time;
     }
-    
+
     public int getDifficulty() {
         return difficulty;
     }
 
     public void setDifficulty(int difficulty) {
-    	this.difficulty=difficulty;
+        this.difficulty = difficulty;
     }
 
     public int getLinearity() {
-    	return this.linearity;
+        return this.linearity;
     }
 
     public void setLinearity(int linearity) {
-    	this.linearity = linearity;
+        this.linearity = linearity;
     }
-    
+
     public int getSleepTime() {
-    	return this.sleepTime;
+        return this.sleepTime;
     }
 
     public void setSleepTime(int sleepTime) {
-    	this.sleepTime = sleepTime;
+        this.sleepTime = sleepTime;
     }
-    
+
     public boolean getSpinning() {
-    	return this.spinning;
+        return this.spinning;
     }
 
     public void setSpinning(boolean spinning) {
-    	this.spinning=spinning;
+        this.spinning = spinning;
     }
 
     public boolean isActive() {
@@ -186,19 +194,19 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void aimShooter(int angleChange) {
-    	if(this.active) shooter.rotateShooter(angleChange);
+        if (this.active) shooter.rotateShooter(angleChange);
     }
 
     public void moveShooter(int displacement) {
-    	if(this.active) shooter.moveShooter(displacement);
+        if (this.active) shooter.moveShooter(displacement);
     }
 
     public void selectAtom() {
-    	if(this.active) shooter.pickAtom();
+        if (this.active) shooter.pickAtom();
     }
 
     public void selectPowerUp(PowerType type) {
-    	this.shooter.pickPowerUp(type);
+        this.shooter.pickPowerUp(type);
     }
 
     public void useBlender(BlenderAction action, AtomType typeCreate, AtomType typeDestroy) {
@@ -212,7 +220,7 @@ public class KUVidGame extends Observable implements Runnable {
     public void setNumPowerUp(int numPowerUp) {
         this.numPowerUp = numPowerUp;
     }
-    
+
     public int getNumBlocker() {
         return numBlocker;
     }
@@ -228,7 +236,7 @@ public class KUVidGame extends Observable implements Runnable {
     public void setNumMolecules(int numMolecules) {
         this.numMolecules = numMolecules;
     }
-    
+
     public int getNumAtoms() {
         return numAtoms;
     }
@@ -269,13 +277,13 @@ public class KUVidGame extends Observable implements Runnable {
     public int getNumAtom(AtomType type) {
         return KUVidGame.gameObjectMap.get(new Key(ObjectType.ATOM, type)).size();
     }
-    
+
     public int getNumMol(MoleculeType type) {
         return KUVidGame.gameObjectMap.get(new Key(ObjectType.MOLECULE, type)).size();
     }
-    
+
     public int getNumPower(PowerType type) {
-    	return KUVidGame.powerArsenal.get(type).size();
+        return KUVidGame.powerArsenal.get(type).size();
     }
     
 	public static List<GameObject> getShootedAtom() {
@@ -343,8 +351,8 @@ public class KUVidGame extends Observable implements Runnable {
             if (getTime() <= 0) {
                 break;
             }
-            if(this.getRemMolecules()==0) {
-            	break;
+            if (this.getRemMolecules() == 0) {
+                break;
             }
 
             if(this.active) {
