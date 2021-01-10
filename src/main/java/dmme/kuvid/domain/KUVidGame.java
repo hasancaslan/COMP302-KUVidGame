@@ -363,6 +363,7 @@ public class KUVidGame extends Observable implements Runnable {
             	if(count == 10) {
             		count = 0;
             		setTime(getTime() - 1);
+            		publishPropertyEvent("tick",getTime()+1,getTime());
             	}
             	
 

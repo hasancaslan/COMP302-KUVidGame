@@ -75,6 +75,12 @@ public class movementHandler extends Observable{
     }
     
     public void throwMolecule() {
+    	//@requires: gameObject map and alpha,beta,gamma, sigma molecule lists to be created
+    	//@modifies: molecule instance fields from random list from gameObject map
+    	//           makes active boolean true and gives a random position in x since y is fixed top of screen.
+    	//@effects:  This procedure selects a random molecule type gets that types list and activates the first molecule
+    	//			 that is not active in that list also sets a random x position for it.
+    	
     	MoleculeType t=MoleculeType.randomMoleculeType();
     	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));	
     	while(list.size()==0) {
@@ -265,6 +271,7 @@ public class movementHandler extends Observable{
 	        				this.garbage.add(gameObject);
 	        			}else if(gameObject.getPosition().getY()>(KUVidGame.getInstance().getPlayableArea().height-10*L) && gameObject.isActive()) {
 			            	this.garbage.add(gameObject);
+			            	this.searchBlocker(gameObject);
 			        	}
 	        		}else if(gameObject.getType().equals(ObjectType.POWER_UP)) {
 	        			int shooterPosition= KUVidGame.getInstance().getShooter().getPosition();
@@ -301,6 +308,7 @@ public class movementHandler extends Observable{
         
         for(GameObject gameObject: garbage) {
         	if(gameObject.getType().equals(ObjectType.REACTION_BLOCKER)) {
+        		//this.searchBlocker(gameObject);
         		new ReactionSurfaceCollision(gameObject);
         	}else {
         		destroyHandler.getInstance().destroyObject(gameObject);
@@ -308,6 +316,25 @@ public class movementHandler extends Observable{
         }
         garbage.clear();
         this.search();
+    }
+    
+    public void searchBlocker(GameObject blocker) {
+    	double x=blocker.getPosition().getX();
+    	double y=blocker.getPosition().getY();
+    	HashMap<Key,List<GameObject>> map= KUVidGame.getGameObjectMap();
+        for (Key k: map.keySet()) {
+        	 List<GameObject> gameObjectList = map.get(k);
+	        for (GameObject gameObject : gameObjectList) {
+	        	if(gameObject.isActive() && !gameObject.getType().equals(ObjectType.REACTION_BLOCKER)) {
+	        		double objectX=gameObject.getPosition().getX();
+	        		double objectY=gameObject.getPosition().getY();
+	        		double dist=Math.hypot(Math.abs(x-objectX),Math.abs(y-objectY));
+	        		if(dist<=20*L) {
+	        			this.garbage.add(gameObject);
+	        		}
+	        	}
+	        }
+        }
     }
 
     public void run() {
