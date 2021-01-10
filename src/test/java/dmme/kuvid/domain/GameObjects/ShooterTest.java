@@ -46,7 +46,7 @@ class ShooterTest {
     }
 
     @Test
-    void testConsecutiveDifferentPicking() {
+    void testRandomPicking() {
         DomainFactory.createAtom(AtomType.ALPHA, 1);
         DomainFactory.createAtom(AtomType.SIGMA, 1);
 
