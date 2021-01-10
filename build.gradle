@@ -33,7 +33,6 @@ dependencies {
     // Required for tests
     compile 'org.junit.jupiter:junit-jupiter-api:5.6.3'
     compile 'org.junit.jupiter:junit-jupiter-engine:5.6.3'
-    compile 'junit:junit:4.13.1'
 }
 
 application {

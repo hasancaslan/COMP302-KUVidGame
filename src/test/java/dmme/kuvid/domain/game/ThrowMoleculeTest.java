@@ -1,20 +1,31 @@
 package dmme.kuvid.domain.game;
 
 import dmme.kuvid.domain.Controllers.DomainFactory;
-import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ThrowMoleculeTest {
-    GameObject molecule;
+
+    @BeforeEach
+    public void cleanGame(){
+        KUVidGame.getInstance().setNumMolecules(0);
+        KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), new ArrayList<GameObject>());
+        KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), new ArrayList<GameObject>());
+        KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.GAMMA), new ArrayList<GameObject>());
+        KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA), new ArrayList<GameObject>());
+
+    }
 
     @Test
     public void testList() {
