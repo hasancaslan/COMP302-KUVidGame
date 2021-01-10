@@ -9,6 +9,7 @@ import dmme.kuvid.utils.observer.PropertyListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class ScorePanel extends JPanel implements PropertyListener {
     private final JLabel scoreLabel;
@@ -31,9 +32,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
         timeLabel.setFont(defaultFont);
         healthLabel.setFont(defaultFont);
 
-        //setScoreLabel(Player.getInstance().getPoint());
-        //TODO
-        setScoreLabel((int)Player.getInstance().getPoint());
+        setScoreLabel(Player.getInstance().getPoint());
 
 
         setHealthLabel(Player.getInstance().getHealth());
@@ -59,8 +58,8 @@ public class ScorePanel extends JPanel implements PropertyListener {
         KUVidGame.getInstance().addPropertyListener("time", this);
     }
 
-    public void setScoreLabel(int score) {
-        scoreLabel.setText("  " + score);
+    public void setScoreLabel(double score) { //TODO changed int to double
+        scoreLabel.setText("  " + (int)score);
     }
 
     public void setTimeLabel(int seconds) {
@@ -83,7 +82,11 @@ public class ScorePanel extends JPanel implements PropertyListener {
     public void onPropertyEvent(PropertyEvent e) {
         switch (e.getPropertyName()) {
             case "point":
-                int score = (int) e.getNewValue();
+                //DecimalFormat df = new DecimalFormat("#.#"); //TODO added
+                //double temp = (double) e.getNewValue();
+                //df.format(temp);
+                //double score = temp;
+                double score = (double) e.getNewValue(); //TODO actually double
                 this.setScoreLabel(score);
                 break;
             case "health":
