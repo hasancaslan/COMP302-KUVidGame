@@ -1,8 +1,8 @@
 package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Shooter extends Observable {
@@ -83,13 +83,31 @@ public class Shooter extends Observable {
 	    	if (this.currentAtom!= null) {
 	    		this.currentAtom.setActive(false);
 	    	}
-	        this.currentAtom=KUVidGame.getInstance().getRandomAtom();
+	        this.currentAtom=movementHandler.getInstance().getRandomAtom();
 	        double angle=Math.toRadians(this.getAngle());
 	        int x=this.position-10*(int)(L*Math.cos(angle));
 	    	int y=gameHeight-(int)(10*L*Math.sin(angle));
 	        this.currentAtom.setPosition(new Position(x,y));
 	        this.currentAtom.setActive(true);
     	}
+    }
+    
+    public void pickPowerUp(PowerType type) {
+    	if(KUVidGame.getPowerArsenal().get(type).size()>0) {
+    		int L=KUVidGame.getInstance().getL();
+	    	int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
+	    	if (this.currentAtom!= null) {
+	    		this.currentAtom.setActive(false);
+	    	}
+	    	this.currentAtom=KUVidGame.getPowerArsenal().get(type).get(KUVidGame.getPowerArsenal().get(type).size()-1);
+	    	double angle=Math.toRadians(this.getAngle());
+		    int x=this.position-10*(int)(L*Math.cos(angle));
+		    int y=gameHeight-(int)(10*L*Math.sin(angle));
+		    this.currentAtom.setPosition(new Position(x,y));
+		    this.currentAtom.setDirection(null);
+		    this.currentAtom.setActive(true);
+    	}
+    	
     }
 
     public void shootAtom() {
@@ -100,9 +118,15 @@ public class Shooter extends Observable {
     		Position direction=new Position((int)(-L*Math.cos(angle)),(int)(-L*Math.sin(angle)));
     		this.currentAtom.setDirection(direction);
     		
-    		KUVidGame.getShootedAtom().add(this.currentAtom);
-    		KUVidGame.getGameObjectMap().get(new Key(this.currentAtom.getType(),this.currentAtom.getSubType())).remove(this.currentAtom);
-    		GameFrame.updateNumAtoms();
+    		if(this.currentAtom.getType().equals(ObjectType.POWER_UP)) {
+    			KUVidGame.getShootedPower().add(this.currentAtom);
+    			KUVidGame.getPowerArsenal().get(this.currentAtom.getSubType()).remove(this.currentAtom);
+    			publishPropertyEvent("updatePower",null,null);
+    		}else {
+    			KUVidGame.getShootedAtom().add(this.currentAtom);
+        		KUVidGame.getGameObjectMap().get(new Key(this.currentAtom.getType(),this.currentAtom.getSubType())).remove(this.currentAtom);
+        		publishPropertyEvent("updateAtom",null,null);
+    		}
     		this.currentAtom=null;
     		this.pickAtom();
     	}

@@ -2,7 +2,12 @@ package dmme.kuvid.ui;
 
 import dmme.kuvid.Application;
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.Controllers.DomainFactory;
+import dmme.kuvid.domain.Controllers.destroyHandler;
+import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.ui.menu.MenuPanel;
+import dmme.kuvid.utils.observer.PropertyEvent;
+import dmme.kuvid.utils.observer.PropertyListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,13 +18,19 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements PropertyListener{
     private final ShooterUI shooterUI;
     public GamePanel gamePanel;
     private static MenuPanel menu;
 
     public GameFrame() {
         this(KUVidGame.getInstance().getScreenSize());
+        KUVidGame.getInstance().addPropertyListener("finishGame",this);
+        KUVidGame.getInstance().getShooter().addPropertyListener("updatePower",this);
+        KUVidGame.getInstance().getShooter().addPropertyListener("updateAtom",this);
+        movementHandler.getInstance().addPropertyListener("updatePower",this);
+        destroyHandler.getInstance().addPropertyListener("updateAtom",this);
+        DomainFactory.getInstance().addPropertyListener("updateAtom", this);
     }
 
     public GameFrame(Dimension size) {
@@ -131,11 +142,17 @@ public class GameFrame extends JFrame {
         
     }
     
-    public static void updateNumAtoms() {
-    	GameFrame.menu.getBlenderPanel().updateAtomCounts();
-    }
-    
-    public static void finishedGame() {
-    	new FinishWindow();
-    }
+
+	@Override
+	public void onPropertyEvent(PropertyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getPropertyName().equals("updateAtom")) {
+			GameFrame.menu.getBlenderPanel().updateAtomCounts();
+		}else if(e.getPropertyName().equals("updatePower")) {
+			GameFrame.menu.getPowerUpPanel().updatePowerCounts();
+		}else if(e.getPropertyName().equals("finishGame")) {
+			new FinishWindow();
+		}
+		
+	}
 }

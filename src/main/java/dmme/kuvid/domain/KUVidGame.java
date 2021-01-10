@@ -5,21 +5,22 @@ import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
+import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
+import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
     private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
     private static List<GameObject> shootedAtom = new ArrayList<>();
+    private static List<GameObject> shootedPower= new ArrayList<>();
+    private static HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
     public boolean active = true;
     public boolean blendingMode;
     private Dimension screenSize;
@@ -30,27 +31,21 @@ public class KUVidGame extends Observable implements Runnable {
     private int numBlocker = 1;
     private int numPowerUp = 1;
     private final int range = 10;
-
-    private boolean linearity;
+    private int linearity= 1;
+    private boolean spinning;
     private int difficulty=1;
     private int sleepTime=100;
-    private GameObject objects;
     private Shooter shooter;
     private Blender blender;
     private DomainFactory creator;
     private destroyHandler destroyer;
     private int time=60;//600;
     private Player p1;
-    private Random rand = new Random();
     private int throwMolecule;
+    private int throwBlocker;
+    private int throwPower;
     
-    private int alphaNo=1;
-    private int betaNo=1;
-    private int gammaNo=1;
-    private int sigmaNo=1;
-    private int MOLNO=0;
     private int count = 0;
-    private int RemAtoms=0;
 
     private KUVidGame() {
         this.shooter = new Shooter();
@@ -60,8 +55,7 @@ public class KUVidGame extends Observable implements Runnable {
         		//Toolkit.getDefaultToolkit().getScreenSize();
         this.playableArea = new Dimension(this.screenSize.width*7/10,this.screenSize.height);
         this.L=Math.floorDiv(screenSize.height,10);
-        this.creator=new DomainFactory();
-        
+        this.creator=DomainFactory.getInstance();
 
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.ALPHA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.ATOM, AtomType.BETA), new ArrayList<GameObject>());
@@ -71,7 +65,18 @@ public class KUVidGame extends Observable implements Runnable {
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.GAMMA), new ArrayList<GameObject>());
         KUVidGame.gameObjectMap.put(new Key(ObjectType.MOLECULE, MoleculeType.SIGMA), new ArrayList<GameObject>());
-        
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.ALPHA_R), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.BETA_R), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.GAMMA_R), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.REACTION_BLOCKER, ReactionType.SIGMA_R), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.POWER_UP, PowerType.ALPHA_B), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.POWER_UP, PowerType.BETA_B), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.POWER_UP, PowerType.GAMMA_B), new ArrayList<GameObject>());
+        KUVidGame.gameObjectMap.put(new Key(ObjectType.POWER_UP, PowerType.SIGMA_B), new ArrayList<GameObject>());
+        KUVidGame.powerArsenal.put(PowerType.ALPHA_B, new ArrayList<PowerUp>());
+        KUVidGame.powerArsenal.put(PowerType.BETA_B, new ArrayList<PowerUp>());
+        KUVidGame.powerArsenal.put(PowerType.GAMMA_B, new ArrayList<PowerUp>());
+        KUVidGame.powerArsenal.put(PowerType.SIGMA_B, new ArrayList<PowerUp>());
         
     }
 
@@ -83,14 +88,17 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public static KUVidGame getInstance() {
-        if (instance == null)
-            instance = new KUVidGame();
-
+        if (instance == null) 
+        	instance = new KUVidGame();
         return instance;
     }
 
     public static HashMap<Key, List<GameObject>> getGameObjectMap() {
         return gameObjectMap;
+    }
+    
+    public static HashMap<PowerType, List<PowerUp>> getPowerArsenal(){
+		return powerArsenal;
     }
 
     public Dimension getScreenSize() {
@@ -122,29 +130,32 @@ public class KUVidGame extends Observable implements Runnable {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
-    	switch(difficulty) {
-    	case "Easy":
-    		this.difficulty = 1;
-    		sleepTime= 100;
-    		break;
-    	case "Medium":
-    		this.difficulty = 2;
-    		sleepTime= 50;
-    		break;
-    	case "Hard":
-    		this.difficulty = 4;
-    		sleepTime= 25;
-    		break;
-    	}
+    public void setDifficulty(int difficulty) {
+    	this.difficulty=difficulty;
     }
 
-    public boolean getLinearity() {
-        return linearity;
+    public int getLinearity() {
+    	return this.linearity;
     }
 
-    public void setLinearity(boolean linearity) {
+    public void setLinearity(int linearity) {
     	this.linearity = linearity;
+    }
+    
+    public int getSleepTime() {
+    	return this.sleepTime;
+    }
+
+    public void setSleepTime(int sleepTime) {
+    	this.sleepTime = sleepTime;
+    }
+    
+    public boolean getSpinning() {
+    	return this.spinning;
+    }
+
+    public void setSpinning(boolean spinning) {
+    	this.spinning=spinning;
     }
 
     public boolean isActive() {
@@ -164,25 +175,19 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void aimShooter(int angleChange) {
-    	if(this.active) {
-    		shooter.rotateShooter(angleChange);
-    	}
+    	if(this.active) shooter.rotateShooter(angleChange);
     }
 
     public void moveShooter(int displacement) {
-    	if(this.active) {
-    		shooter.moveShooter(displacement);
-    	}
+    	if(this.active) shooter.moveShooter(displacement);
     }
 
     public void selectAtom() {
-    	if(this.active) {
-    		shooter.pickAtom();
-    	}
+    	if(this.active) shooter.pickAtom();
     }
 
     public void selectPowerUp(PowerType type) {
-
+    	this.shooter.pickPowerUp(type);
     }
 
     public int getRange() {
@@ -200,11 +205,15 @@ public class KUVidGame extends Observable implements Runnable {
     public void setNumPowerUp(int numPowerUp) {
         this.numPowerUp = numPowerUp;
     }
+    
+    public int getNumBlocker() {
+        return numBlocker;
+    }
 
     public void setNumBlocker(int numBlocker) {
         this.numBlocker = numBlocker;
     }
-
+    
     public int getNumMolecules() {
         return numMolecules;
     }
@@ -215,6 +224,26 @@ public class KUVidGame extends Observable implements Runnable {
 
     public void setNumAtoms(int numAtoms) {
         this.numAtoms = numAtoms;
+    }
+    
+    public void pauseGame() {
+        this.setActive(false);
+    }
+
+    public void resumeGame() {
+        this.setActive(true);
+    }
+
+    public int getL() {
+        return L;
+    }
+
+    public void setL(int l) {
+        L = l;
+    }
+    
+    public void shoot() {
+    	if(this.active) this.shooter.shootAtom();
     }
 
     public Shooter getShooter() {
@@ -233,168 +262,11 @@ public class KUVidGame extends Observable implements Runnable {
     public int getNumMol(MoleculeType type) {
         return KUVidGame.gameObjectMap.get(new Key(ObjectType.MOLECULE, type)).size();
     }
-
-    public GameObject getRandomAtom() {
-        List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
-        
-        while(list.size()==0) {
-        	list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.randomAtomType()));
-        }
-        
-        GameObject atom = list.get(this.rand.nextInt(list.size()));
-        
-        while (atom.isActive()) {
-            atom = list.get(this.rand.nextInt(list.size()));
-        }
-
-        return atom;
-    }
-
-    public void runGame(){ //main loop
-    	
-    	int num=(int) Math.ceil((this.numAtoms/4.0));
-        int numMol=(int) Math.ceil((this.numMolecules/4.0));
-        this.throwMolecule=numMol*4;
-        this.MOLNO=numMol;
-        
-        DomainFactory.createAtom(AtomType.ALPHA,num);
-        DomainFactory.createAtom(AtomType.BETA,num);
-        DomainFactory.createAtom(AtomType.GAMMA,num);
-        DomainFactory.createAtom(AtomType.SIGMA,num);
-        
-        
-        DomainFactory.createMolecule(MoleculeType.ALPHA, numMol);
-        DomainFactory.createMolecule(MoleculeType.BETA, numMol);
-        DomainFactory.createMolecule(MoleculeType.GAMMA, numMol);
-        DomainFactory.createMolecule(MoleculeType.SIGMA, numMol);
-        
-
-        while (true) {
-            if (this.p1.getHealth() <= 0) {
-                break;
-            }
-            if (getTime() <= 0) {
-                break;
-            }
-            if(this.getRemMolecules()==0) {
-            	break;
-            }
-            
-
-            if(this.active) {
-            	movementHandler.getInstance().run();
-            	count++;
-            	for(int i = this.difficulty; i>0 ;i--) {
-                	try {
-        				Thread.sleep(sleepTime);
-        			} catch (InterruptedException e) {
-        				e.printStackTrace();
-        			}
-                	if(count == 10 && this.throwMolecule>0) {
-                    	throwMolecule();
-                	}
-            	}
-            	if(count == 10) {
-            		count = 0;
-            		setTime(getTime() - 1);
-            	}
-            	
-
-            }else {
-            	try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-
-            
-
-        }
-        
-        GameFrame.finishedGame();
-    }
-
-    public void pauseGame() {
-        this.setActive(false);
-    }
-
-    public void resumeGame() {
-        this.setActive(true);
-    }
-
-    public int getL() {
-        return L;
-    }
-
-    public void setL(int l) {
-        L = l;
-    }
-
-    public void throwMolecule() {
-    	
-    	
-    	MoleculeType t=MoleculeType.randomMoleculeType();
-    	List<GameObject> list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
-    	
-    	while(list.size()==0) {
-    		t=MoleculeType.randomMoleculeType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
-    	}
-    	
-    	Molecule molecule=null;
-    	while(molecule==null) {
-    		
-	    	if(t.equals(MoleculeType.ALPHA) && this.alphaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.alphaNo);
-	    		this.alphaNo++;
-	    	}else if(t.equals(MoleculeType.BETA) && this.betaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.betaNo);
-	    		this.betaNo++;
-	    	}else if(t.equals(MoleculeType.GAMMA) && this.gammaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.gammaNo);
-	    		this.gammaNo++;
-	    	}else if(t.equals(MoleculeType.SIGMA) && this.sigmaNo<=this.MOLNO) {
-	    		molecule=(Molecule)list.get(this.MOLNO-this.sigmaNo);
-	    		this.sigmaNo++;
-	    	}
-        
-        	t=MoleculeType.randomMoleculeType();
-    		list=KUVidGame.getGameObjectMap().get(new Key(ObjectType.MOLECULE,t));
-    		
-        }
-        
-        molecule.setPosition(new Position(this.rand.nextInt(this.playableArea.width - 30*L) + 10 * L ,0));
-        molecule.setActive(true);
-        this.throwMolecule--;
-        
-       
+    
+    public int getNumPower(PowerType type) {
+    	return KUVidGame.powerArsenal.get(type).size();
     }
     
-    public void shoot() {
-    	if(this.active) {
-    		this.shooter.shootAtom();
-    	}
-    }
-    
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		this.runGame();
-	}
-	
-	private void prettyPrint(List<GameObject> list) {
-		System.out.print("[");
-		for(int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i).isActive());
-            System.out.print(" , ");
-        }
-		System.out.print("]");
-		System.out.println("");
-	}
-
 	public static List<GameObject> getShootedAtom() {
 		return shootedAtom;
 	}
@@ -411,4 +283,113 @@ public class KUVidGame extends Observable implements Runnable {
 		return this.p1.getPoint();
 	}
 
+	public static List<GameObject> getShootedPower() {
+		return shootedPower;
+	}
+	
+	public Blender getBlender() {
+		return this.blender;
+	}
+
+    public void runGame(){ //main loop
+    	
+    	int num=(int) Math.ceil((this.numAtoms/4.0));
+        int numMol=(int) Math.ceil((this.numMolecules/4.0));
+        int numBlock=(int) Math.ceil((this.numBlocker/4.0));
+        int numPower=(int) Math.ceil((this.numPowerUp/4.0));
+        
+        this.throwMolecule = numMol*4;
+        this.throwPower = numPower * 4;
+        this.throwBlocker = numBlock * 4;
+
+        DomainFactory.getInstance().createAtom(AtomType.ALPHA,num);
+        DomainFactory.getInstance().createAtom(AtomType.BETA,num);
+        DomainFactory.getInstance().createAtom(AtomType.GAMMA,num);
+        DomainFactory.getInstance().createAtom(AtomType.SIGMA,num);
+        
+        DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, numMol);
+        DomainFactory.getInstance().createMolecule(MoleculeType.BETA, numMol);
+        DomainFactory.getInstance().createMolecule(MoleculeType.GAMMA, numMol);
+        DomainFactory.getInstance().createMolecule(MoleculeType.SIGMA, numMol);
+        
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.ALPHA_R, numBlock);
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.BETA_R, numBlock);
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.SIGMA_R, numBlock);
+        DomainFactory.getInstance().createReactionBlocker(ReactionType.GAMMA_R, numBlock);
+        
+        DomainFactory.getInstance().createPowerup(PowerType.ALPHA_B, numPower);
+        DomainFactory.getInstance().createPowerup(PowerType.BETA_B, numPower);
+        DomainFactory.getInstance().createPowerup(PowerType.SIGMA_B, numPower);
+        DomainFactory.getInstance().createPowerup(PowerType.GAMMA_B, numPower);
+        
+        int select=0;
+
+        while (true) {
+            if (this.p1.getHealth() <= 0) {
+                break;
+            }
+            if (getTime() <= 0) {
+                break;
+            }
+            if(this.getRemMolecules()==0) {
+            	break;
+            }
+
+            if(this.active) {
+            	movementHandler.getInstance().run();
+            	count++;
+            	for(int i = this.difficulty; i>0 ;i--) {
+                	try {
+        				Thread.sleep(sleepTime);
+        			} catch (InterruptedException e) {
+        				e.printStackTrace();
+        			}
+                	if(count == 10) {
+                		if(select==0 && this.throwMolecule>0) {
+                			movementHandler.getInstance().throwMolecule();
+                			this.throwMolecule--;
+                			select++;
+                		}else if(select==1 && this.throwBlocker>0){
+                			movementHandler.getInstance().throwBlocker();
+                			this.throwBlocker--;
+                			select++;
+                		}else if(this.throwPower>0){
+                			movementHandler.getInstance().throwPower();
+                			this.throwPower--;
+                			select=0;
+                		}
+                	}
+            	}
+            	if(count == 10) {
+            		count = 0;
+            		setTime(getTime() - 1);
+            		publishPropertyEvent("tick",getTime()+1,getTime());
+            	}
+            	
+
+            }else {
+            	try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+            }
+        }
+        publishPropertyEvent("finishGame",null,null);
+    }
+    
+	@Override
+	public void run() {
+		this.runGame();
+	}
+	
+	private void prettyPrint(List<GameObject> list) {
+		System.out.print("[");
+		for(int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i).isActive());
+            System.out.print(" , ");
+        }
+		System.out.print("]");
+		System.out.println("");
+	}
 }

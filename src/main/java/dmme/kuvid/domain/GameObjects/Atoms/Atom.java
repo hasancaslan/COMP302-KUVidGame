@@ -2,7 +2,6 @@ package dmme.kuvid.domain.GameObjects.Atoms;
 
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.AtomUI;
 
 public abstract class Atom extends GameObject{
 	

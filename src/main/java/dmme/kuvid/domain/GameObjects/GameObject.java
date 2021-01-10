@@ -1,13 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
 import java.awt.Dimension;
-
-import java.util.*;
-
-
-import java.util.ArrayList;
 import java.util.List;
-
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
