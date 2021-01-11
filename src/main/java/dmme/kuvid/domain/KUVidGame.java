@@ -1,27 +1,13 @@
 package dmme.kuvid.domain;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import dmme.kuvid.constants.Config;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
-import dmme.kuvid.domain.GameObjects.Atoms.AlphaAtom;
-import dmme.kuvid.domain.GameObjects.Atoms.Atom;
-import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
-import dmme.kuvid.domain.GameObjects.Shooter;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,14 +96,6 @@ public class KUVidGame extends Observable implements Runnable {
 
     public static HashMap<PowerType, List<PowerUp>> getPowerArsenal() {
         return powerArsenal;
-    }
-
-    public static List<GameObject> getShootedAtom() {
-        return shootedAtom;
-    }
-
-    public static List<GameObject> getShootedPower() {
-        return shootedPower;
     }
 
     public Dimension getScreenSize() {

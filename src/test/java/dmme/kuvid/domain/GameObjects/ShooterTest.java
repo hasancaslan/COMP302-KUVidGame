@@ -24,15 +24,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShooterTest {
 
-    @BeforeAll
-    static void setUpBeforeClass() throws Exception {
-        new GameFrame();
-    }
-
     @BeforeEach
     void setUp() {
-        new Shooter();
-
+        KUVidGame.getInstance();
+        KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA)).clear();
+	     KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.BETA)).clear();
+	     KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.GAMMA)).clear();
+	     KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.SIGMA)).clear();
     }
 
     @AfterEach

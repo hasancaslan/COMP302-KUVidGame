@@ -91,9 +91,6 @@ class SaveLoadFileTest {
             String loaded = saveLoadFile.load("test_alpha");
             List<GameObject> alphaAtomList = saveLoadFile.jsonToGameObject(loaded, ObjectType.ATOM, AtomType.ALPHA);
 
-            System.out.println(list);
-            System.out.println("======");
-            System.out.println(alphaAtomList);
 
             Assertions.assertSame(list.get(0).getDirection().getX(), alphaAtomList.get(0).getDirection().getX());
             Assertions.assertSame(list.get(0).getPosition().getX(), alphaAtomList.get(0).getPosition().getX());

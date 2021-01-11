@@ -1,6 +1,9 @@
 package dmme.kuvid;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.awt.Dimension;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import dmme.kuvid.domain.Controllers.*;
