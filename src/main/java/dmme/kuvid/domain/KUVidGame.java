@@ -13,6 +13,7 @@ import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Molecules.Molecule;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
+import dmme.kuvid.domain.database.SaveLoadFile;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.PathHandler;
@@ -36,10 +37,15 @@ public class KUVidGame extends Observable implements Runnable {
     private static List<GameObject> shootedAtom = new ArrayList<>();
     private static List<GameObject> shootedPower= new ArrayList<>();
     private static HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
+
+    private SaveLoadFile saveLoadFile = new SaveLoadFile();
+
     public boolean active = true;
     public boolean blendingMode;
+
     private Dimension screenSize;
     private Dimension playableArea;
+
     private int L;
     private int numAtoms = 1;
     private int numMolecules = 1;
@@ -49,8 +55,10 @@ public class KUVidGame extends Observable implements Runnable {
 
     private boolean linearity;
     private boolean spinning;
+
     private int difficulty=1;
     private int sleepTime=100;
+
     private GameObject objects;
     private Shooter shooter;
     private Blender blender;
@@ -59,6 +67,7 @@ public class KUVidGame extends Observable implements Runnable {
     private int time=60;//600;
     private Player p1;
     private Random rand = new Random();
+
     private int throwMolecule;
     private int throwBlocker;
     private int throwPower;
@@ -357,7 +366,8 @@ public class KUVidGame extends Observable implements Runnable {
             
 
             if(this.active) {
-                toBeLoaded = save(ObjectType.ATOM, AtomType.ALPHA, "atomAlpha");
+                saveLoadFile.saveGame();
+                //toBeLoaded = save(ObjectType.ATOM, AtomType.ALPHA, "atomAlpha");
 
 
             	movementHandler.getInstance().run();
@@ -386,7 +396,8 @@ public class KUVidGame extends Observable implements Runnable {
             		setTime(getTime() - 1);
             	}
             } else {
-                load(toBeLoaded);
+                saveLoadFile.loadGame();
+                //load(toBeLoaded);
             	try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
