@@ -5,6 +5,8 @@ import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
+import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
+import dmme.kuvid.domain.database.SaveLoadFile;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
 import java.awt.*;
@@ -14,14 +16,19 @@ import java.util.List;
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
-    private static final HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
-    private static final List<GameObject> shootedAtom = new ArrayList<>();
-    private static final List<GameObject> shootedPower = new ArrayList<>();
-    private static final HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
+    private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
+    private static List<GameObject> shootedAtom = new ArrayList<>();
+    private static List<GameObject> shootedPower= new ArrayList<>();
+    private static HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
+
+    private SaveLoadFile saveLoadFile = new SaveLoadFile();
+
     public boolean active = true;
     public boolean blendingMode;
+
     private Dimension screenSize;
     private Dimension playableArea;
+
     private int L;
     private int numAtoms = 1;
     private int numMolecules = 1;
@@ -30,14 +37,19 @@ public class KUVidGame extends Observable implements Runnable {
     private final int range = 10;
     private int linearity= 1;
     private boolean spinning;
+
     private int difficulty=1;
     private int sleepTime=100;
+
+    private GameObject objects;
     private Shooter shooter;
     private Blender blender;
     private DomainFactory creator;
     private destroyHandler destroyer;
     private int time = 600;    //60;
     private Player p1;
+    private Random rand = new Random();
+
     private int throwMolecule;
     private int throwBlocker;
     private int throwPower;
@@ -334,6 +346,8 @@ public class KUVidGame extends Observable implements Runnable {
             }
 
             if(this.active) {
+                saveLoadFile.saveGame();
+                //toBeLoaded = save(ObjectType.ATOM, AtomType.ALPHA, "atomAlpha");
 
 
             	movementHandler.getInstance().run();
@@ -366,6 +380,8 @@ public class KUVidGame extends Observable implements Runnable {
             		publishPropertyEvent("tick",getTime()+1,getTime());
             	}
             } else {
+                saveLoadFile.loadGame();
+                //load(toBeLoaded);
             	try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
