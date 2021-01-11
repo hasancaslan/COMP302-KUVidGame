@@ -1,11 +1,16 @@
 package dmme.kuvid.domain.database;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.domain.GameObjects.Molecules.*;
+import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.Factory;
 import dmme.kuvid.utils.PathHandler;
@@ -16,6 +21,9 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 
 public class SaveLoadFile extends Observable implements SaveMode {
@@ -36,6 +44,10 @@ public class SaveLoadFile extends Observable implements SaveMode {
         save(ObjectType.REACTION_BLOCKER, ReactionType.BETA_R, "reaction_beta");
         save(ObjectType.REACTION_BLOCKER, ReactionType.GAMMA_R, "reaction_gamma");
         save(ObjectType.REACTION_BLOCKER, ReactionType.SIGMA_R, "reaction_sigma");
+        
+        save("shootedAtom");
+        save("shootedPower");
+        //save("powerArsenal");
 
         return false;
     }
@@ -46,6 +58,8 @@ public class SaveLoadFile extends Observable implements SaveMode {
         load("atom_beta");
         load("atom_gamma");
         load("atom_sigma");
+        load("shootedAtom");
+        load("shootedPower");
         publishPropertyEvent("updateAtom",null,null);
 
         /*
@@ -87,6 +101,41 @@ public class SaveLoadFile extends Observable implements SaveMode {
         //System.out.println("Alpha Atom Info: " + jsonString);
         return jsonString;
     }
+    
+    public String save(String name) {
+        /*
+        @requires: this not null, objectType not null, subType not null, name not null
+        @effects: Generates a JSON string from properties of the given specified List of GameObjects.
+            Returns generated String and saves corresponding String as a ".json" file
+         */
+        PathHandler pathHandler = PathHandler.getInstance();
+
+        String saveFolder = "snapshots";
+        String saveFolderPath = pathHandler.makePath(".",saveFolder,"");
+        File f = new File(saveFolderPath);
+
+        if (!f.exists()) {
+            f.mkdir();
+        }
+
+        String jsonString = "";
+        try {
+            FileWriter fileWriter = new FileWriter(pathHandler.makePath(f.getAbsolutePath(), name)+".json");
+            if(name.equals("shootedAtom")) {
+            	fileWriter.write(this.shootedAtomToJson());
+            }else if(name.equals("shootedPower")) {
+            	fileWriter.write(this.shootedPowerToJson());
+            }else if(name.equals("powerArsenal")) {
+            	fileWriter.write(this.powerArsenalToJson());
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println("SERIALIZED");
+        //System.out.println("Alpha Atom Info: " + jsonString);
+        return jsonString;
+    }
 
     public String gameObjectToJson(ObjectType objectType, Enum<?> subType) {
         /*
@@ -96,6 +145,39 @@ public class SaveLoadFile extends Observable implements SaveMode {
          */
         return new GsonBuilder().setPrettyPrinting().create()
                 .toJson(KUVidGame.getGameObjectMap().get(new Key(objectType, subType)));
+    }
+    
+    public String shootedAtomToJson() {
+        /*
+        @requires: this not null, objectType not null, subType not null
+        @effects: Generates a JSON string from properties of the given specified List of GameObjects.
+            Returns generated String.
+         */
+    	Gson son = new GsonBuilder().registerTypeAdapter(Atom.class, new AbstractAtomAdapter()).setPrettyPrinting().create();
+    	Type type = new TypeToken<List<Atom>>(){}.getType();
+        return son.toJson(KUVidGame.getShootedAtom(),type);
+    }
+    
+    public String shootedPowerToJson() {
+        /*
+        @requires: this not null, objectType not null, subType not null
+        @effects: Generates a JSON string from properties of the given specified List of GameObjects.
+            Returns generated String.
+         */
+    	Gson son = new GsonBuilder().registerTypeAdapter(PowerUp.class, new AbstractPowerAdapter()).setPrettyPrinting().create();
+    	Type type = new TypeToken<List<PowerUp>>(){}.getType();
+        return son.toJson(KUVidGame.getShootedPower(),type);
+    }
+    
+    public String powerArsenalToJson() {
+        /*
+        @requires: this not null, objectType not null, subType not null
+        @effects: Generates a JSON string from properties of the given specified List of GameObjects.
+            Returns generated String.
+         */
+    	Gson son = new GsonBuilder().registerTypeAdapter(PowerUp.class, new AbstractPowerAdapter()).setPrettyPrinting().create();
+    	Type type = new TypeToken<List<PowerUp>>(){}.getType();
+        return son.toJson(KUVidGame.getPowerArsenal(),type);
     }
 
     public String load(String fileName) {
@@ -121,24 +203,24 @@ public class SaveLoadFile extends Observable implements SaveMode {
 
             if (fileName.contains("atom_alpha")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.ALPHA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.ALPHA), list);
-                list.forEach(n -> publishPropertyEvent("alpha", null,n));
+                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.ALPHA), list);
+                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
 
             } else if (fileName.contains("atom_beta")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.BETA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.BETA), list);
-                list.forEach(n -> publishPropertyEvent("beta", null,n));
-
+                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.BETA), list);
+                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                
             } else if (fileName.contains("atom_gamma")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.GAMMA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.GAMMA), list);
-                list.forEach(n -> publishPropertyEvent("gamma", null,n));
-
+                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.GAMMA), list);
+                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                
             } else if (fileName.contains("atom_sigma")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.SIGMA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.SIGMA), list);
-                list.forEach(n -> publishPropertyEvent("sigma", null,n));
-
+                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.SIGMA), list);
+                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                
             } else if (fileName.contains("molecule_alpha")) {
                 list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.ALPHA);
                 KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), list);
@@ -151,6 +233,15 @@ public class SaveLoadFile extends Observable implements SaveMode {
             } else if (fileName.contains("molecule_sigma")) {
                 list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.SIGMA);
                 KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
+            } else if (fileName.contains("shootedAtom")) {
+            	list =this.jsonToList(outputData,ObjectType.ATOM);
+                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+            }else if (fileName.contains("shootedPower")) {
+                //list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.BETA);
+                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.BETA), list);
+                //list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+            	list =this.jsonToList(outputData,ObjectType.POWER_UP);
+                list.forEach(n -> DomainFactory.getInstance().addPowerUp(n));
             }
 
             //System.out.println(outputData);
@@ -162,6 +253,25 @@ public class SaveLoadFile extends Observable implements SaveMode {
         return outputData;
     }
 
+    public List<GameObject> jsonToList(String jsonString,ObjectType t) {
+        /*
+        @requires: this not null, objectType not null, subType not null, jsonString not null
+        @effects: Generates a List object from properties of the given jsonString.
+            Returns generated object as a GameObject List.
+         */
+    	Gson son=null;
+    	Type type=null;
+    	if(t.equals(ObjectType.ATOM)) {
+	    	son = new GsonBuilder().registerTypeAdapter(Atom.class, new AbstractAtomAdapter()).setPrettyPrinting().create();
+	    	type = new TypeToken<List<Atom>>(){}.getType();
+    	}else if(t.equals(ObjectType.POWER_UP)){
+    		son = new GsonBuilder().registerTypeAdapter(PowerUp.class, new AbstractPowerAdapter()).setPrettyPrinting().create();
+	    	type = new TypeToken<List<PowerUp>>(){}.getType();
+    	}
+      
+        return son.fromJson(jsonString, type);
+    }
+    
     public List<GameObject> jsonToGameObject(String jsonString, ObjectType objectType, Enum<?> subType) {
         /*
         @requires: this not null, objectType not null, subType not null, jsonString not null

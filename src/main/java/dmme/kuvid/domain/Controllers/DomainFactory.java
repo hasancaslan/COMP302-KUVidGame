@@ -160,5 +160,130 @@ public class DomainFactory extends Observable{
                 break;
         }
     }
+  
+  public void addAtom(GameObject atom) {
+	  AtomType type=(AtomType)atom.getSubType();
+		  switch (type) {
+		      case ALPHA:
+		    	  if(atom.isActive()) {
+		    		  if(atom.getDirection().getX()==0 && atom.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(atom);
+		    			  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.ALPHA).add(atom);
+		    		  }else {
+		    			  KUVidGame.getShootedAtom().add((Atom) atom);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.ALPHA).add(atom);
+		    	  }
+		          publishPropertyEvent("alpha", null, atom);
+		          break;
+		      case BETA:
+		    	  if(atom.isActive()) {
+		    		  if(atom.getDirection().getX()==0 && atom.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(atom);
+		    			  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.BETA).add(atom);
+		    		  }else {
+		    			  KUVidGame.getShootedAtom().add((Atom) atom);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.BETA).add(atom);
+		    	  }
+	              publishPropertyEvent("beta", null, atom);
+		          break;
+		      case SIGMA:
+		    	  if(atom.isActive()) {
+		    		  if(atom.getDirection().getX()==0 && atom.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(atom);
+		    			  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.SIGMA).add(atom);
+		    		  }else {
+		    			  KUVidGame.getShootedAtom().add((Atom) atom);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.SIGMA).add(atom);
+		    	  }
+	              publishPropertyEvent("sigma", null, atom);
+		          break;
+		      case GAMMA:
+		    	  if(atom.isActive()) {
+		    		  if(atom.getDirection().getX()==0 && atom.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(atom);
+		    			  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.GAMMA).add(atom);
+		    		  }else {
+		    			  KUVidGame.getShootedAtom().add((Atom) atom);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.ATOM,AtomType.GAMMA).add(atom);
+		    	  }
+	              publishPropertyEvent("gamma", null, atom);
+		          break;
+		  }
+		  
+		  if(atom.isActive()) {
+			  atom.setActive(true);
+		  }
+	  publishPropertyEvent("updateAtom",null,null);
+  }
+  
+  public void addPowerUp(GameObject power) {
+	  PowerType type=(PowerType)power.getSubType();
+		  switch (type) {
+		      case ALPHA_B:
+		    	  if(power.isActive()) {
+		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(power);
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(power);
+		    		  }else {
+		    			  KUVidGame.getShootedPower().add((PowerUp) power);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(power);
+		    	  }
+		          publishPropertyEvent("alphaPower", null, power);
+		          break;
+		      case BETA_B:
+		    	  if(power.isActive()) {
+		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(power);
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(power);
+		    		  }else {
+		    			  KUVidGame.getShootedPower().add((PowerUp) power);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(power);
+		    	  }
+		          publishPropertyEvent("betaPower", null, power);
+		          break;
+		      case SIGMA_B:
+		    	  if(power.isActive()) {
+		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(power);
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(power);
+		    		  }else {
+		    			  KUVidGame.getShootedPower().add((PowerUp) power);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(power);
+		    	  }
+		          publishPropertyEvent("sigmaPower", null, power);
+		          break;
+		      case GAMMA_B:
+		    	  if(power.isActive()) {
+		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+		    			  KUVidGame.getInstance().setCurrentAmmo(power);
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(power);
+		    		  }else {
+		    			  KUVidGame.getShootedPower().add((PowerUp) power);
+		    		  } 
+		    	  }else {
+		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(power);
+		    	  }
+		          publishPropertyEvent("gammaPower", null, power);
+		          break;
+		  }
+		  
+		  if(power.isActive()) {
+			  power.setActive(true);
+		  }
+  }
 
 }

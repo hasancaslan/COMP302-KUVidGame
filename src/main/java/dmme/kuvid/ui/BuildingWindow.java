@@ -43,6 +43,8 @@ public class BuildingWindow extends JFrame {
     int moleculeNumber = 0;
     int L = 0;
 
+    private JButton Load;
+    
     public BuildingWindow() {
         this.setTitle("BUILDING WINDOW");
         this.setSize(510, 510);
@@ -88,6 +90,8 @@ public class BuildingWindow extends JFrame {
         this.add(this.ComboBox);
  
         this.add(this.StartButton);
+        this.Load=new JButton("Load Game");
+        this.add(this.Load);
 
         this.StartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -108,6 +112,33 @@ public class BuildingWindow extends JFrame {
                 buildHandler.getInstance().setLinearity(linear);
                 buildHandler.getInstance().setSpinning(spinning);
                 KUVidGame.getInstance().shooterStart();
+                dispose();
+
+                new GameFrame();
+                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
+            }
+        });
+        
+        this.Load.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+                reactionBlockerNumber = Integer.parseInt((String) ReactionBlockerNumber.getText());
+                powerUpNumber = Integer.parseInt((String) PowerUpNumber.getText());
+                moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
+                L = Integer.parseInt((String) LTextField.getText());
+                difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
+
+                
+                buildHandler.getInstance().setNumMolecules(moleculeNumber);
+                buildHandler.getInstance().setNumBlocker(reactionBlockerNumber);
+                buildHandler.getInstance().setNumPowerUp(powerUpNumber);
+                buildHandler.getInstance().setL(L);
+                buildHandler.getInstance().setDifficulty(difficulty);
+                buildHandler.getInstance().setLinearity(linear);
+                buildHandler.getInstance().setSpinning(spinning);
+                KUVidGame.getInstance().shooterStart();
+                KUVidGame.getInstance().setIsLoad(true);
+                
                 dispose();
 
                 new GameFrame();
