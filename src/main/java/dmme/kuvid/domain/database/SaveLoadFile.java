@@ -9,6 +9,7 @@ import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.ui.Factory;
 import dmme.kuvid.utils.PathHandler;
+import dmme.kuvid.utils.observer.Observable;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -17,7 +18,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 
-public class SaveLoadFile implements SaveMode {
+public class SaveLoadFile extends Observable implements SaveMode {
 
     @Override
     public boolean saveGame() {
@@ -45,6 +46,8 @@ public class SaveLoadFile implements SaveMode {
         load("atom_beta");
         load("atom_gamma");
         load("atom_sigma");
+        publishPropertyEvent("updateAtom",null,null);
+
         /*
         load("molecule_alpha");
         load("molecule_beta");
@@ -119,19 +122,23 @@ public class SaveLoadFile implements SaveMode {
             if (fileName.contains("atom_alpha")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.ALPHA);
                 KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.ALPHA), list);
-                list.forEach(Factory::createAlphaUI);
+                list.forEach(n -> publishPropertyEvent("alpha", null,n));
+
             } else if (fileName.contains("atom_beta")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.BETA);
                 KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.BETA), list);
-                list.forEach(Factory::createBetaUI);
+                list.forEach(n -> publishPropertyEvent("beta", null,n));
+
             } else if (fileName.contains("atom_gamma")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.GAMMA);
                 KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.GAMMA), list);
-                list.forEach(Factory::createGammaUI);
+                list.forEach(n -> publishPropertyEvent("gamma", null,n));
+
             } else if (fileName.contains("atom_sigma")) {
                 list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.SIGMA);
                 KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.SIGMA), list);
-                list.forEach(Factory::createSigmaUI);
+                list.forEach(n -> publishPropertyEvent("sigma", null,n));
+
             } else if (fileName.contains("molecule_alpha")) {
                 list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.ALPHA);
                 KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), list);

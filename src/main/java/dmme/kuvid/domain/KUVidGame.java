@@ -13,6 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
