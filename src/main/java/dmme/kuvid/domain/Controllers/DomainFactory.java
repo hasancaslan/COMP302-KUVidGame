@@ -296,7 +296,7 @@ public class DomainFactory extends Observable{
 		          publishPropertyEvent("gammaPower", null, power);
 		          break;
 		  }
-		  
+		  publishPropertyEvent("updatePower",null,null);
 		  if(power.isActive()) {
 			  power.setActive(true);
 		  }

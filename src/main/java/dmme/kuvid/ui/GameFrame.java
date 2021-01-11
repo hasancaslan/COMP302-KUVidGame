@@ -31,6 +31,7 @@ public class GameFrame extends JFrame implements PropertyListener{
         movementHandler.getInstance().addPropertyListener("updatePower",this);
         destroyHandler.getInstance().addPropertyListener("updateAtom",this);
         DomainFactory.getInstance().addPropertyListener("updateAtom", this);
+        DomainFactory.getInstance().addPropertyListener("updatePower", this);
     }
 
     public GameFrame(Dimension size) {
