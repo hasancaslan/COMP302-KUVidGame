@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.domain.GameObjects.Molecules.*;
-import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
+import dmme.kuvid.domain.GameObjects.Powerup.*;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.lib.types.*;
@@ -47,7 +47,11 @@ public class SaveLoadFile extends Observable implements SaveMode {
         
         save("shootedAtom");
         save("shootedPower");
-        //save("powerArsenal");
+
+        save("power_arsenal_alpha");
+        save("power_arsenal_beta");
+        save("power_arsenal_gamma");
+        save("power_arsenal_sigma");
 
         return false;
     }
@@ -60,6 +64,12 @@ public class SaveLoadFile extends Observable implements SaveMode {
         load("atom_sigma");
         load("shootedAtom");
         load("shootedPower");
+
+        load("power_arsenal_alpha");
+        load("power_arsenal_beta");
+        load("power_arsenal_gamma");
+        load("power_arsenal_sigma");
+
         publishPropertyEvent("updateAtom",null,null);
 
         /*
@@ -121,13 +131,27 @@ public class SaveLoadFile extends Observable implements SaveMode {
         String jsonString = "";
         try {
             FileWriter fileWriter = new FileWriter(pathHandler.makePath(f.getAbsolutePath(), name)+".json");
-            if(name.equals("shootedAtom")) {
-            	fileWriter.write(this.shootedAtomToJson());
-            }else if(name.equals("shootedPower")) {
-            	fileWriter.write(this.shootedPowerToJson());
-            }else if(name.equals("powerArsenal")) {
-            	fileWriter.write(this.powerArsenalToJson());
+            switch (name) {
+                case "shootedAtom":
+                    fileWriter.write(this.shootedAtomToJson());
+                    break;
+                case "shootedPower":
+                    fileWriter.write(this.shootedPowerToJson());
+                    break;
+                case "power_arsenal_alpha":
+                    fileWriter.write(this.powerArsenalToJson(PowerType.ALPHA_B));
+                    break;
+                case "power_arsenal_beta":
+                    fileWriter.write(this.powerArsenalToJson(PowerType.BETA_B));
+                    break;
+                case "power_arsenal_gamma":
+                    fileWriter.write(this.powerArsenalToJson(PowerType.GAMMA_B));
+                    break;
+                case "power_arsenal_sigma":
+                    fileWriter.write(this.powerArsenalToJson(PowerType.SIGMA_B));
+                    break;
             }
+
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -169,15 +193,14 @@ public class SaveLoadFile extends Observable implements SaveMode {
         return son.toJson(KUVidGame.getShootedPower(),type);
     }
     
-    public String powerArsenalToJson() {
+    public String powerArsenalToJson(PowerType powerType) {
         /*
         @requires: this not null, objectType not null, subType not null
         @effects: Generates a JSON string from properties of the given specified List of GameObjects.
             Returns generated String.
          */
-    	Gson son = new GsonBuilder().registerTypeAdapter(PowerUp.class, new AbstractPowerAdapter()).setPrettyPrinting().create();
-    	Type type = new TypeToken<List<PowerUp>>(){}.getType();
-        return son.toJson(KUVidGame.getPowerArsenal(),type);
+        return new GsonBuilder().setPrettyPrinting().create()
+                .toJson(KUVidGame.getPowerArsenal().get(powerType));
     }
 
     public String load(String fileName) {
@@ -198,50 +221,71 @@ public class SaveLoadFile extends Observable implements SaveMode {
         }
 
         List<GameObject> list;
+        List<PowerUp> powerUpList;
         try {
             outputData = new String(Files.readAllBytes(Paths.get(pathHandler.makePath(f.getAbsolutePath(), fileName) + ".json")));
 
-            if (fileName.contains("atom_alpha")) {
-                list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.ALPHA);
-                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.ALPHA), list);
-                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
-
-            } else if (fileName.contains("atom_beta")) {
-                list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.BETA);
-                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.BETA), list);
-                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
-                
-            } else if (fileName.contains("atom_gamma")) {
-                list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.GAMMA);
-                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.GAMMA), list);
-                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
-                
-            } else if (fileName.contains("atom_sigma")) {
-                list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.SIGMA);
-                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.SIGMA), list);
-                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
-                
-            } else if (fileName.contains("molecule_alpha")) {
-                list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.ALPHA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), list);
-            } else if (fileName.contains("molecule_beta")) {
-                list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.BETA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
-            } else if (fileName.contains("molecule_gamma")) {
-                list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.GAMMA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
-            } else if (fileName.contains("molecule_sigma")) {
-                list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.SIGMA);
-                KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
-            } else if (fileName.contains("shootedAtom")) {
-            	list =this.jsonToList(outputData,ObjectType.ATOM);
-                list.forEach(n -> DomainFactory.getInstance().addAtom(n));
-            }else if (fileName.contains("shootedPower")) {
-                //list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.BETA);
-                //KUVidGame.getGameObjectMap().put(new Key(ObjectType.ATOM, AtomType.BETA), list);
-                //list.forEach(n -> DomainFactory.getInstance().addAtom(n));
-            	list =this.jsonToList(outputData,ObjectType.POWER_UP);
-                list.forEach(n -> DomainFactory.getInstance().addPowerUp(n));
+            switch (fileName) {
+                case "atom_alpha":
+                    list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.ALPHA);
+                    list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                    break;
+                case "atom_beta":
+                    list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.BETA);
+                    list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                    break;
+                case "atom_gamma":
+                    list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.GAMMA);
+                    list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                    break;
+                case "atom_sigma":
+                    list = jsonToGameObject(outputData, ObjectType.ATOM, AtomType.SIGMA);
+                    list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                    break;
+                case "molecule_alpha":
+                    list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.ALPHA);
+                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), list);
+                    break;
+                case "molecule_beta":
+                    list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.BETA);
+                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
+                    break;
+                case "molecule_gamma":
+                    list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.GAMMA);
+                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
+                    break;
+                case "molecule_sigma":
+                    list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.SIGMA);
+                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
+                    break;
+                case "shootedAtom":
+                    list = this.jsonToList(outputData, ObjectType.ATOM);
+                    list.forEach(n -> DomainFactory.getInstance().addAtom(n));
+                    break;
+                case "shootedPower":
+                    list = this.jsonToList(outputData, ObjectType.POWER_UP);
+                    list.forEach(n -> DomainFactory.getInstance().addPowerUp(n));
+                    break;
+                case "power_arsenal_alpha":
+                    powerUpList = jsonToPowerUp(outputData, PowerType.ALPHA_B);
+                    //KUVidGame.getPowerArsenal().put(PowerType.ALPHA_B, powerUpList);
+                    powerUpList.forEach(n -> DomainFactory.getInstance().addPowerUp(n));
+                    break;
+                case "power_arsenal_beta":
+                    powerUpList = jsonToPowerUp(outputData, PowerType.BETA_B);
+                    //KUVidGame.getPowerArsenal().put(PowerType.BETA_B, powerUpList);
+                    powerUpList.forEach(n -> DomainFactory.getInstance().addPowerUp(n));
+                    break;
+                case "power_arsenal_gamma":
+                    powerUpList = jsonToPowerUp(outputData, PowerType.GAMMA_B);
+                    //KUVidGame.getPowerArsenal().put(PowerType.GAMMA_B, powerUpList);
+                    powerUpList.forEach(n -> DomainFactory.getInstance().addPowerUp(n));
+                    break;
+                case "power_arsenal_sigma":
+                    powerUpList = jsonToPowerUp(outputData, PowerType.SIGMA_B);
+                    //KUVidGame.getPowerArsenal().put(PowerType.SIGMA_B, powerUpList);
+                    powerUpList.forEach(n -> DomainFactory.getInstance().addPowerUp(n));
+                    break;
             }
 
             //System.out.println(outputData);
@@ -252,6 +296,8 @@ public class SaveLoadFile extends Observable implements SaveMode {
         }
         return outputData;
     }
+
+
 
     public List<GameObject> jsonToList(String jsonString,ObjectType t) {
         /*
@@ -303,5 +349,18 @@ public class SaveLoadFile extends Observable implements SaveMode {
         return new GsonBuilder().setPrettyPrinting().create().fromJson(jsonString, type);
     }
 
+    private List<PowerUp> jsonToPowerUp(String jsonString, PowerType powerType) {
+        Type type = null;
+        if (powerType == PowerType.ALPHA_B) {
+            type = new TypeToken<List<AlphaPowerUp>>(){}.getType();
+        } else if (powerType == PowerType.BETA_B) {
+            type = new TypeToken<List<BetaPowerUp>>(){}.getType();
+        } else if (powerType == PowerType.GAMMA_B) {
+            type = new TypeToken<List<GammaPowerUp>>(){}.getType();
+        } else if (powerType == PowerType.SIGMA_B) {
+            type = new TypeToken<List<SigmaPowerUp>>(){}.getType();
+        }
+        return new GsonBuilder().setPrettyPrinting().create().fromJson(jsonString, type);
+    }
 
 }

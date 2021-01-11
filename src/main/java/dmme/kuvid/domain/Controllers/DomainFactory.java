@@ -236,7 +236,11 @@ public class DomainFactory extends Observable{
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
 		    		  } 
 		    	  }else {
-		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(power);
+                      if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+                          GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(power);
+                      } else {
+                          KUVidGame.getPowerArsenal().get(PowerType.ALPHA_B).add((PowerUp) power);
+                      }
 		    	  }
 		          publishPropertyEvent("alphaPower", null, power);
 		          break;
@@ -249,7 +253,11 @@ public class DomainFactory extends Observable{
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
 		    		  } 
 		    	  }else {
-		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(power);
+                      if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+                          GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(power);
+                      } else {
+                          KUVidGame.getPowerArsenal().get(PowerType.BETA_B).add((PowerUp) power);
+                      }
 		    	  }
 		          publishPropertyEvent("betaPower", null, power);
 		          break;
@@ -262,7 +270,11 @@ public class DomainFactory extends Observable{
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
 		    		  } 
 		    	  }else {
-		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(power);
+                      if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+                          GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(power);
+                      } else {
+                          KUVidGame.getPowerArsenal().get(PowerType.SIGMA_B).add((PowerUp) power);
+                      }
 		    	  }
 		          publishPropertyEvent("sigmaPower", null, power);
 		          break;
@@ -275,7 +287,11 @@ public class DomainFactory extends Observable{
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
 		    		  } 
 		    	  }else {
-		    		  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(power);
+                      if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
+                          GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(power);
+                      } else {
+                          KUVidGame.getPowerArsenal().get(PowerType.GAMMA_B).add((PowerUp) power);
+                      }
 		    	  }
 		          publishPropertyEvent("gammaPower", null, power);
 		          break;
