@@ -2,6 +2,7 @@ package dmme.kuvid.ui;
 
 import dmme.kuvid.Application;
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.Controllers.buildHandler;
 import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
 import dmme.kuvid.lib.types.GameLevel;
 
@@ -85,7 +86,7 @@ public class BuildingWindow extends JFrame {
 
         this.add(new JLabel("GameDifficulty"));
         this.add(this.ComboBox);
-
+ 
         this.add(this.StartButton);
 
         this.StartButton.addActionListener(new ActionListener() {
@@ -98,17 +99,15 @@ public class BuildingWindow extends JFrame {
                 L = Integer.parseInt((String) LTextField.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
 
-                KUVidGame.getInstance().setNumAtoms(atomNumber);
-                KUVidGame.getInstance().setNumMolecules(moleculeNumber);
-                KUVidGame.getInstance().setNumBlocker(reactionBlockerNumber);
-                KUVidGame.getInstance().setNumPowerUp(powerUpNumber);
-
-                KUVidGame.getInstance().setL(L);
+                buildHandler.getInstance().setNumAtoms(atomNumber);
+                buildHandler.getInstance().setNumMolecules(moleculeNumber);
+                buildHandler.getInstance().setNumBlocker(reactionBlockerNumber);
+                buildHandler.getInstance().setNumPowerUp(powerUpNumber);
+                buildHandler.getInstance().setL(L);
+                buildHandler.getInstance().setDifficulty(difficulty);
+                buildHandler.getInstance().setLinearity(linear);
+                buildHandler.getInstance().setSpinning(spinning);
                 KUVidGame.getInstance().shooterStart();
-                KUVidGame.getInstance().setDifficulty(difficulty);
-                KUVidGame.getInstance().setLinearity(linear);
-                KUVidGame.getInstance().setSpinning(spinning);
-                
                 dispose();
 
                 new GameFrame();
@@ -121,6 +120,30 @@ public class BuildingWindow extends JFrame {
         LinearButton.addItemListener(new StructureHandler(true));
         NoNLinearButton.addItemListener(new StructureHandler(false));
 
+    }
+
+    public void createGame() {
+        atomNumber = Integer.parseInt((String) AtomNumber.getText());
+        reactionBlockerNumber = Integer.parseInt((String) ReactionBlockerNumber.getText());
+        powerUpNumber = Integer.parseInt((String) PowerUpNumber.getText());
+        moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
+        L = Integer.parseInt((String) LTextField.getText());
+        difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
+
+        buildHandler.getInstance().setNumAtoms(atomNumber);
+        buildHandler.getInstance().setNumMolecules(moleculeNumber);
+        buildHandler.getInstance().setNumBlocker(reactionBlockerNumber);
+        buildHandler.getInstance().setNumPowerUp(powerUpNumber);
+        buildHandler.getInstance().setL(L);
+        buildHandler.getInstance().setDifficulty(difficulty);
+        buildHandler.getInstance().setLinearity(linear);
+        buildHandler.getInstance().setSpinning(spinning);
+
+        KUVidGame.getInstance().shooterStart();
+        dispose();
+
+        new GameFrame();
+        Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
     }
 
     // private inner class to handle the movement of the molecules

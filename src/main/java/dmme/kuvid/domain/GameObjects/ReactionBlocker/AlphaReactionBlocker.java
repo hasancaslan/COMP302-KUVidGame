@@ -2,7 +2,6 @@ package dmme.kuvid.domain.GameObjects.ReactionBlocker;
 
 import dmme.kuvid.domain.GameObjects.Position;
 import dmme.kuvid.domain.GameObjects.Molecules.ZigZagPatternStrategy;
-import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
 import dmme.kuvid.lib.types.ReactionType;
 

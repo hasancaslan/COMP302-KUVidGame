@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.GameObjects.GameObject;
@@ -23,6 +24,8 @@ public class betaBlockerUI extends MoleculeUI implements PropertyListener{
 	private GamePanel panel;
 	private Dimension dim;
 	private int id;
+	private boolean explode=false;
+	private int timeExp=-100;
 	
 	public betaBlockerUI(GameObject block, GamePanel panel2) {
 		super(IconImporter.getIconFromFileName("beta-b.png","blockers",new Dimension((int) (10 * L), (int) (10 * L))));
@@ -31,6 +34,7 @@ public class betaBlockerUI extends MoleculeUI implements PropertyListener{
         
         block.addPropertyListener("active",this);
         block.addPropertyListener("position",this);
+        KUVidGame.getInstance().addPropertyListener("tick", this);
         this.block=block;
         this.panel=panel2;
         this.dim=dimension;
@@ -45,10 +49,23 @@ public class betaBlockerUI extends MoleculeUI implements PropertyListener{
         		this.panel.add(this);
         	}else {
         		this.panel.remove(this);
+        		ImageIcon icon =IconImporter.getIconFromFileName("explode.png","explode",new Dimension((int) (10 * L), (int) (10 * L)));
+            	this.setIcon(icon);
+            	this.setLocation(this.block.getPosition().getX(),this.block.getPosition().getY()-10*L);
+            	this.panel.add(this);
+            	this.explode=true;
+            	this.timeExp=KUVidGame.getInstance().getTime();
         	}
         }else if (e.getPropertyName().equals("position")) {
         	if(this.block.isActive()) {
         		this.setLocation(this.block.getPosition().getX(),this.block.getPosition().getY());
+        	}
+        }else if (e.getPropertyName().equals("tick")) {
+        	if(this.explode) {
+        		if((this.timeExp-(int)e.getNewValue())>=2) {
+        			this.panel.remove(this);
+        			}
+        		
         	}
         }
     }

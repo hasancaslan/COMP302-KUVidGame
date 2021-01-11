@@ -18,6 +18,6 @@ public class ReactionSurfaceCollision implements collisionHandler {
 				damage = KUVidGame.getInstance().getPlayableArea().width / Math.abs(shooterPosition - objectPosition);
 			}
 			Player.getInstance().decrementHealth(damage);
-			destroyHandler.destroyObject(object);
+			destroyHandler.getInstance().destroyObject(object);
 		}
 }
