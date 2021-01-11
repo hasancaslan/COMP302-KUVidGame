@@ -55,4 +55,8 @@ public class MenuPanel extends JPanel implements PropertyListener {
     public BlenderPanel getBlenderPanel() {
     	return this.blenderPanel;
     }
+    
+    public PowerUpPanel getPowerUpPanel() {
+    	return this.powerUpPanel;
+    }
 }

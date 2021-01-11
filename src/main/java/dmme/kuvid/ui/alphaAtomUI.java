@@ -33,7 +33,7 @@ public class alphaAtomUI extends AtomUI implements PropertyListener{
         atom.addPropertyListener("active",this);
         atom.addPropertyListener("position",this);
         this.atom=atom;
-        this.panel=panel;
+        this.panel=panel; 
         this.gameHeight=KUVidGame.getInstance().getPlayableArea().height;
 
 	

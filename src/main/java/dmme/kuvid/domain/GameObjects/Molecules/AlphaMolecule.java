@@ -29,6 +29,10 @@ public class AlphaMolecule extends Molecule{
 		this.setPattern(new ZigZagPatternStrategy());
 		this.strategy.move(this, count);	
 		this.count++;
+		if(spinning) {
+			this.spin = this.count/2;
+			this.spin = this.spin % 4;	
+		}
 	}
 
 	@Override

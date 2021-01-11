@@ -5,29 +5,41 @@ import java.util.Random;
 
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.GameObjects.GameObject;
-import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.Key;
 import dmme.kuvid.lib.types.ObjectType;
-import dmme.kuvid.ui.GameFrame;
+import dmme.kuvid.utils.observer.Observable;
 
-public class destroyHandler {
+public class destroyHandler extends Observable{
 	
 	private static Random rand=new Random();
+	private static destroyHandler instance=null;
+	
+	private destroyHandler() {
+		
+	}
+	
+	public static destroyHandler getInstance() {
+		 if (instance == null)
+	            instance = new destroyHandler();
 
-    public static boolean destroyObject(GameObject object1) {
+	        return instance;
+	}
+
+    public boolean destroyObject(GameObject object1) {
         if (object1 == null) return false;
         if(object1.getType().equals(ObjectType.ATOM)) {
         	KUVidGame.getShootedAtom().remove(object1);
-        }else {
+        }else{
         	GameObject.getGameObjectList(object1.getType(), object1.getSubType()).remove(object1);
         }
         object1.setActive(false);
-        GameFrame.updateNumAtoms();
+        publishPropertyEvent("updateAtom",null,null);
+        
         return true;
     }
 
-    public static boolean blenderDestroy(AtomType type) {
+    public boolean blenderDestroy(AtomType type) {
         
         List<GameObject> atomList=KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM,type));
         
@@ -38,8 +50,8 @@ public class destroyHandler {
         }
         
         atomList.remove(atom);
-        GameFrame.updateNumAtoms();
 
+        publishPropertyEvent("updateAtom",null,null);
         return true;
     }
 }

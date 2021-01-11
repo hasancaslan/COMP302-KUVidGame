@@ -40,8 +40,19 @@ public class Player extends Observable {
     }
 
     public void decrementHealth(int decrement) {
-        this.setHealth(this.getHealth() - decrement);
+    	if(this.getHealth()>decrement) {
+    		this.setHealth(this.getHealth() - decrement);
+    	}else {
+    		this.setHealth(0);
+    	}
     }
 
-
+    @Override
+    public String toString() {
+        return "Player [" +
+                "health=" + health +
+                ", point=" + point +
+                ", propertyListenersMap=" + propertyListenersMap +
+                ']';
+    }
 }
