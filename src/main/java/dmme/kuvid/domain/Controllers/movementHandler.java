@@ -339,4 +339,20 @@ public class movementHandler extends Observable{
         search();
         move();
     }
+    
+    public int numMolToThrow() {
+    	return (this.MOLNO*4)-(this.alphaNo+this.betaNo+this.sigmaNo+this.gammaNo-4);
+    }
+    
+    public int numBlockToThrow() {
+    	return (this.BLOCKNO*4)-(this.alphaBlockNo+this.betaBlockNo+this.sigmaBlockNo+this.gammaBlockNo-4);
+    }
+    
+    public int numPowerToThrow() {
+    	return (this.POWERNO*4)-(this.alphaPowerNo+this.betaPowerNo+this.sigmaPowerNo+this.gammaPowerNo-4);
+    }
+    
+    public static void setInstance(movementHandler init) {
+    	movementHandler.instance=init;
+    }
 }

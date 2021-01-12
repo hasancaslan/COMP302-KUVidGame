@@ -9,6 +9,7 @@ public interface MovementStrategy {
 	int L = KUVidGame.getInstance().getL(); 
 	Dimension gameField=KUVidGame.getInstance().getPlayableArea();
 	
+	
 	public void move(GameObject m, int count);
 
 

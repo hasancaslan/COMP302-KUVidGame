@@ -5,6 +5,10 @@ import dmme.kuvid.domain.GameObjects.Position;
 
 public class StraightPatternStrategy implements MovementStrategy {
 	
+	public StraightPatternStrategy() {
+		
+	}
+	
 	@Override
 	public void move(GameObject m, int count){
 		int Y = m.getPosition().getY();

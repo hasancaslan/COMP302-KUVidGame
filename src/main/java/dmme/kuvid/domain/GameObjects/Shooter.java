@@ -11,7 +11,7 @@ public class Shooter extends Observable {
     private int position;
     private int angle;
     public AmmoType ammoType;
-    public GameObject currentAtom;
+    public transient GameObject currentAtom;
 
     public Shooter(int position, int angle, AmmoType ammoType) {
         this.position = position;

@@ -308,31 +308,17 @@ public class KUVidGame extends Observable implements Runnable {
     public void runGame(){ //main loop
     	
     	if(this.isLoad) {
-    		int numMol=(int) Math.ceil((this.numMolecules/4.0));
-	        int numBlock=(int) Math.ceil((this.numBlocker/4.0));
-	        int numPower=(int) Math.ceil((this.numPowerUp/4.0));
-	        
-	        this.throwMolecule = numMol*4;
-	        this.throwPower = numPower * 4;
-	        this.throwBlocker = numBlock * 4;
 	        
 	        this.loadLocal();
+	        this.setNumMolecules(this.getRemMolecules());
+	        this.throwMolecule = movementHandler.getInstance().numMolToThrow();
+	        this.throwBlocker = movementHandler.getInstance().numBlockToThrow();
+	        this.throwPower = movementHandler.getInstance().numPowerToThrow();
+	        publishPropertyEvent("load",null,true);
+	        this.time=Player.getInstance().getTime();
 	        
-	        DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, numMol);
-	        DomainFactory.getInstance().createMolecule(MoleculeType.BETA, numMol);
-	        DomainFactory.getInstance().createMolecule(MoleculeType.GAMMA, numMol);
-	        DomainFactory.getInstance().createMolecule(MoleculeType.SIGMA, numMol);
-	        
-	        DomainFactory.getInstance().createReactionBlocker(ReactionType.ALPHA_R, numBlock);
-	        DomainFactory.getInstance().createReactionBlocker(ReactionType.BETA_R, numBlock);
-	        DomainFactory.getInstance().createReactionBlocker(ReactionType.SIGMA_R, numBlock);
-	        DomainFactory.getInstance().createReactionBlocker(ReactionType.GAMMA_R, numBlock);
-	        
-	        DomainFactory.getInstance().createPowerup(PowerType.ALPHA_B, numPower);
-	        DomainFactory.getInstance().createPowerup(PowerType.BETA_B, numPower);
-	        DomainFactory.getInstance().createPowerup(PowerType.SIGMA_B, numPower);
-	        DomainFactory.getInstance().createPowerup(PowerType.GAMMA_B, numPower);
     	}else {
+    		publishPropertyEvent("load",null,false);
     		
 	    	int num=(int) Math.ceil((this.numAtoms/4.0));
 	        int numMol=(int) Math.ceil((this.numMolecules/4.0));
@@ -448,6 +434,7 @@ public class KUVidGame extends Observable implements Runnable {
 	}
 	
 	public void saveLocal() {
+		Player.getInstance().setTime(this.time);
 		saveLoadFile.saveGame();
 	}
 	
@@ -465,5 +452,9 @@ public class KUVidGame extends Observable implements Runnable {
 	
 	public void setCurrentAmmo(GameObject ammo) {
 		this.shooter.currentAtom=ammo;
+	}
+	
+	public void setShooter(Shooter shot) {
+		this.shooter=shot;
 	}
 }

@@ -26,9 +26,7 @@ public class GameFrame extends JFrame implements PropertyListener{
     public GameFrame() {
         this(KUVidGame.getInstance().getScreenSize());
         KUVidGame.getInstance().addPropertyListener("finishGame",this);
-        KUVidGame.getInstance().getShooter().addPropertyListener("updatePower",this);
-        KUVidGame.getInstance().getShooter().addPropertyListener("updateAtom",this);
-        movementHandler.getInstance().addPropertyListener("updatePower",this);
+        KUVidGame.getInstance().addPropertyListener("load", this);
         destroyHandler.getInstance().addPropertyListener("updateAtom",this);
         DomainFactory.getInstance().addPropertyListener("updateAtom", this);
         DomainFactory.getInstance().addPropertyListener("updatePower", this);
@@ -153,6 +151,11 @@ public class GameFrame extends JFrame implements PropertyListener{
 			GameFrame.menu.getPowerUpPanel().updatePowerCounts();
 		}else if(e.getPropertyName().equals("finishGame")) {
 			new FinishWindow();
+		}else if(e.getPropertyName().equals("load")) {
+			 movementHandler.getInstance().addPropertyListener("updatePower",this);
+			 KUVidGame.getInstance().getShooter().addPropertyListener("updatePower",this);
+		     KUVidGame.getInstance().getShooter().addPropertyListener("updateAtom",this);
+		     this.shooterUI.loadShooter(KUVidGame.getInstance().getShooter());
 		}
 		
 	}

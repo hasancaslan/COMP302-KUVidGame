@@ -6,6 +6,7 @@ public class Player extends Observable {
     private static Player instance = null;
     private int health = 100;
     private int point = 0;
+    private int time;
 
     private Player() {
     }
@@ -55,4 +56,19 @@ public class Player extends Observable {
                 ", propertyListenersMap=" + propertyListenersMap +
                 ']';
     }
+
+	public int getTime() {
+		publishPropertyEvent("point", null, this.point);
+		publishPropertyEvent("health", null, this.health);
+		publishPropertyEvent("time", null, this.time);
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	public static void setInstance(Player p1) {
+		Player.instance=p1;
+	}
 }

@@ -70,5 +70,18 @@ public class ShooterUI extends JLabel implements PropertyListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void loadShooter(Shooter shoot) {
+		this.panel.remove(this);
+		this.shooter=shoot;
+		int angle=(this.shooter.getAngle()-90);
+    	String s = "shooter"+angle+".png";
+    	ImageIcon icon =IconImporter.getIconFromFileName(s,"shooter",new Dimension((int) (10 * L), (int) (20 * L)));
+    	this.setIcon(icon);
+    	this.setLocation(this.shooter.getPosition(),this.y);
+    	this.panel.add(this);
+		shooter.addPropertyListener("position", this);
+        shooter.addPropertyListener("angle", this);
+	}
 
 }

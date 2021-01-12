@@ -98,28 +98,28 @@ public class DomainFactory extends Observable{
         switch (type) {
             case ALPHA_B:
                 for (int i = 0; i < amount; i++) {
-                    powerUp = new AlphaPowerUp(null, null, false, ObjectType.POWER_UP);
+                    powerUp = new AlphaPowerUp(new Position(0,0), new Position(0,0), false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(powerUp);
                     publishPropertyEvent("alphaPower", null, powerUp);
                 }
                 break;
             case BETA_B:
                 for (int i = 0; i < amount; i++) {
-                    powerUp = new BetaPowerUp(null, null,false, ObjectType.POWER_UP);
+                    powerUp = new BetaPowerUp(new Position(0,0), new Position(0,0),false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(powerUp);
                     publishPropertyEvent("betaPower", null, powerUp);
                 }
                 break;
             case SIGMA_B:
                 for (int i = 0; i < amount; i++) {
-                    powerUp = new SigmaPowerUp(null, null, false, ObjectType.POWER_UP);
+                    powerUp = new SigmaPowerUp(new Position(0,0), new Position(0,0), false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(powerUp);
                     publishPropertyEvent("sigmaPower", null, powerUp);
                 }
                 break;
             case GAMMA_B:
                 for (int i = 0; i < amount; i++) {
-                    powerUp = new GammaPowerUp(null, null, false, ObjectType.POWER_UP);
+                    powerUp = new GammaPowerUp(new Position(0,0), new Position(0,0), false, ObjectType.POWER_UP);
                     GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(powerUp);
                     publishPropertyEvent("gammaPower", null, powerUp);
                 }
@@ -232,9 +232,11 @@ public class DomainFactory extends Observable{
 		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
 		    			  KUVidGame.getInstance().setCurrentAmmo(power);
 		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(power);
-		    		  }else {
+		    		  }else if(power.getDirection().getY()<0){
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
-		    		  } 
+		    		  }else {
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(power);
+		    		  }
 		    	  }else {
                       if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
                           GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.ALPHA_B).add(power);
@@ -249,9 +251,11 @@ public class DomainFactory extends Observable{
 		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
 		    			  KUVidGame.getInstance().setCurrentAmmo(power);
 		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(power);
-		    		  }else {
+		    		  }else if(power.getDirection().getY()<0){
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
-		    		  } 
+		    		  }else {
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(power);
+		    		  }
 		    	  }else {
                       if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
                           GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.BETA_B).add(power);
@@ -266,9 +270,11 @@ public class DomainFactory extends Observable{
 		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
 		    			  KUVidGame.getInstance().setCurrentAmmo(power);
 		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(power);
-		    		  }else {
+		    		  }else if(power.getDirection().getY()<0){
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
-		    		  } 
+		    		  }else {
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(power);
+		    		  }
 		    	  }else {
                       if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
                           GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.SIGMA_B).add(power);
@@ -283,9 +289,11 @@ public class DomainFactory extends Observable{
 		    		  if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
 		    			  KUVidGame.getInstance().setCurrentAmmo(power);
 		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(power);
-		    		  }else {
+		    		  }else if(power.getDirection().getY()<0){
 		    			  KUVidGame.getShootedPower().add((PowerUp) power);
-		    		  } 
+		    		  }else {
+		    			  GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(power);
+		    		  }
 		    	  }else {
                       if(power.getDirection().getX()==0 && power.getDirection().getY()==0) {
                           GameObject.getGameObjectList(ObjectType.POWER_UP,PowerType.GAMMA_B).add(power);
@@ -300,6 +308,58 @@ public class DomainFactory extends Observable{
 		  if(power.isActive()) {
 			  power.setActive(true);
 		  }
+  }
+  
+  public void addMolecule(GameObject molecule) {
+      MoleculeType type=(MoleculeType) molecule.getSubType();
+      switch (type) {
+          case ALPHA:
+              GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.ALPHA).add(molecule);
+              publishPropertyEvent("alphaMol", null, molecule);
+              break;
+          case BETA:
+        	  GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.BETA).add(molecule);
+              publishPropertyEvent("betaMol", null, molecule);
+              break;
+          case SIGMA:
+        	  GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.SIGMA).add(molecule);
+              publishPropertyEvent("sigmaMol", null, molecule);
+              break;
+          case GAMMA:
+        	  GameObject.getGameObjectList(ObjectType.MOLECULE,MoleculeType.GAMMA).add(molecule);
+              publishPropertyEvent("gammaMol", null, molecule);
+              break;
+      }
+      if(molecule.isActive()) {
+		  molecule.setActive(true);
+	  }
+      
+  }
+  
+  public void addBlocker(GameObject blocker) {
+	  ReactionType type=(ReactionType) blocker.getSubType();
+      switch (type) {
+          case ALPHA_R:
+              GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.ALPHA_R).add(blocker);
+              publishPropertyEvent("alphaBlocker", null, blocker);
+              break;
+          case BETA_R:
+        	  GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.BETA_R).add(blocker);
+              publishPropertyEvent("betaBlocker", null, blocker);
+              break;
+          case SIGMA_R:
+        	  GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.SIGMA_R).add(blocker);
+              publishPropertyEvent("sigmaBlocker", null, blocker);
+              break;
+          case GAMMA_R:
+        	  GameObject.getGameObjectList(ObjectType.REACTION_BLOCKER,ReactionType.GAMMA_R).add(blocker);
+              publishPropertyEvent("gammaBlocker", null, blocker);
+              break;
+      }
+      if(blocker.isActive()) {
+		  blocker.setActive(true);
+	  }
+      
   }
 
 }
