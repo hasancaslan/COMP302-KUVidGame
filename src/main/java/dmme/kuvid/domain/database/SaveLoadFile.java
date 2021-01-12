@@ -244,19 +244,19 @@ public class SaveLoadFile extends Observable implements SaveMode {
                     break;
                 case "molecule_alpha":
                     list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.ALPHA);
-                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), list);
+                    //KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.ALPHA), list);
                     break;
                 case "molecule_beta":
                     list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.BETA);
-                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
+                    //KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
                     break;
                 case "molecule_gamma":
                     list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.GAMMA);
-                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
+                    //KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
                     break;
                 case "molecule_sigma":
                     list = jsonToGameObject(outputData, ObjectType.MOLECULE, MoleculeType.SIGMA);
-                    KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
+                    //KUVidGame.getGameObjectMap().put(new Key(ObjectType.MOLECULE, MoleculeType.BETA), list);
                     break;
                 case "shootedAtom":
                     list = this.jsonToList(outputData, ObjectType.ATOM);
