@@ -4,24 +4,33 @@ import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
+import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
+import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
+import dmme.kuvid.domain.database.SaveLoadFile;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
-    private static final HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
-    private static final List<GameObject> shootedAtom = new ArrayList<>();
-    private static final List<GameObject> shootedPower = new ArrayList<>();
-    private static final HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
+    private static HashMap<Key, List<GameObject>> gameObjectMap = new HashMap<Key, List<GameObject>>();
+    private static List<Atom> shootedAtom = new ArrayList<>();
+    private static List<PowerUp> shootedPower= new ArrayList<>();
+    private static HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
+
+    private static SaveLoadFile saveLoadFile = new SaveLoadFile();
+
     public boolean active = true;
     public boolean blendingMode;
+
     private Dimension screenSize;
     private Dimension playableArea;
+
     private int L;
     private int numAtoms = 1;
     private int numMolecules = 1;
@@ -30,19 +39,27 @@ public class KUVidGame extends Observable implements Runnable {
     private final int range = 10;
     private int linearity= 1;
     private boolean spinning;
+
     private int difficulty=1;
     private int sleepTime=100;
+
+    private GameObject objects;
     private Shooter shooter;
     private Blender blender;
     private DomainFactory creator;
     private destroyHandler destroyer;
     private int time = 600;    //60;
     private Player p1;
+    private Random rand = new Random();
+
     private int throwMolecule;
     private int throwBlocker;
     private int throwPower;
     
     private int count = 0;
+    
+    private boolean quit=false;
+    private boolean isLoad=false;
 
     private KUVidGame() {
         this.shooter = new Shooter();
@@ -264,7 +281,7 @@ public class KUVidGame extends Observable implements Runnable {
         return KUVidGame.powerArsenal.get(type).size();
     }
     
-	public static List<GameObject> getShootedAtom() {
+	public static List<Atom> getShootedAtom() {
 		return shootedAtom;
 	}
 
@@ -280,7 +297,7 @@ public class KUVidGame extends Observable implements Runnable {
 		return this.p1.getPoint();
 	}
 
-	public static List<GameObject> getShootedPower() {
+	public static List<PowerUp> getShootedPower() {
 		return shootedPower;
 	}
 	
@@ -290,38 +307,51 @@ public class KUVidGame extends Observable implements Runnable {
 
     public void runGame(){ //main loop
     	
-    	int num=(int) Math.ceil((this.numAtoms/4.0));
-        int numMol=(int) Math.ceil((this.numMolecules/4.0));
-        int numBlock=(int) Math.ceil((this.numBlocker/4.0));
-        int numPower=(int) Math.ceil((this.numPowerUp/4.0));
-        
-        this.throwMolecule = numMol*4;
-        this.throwPower = numPower * 4;
-        this.throwBlocker = numBlock * 4;
-
-        DomainFactory.getInstance().createAtom(AtomType.ALPHA,num);
-        DomainFactory.getInstance().createAtom(AtomType.BETA,num);
-        DomainFactory.getInstance().createAtom(AtomType.GAMMA,num);
-        DomainFactory.getInstance().createAtom(AtomType.SIGMA,num);
-        
-        DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, numMol);
-        DomainFactory.getInstance().createMolecule(MoleculeType.BETA, numMol);
-        DomainFactory.getInstance().createMolecule(MoleculeType.GAMMA, numMol);
-        DomainFactory.getInstance().createMolecule(MoleculeType.SIGMA, numMol);
-        
-        DomainFactory.getInstance().createReactionBlocker(ReactionType.ALPHA_R, numBlock);
-        DomainFactory.getInstance().createReactionBlocker(ReactionType.BETA_R, numBlock);
-        DomainFactory.getInstance().createReactionBlocker(ReactionType.SIGMA_R, numBlock);
-        DomainFactory.getInstance().createReactionBlocker(ReactionType.GAMMA_R, numBlock);
-        
-        DomainFactory.getInstance().createPowerup(PowerType.ALPHA_B, numPower);
-        DomainFactory.getInstance().createPowerup(PowerType.BETA_B, numPower);
-        DomainFactory.getInstance().createPowerup(PowerType.SIGMA_B, numPower);
-        DomainFactory.getInstance().createPowerup(PowerType.GAMMA_B, numPower);
+    	if(this.isLoad) {
+	        
+	        this.loadLocal();
+	        this.setNumMolecules(this.getRemMolecules());
+	        this.throwMolecule = movementHandler.getInstance().numMolToThrow();
+	        this.throwBlocker = movementHandler.getInstance().numBlockToThrow();
+	        this.throwPower = movementHandler.getInstance().numPowerToThrow();
+	        publishPropertyEvent("load",null,true);
+	        this.time=Player.getInstance().getTime();
+	        
+    	}else {
+    		publishPropertyEvent("load",null,false);
+    		
+	    	int num=(int) Math.ceil((this.numAtoms/4.0));
+	        int numMol=(int) Math.ceil((this.numMolecules/4.0));
+	        int numBlock=(int) Math.ceil((this.numBlocker/4.0));
+	        int numPower=(int) Math.ceil((this.numPowerUp/4.0));
+	        
+	        this.throwMolecule = numMol*4;
+	        this.throwPower = numPower * 4;
+	        this.throwBlocker = numBlock * 4;
+	
+	        DomainFactory.getInstance().createAtom(AtomType.ALPHA,num);
+	        DomainFactory.getInstance().createAtom(AtomType.BETA,num);
+	        DomainFactory.getInstance().createAtom(AtomType.GAMMA,num);
+	        DomainFactory.getInstance().createAtom(AtomType.SIGMA,num);
+	        
+	        DomainFactory.getInstance().createMolecule(MoleculeType.ALPHA, numMol);
+	        DomainFactory.getInstance().createMolecule(MoleculeType.BETA, numMol);
+	        DomainFactory.getInstance().createMolecule(MoleculeType.GAMMA, numMol);
+	        DomainFactory.getInstance().createMolecule(MoleculeType.SIGMA, numMol);
+	        
+	        DomainFactory.getInstance().createReactionBlocker(ReactionType.ALPHA_R, numBlock);
+	        DomainFactory.getInstance().createReactionBlocker(ReactionType.BETA_R, numBlock);
+	        DomainFactory.getInstance().createReactionBlocker(ReactionType.SIGMA_R, numBlock);
+	        DomainFactory.getInstance().createReactionBlocker(ReactionType.GAMMA_R, numBlock);
+	        
+	        DomainFactory.getInstance().createPowerup(PowerType.ALPHA_B, numPower);
+	        DomainFactory.getInstance().createPowerup(PowerType.BETA_B, numPower);
+	        DomainFactory.getInstance().createPowerup(PowerType.SIGMA_B, numPower);
+	        DomainFactory.getInstance().createPowerup(PowerType.GAMMA_B, numPower);
+    	}
         
         int select=0;
 
-        String toBeLoaded = null;
         while (true) {
             if (this.p1.getHealth() <= 0) {
                 break;
@@ -332,8 +362,14 @@ public class KUVidGame extends Observable implements Runnable {
             if (this.getRemMolecules() == 0) {
                 break;
             }
+            
+            if(this.quit) {
+            	break;
+            }
 
             if(this.active) {
+                //saveLoadFile.saveGame();
+                //toBeLoaded = save(ObjectType.ATOM, AtomType.ALPHA, "atomAlpha");
 
 
             	movementHandler.getInstance().run();
@@ -366,6 +402,8 @@ public class KUVidGame extends Observable implements Runnable {
             		publishPropertyEvent("tick",getTime()+1,getTime());
             	}
             } else {
+               // saveLoadFile.loadGame();
+                //load(toBeLoaded);
             	try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
@@ -389,5 +427,34 @@ public class KUVidGame extends Observable implements Runnable {
         }
 		System.out.print("]");
 		System.out.println("");
+	}
+	
+	public SaveLoadFile getSaveLoadFile() {
+		return KUVidGame.saveLoadFile;
+	}
+	
+	public void saveLocal() {
+		Player.getInstance().setTime(this.time);
+		saveLoadFile.saveGame();
+	}
+	
+	public void loadLocal() {
+		saveLoadFile.loadGame();
+	}
+	
+	public void setQuit(boolean quitting) {
+		this.quit=quitting;
+	}
+	
+	public void setIsLoad(boolean l) {
+		this.isLoad=l;
+	}
+	
+	public void setCurrentAmmo(GameObject ammo) {
+		this.shooter.currentAtom=ammo;
+	}
+	
+	public void setShooter(Shooter shot) {
+		this.shooter=shot;
 	}
 }

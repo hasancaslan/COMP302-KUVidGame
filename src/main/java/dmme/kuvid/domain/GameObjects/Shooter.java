@@ -2,6 +2,8 @@ package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.Controllers.movementHandler;
+import dmme.kuvid.domain.GameObjects.Atoms.Atom;
+import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
 
@@ -9,7 +11,7 @@ public class Shooter extends Observable {
     private int position;
     private int angle;
     public AmmoType ammoType;
-    public GameObject currentAtom;
+    public transient GameObject currentAtom;
 
     public Shooter(int position, int angle, AmmoType ammoType) {
         this.position = position;
@@ -126,11 +128,11 @@ public class Shooter extends Observable {
     		this.currentAtom.setDirection(direction);
     		
     		if(this.currentAtom.getType().equals(ObjectType.POWER_UP)) {
-    			KUVidGame.getShootedPower().add(this.currentAtom);
+    			KUVidGame.getShootedPower().add((PowerUp) this.currentAtom);
     			KUVidGame.getPowerArsenal().get(this.currentAtom.getSubType()).remove(this.currentAtom);
     			publishPropertyEvent("updatePower",null,null);
     		}else {
-    			KUVidGame.getShootedAtom().add(this.currentAtom);
+    			KUVidGame.getShootedAtom().add((Atom) this.currentAtom);
         		KUVidGame.getGameObjectMap().get(new Key(this.currentAtom.getType(),this.currentAtom.getSubType())).remove(this.currentAtom);
         		publishPropertyEvent("updateAtom",null,null);
     		}
