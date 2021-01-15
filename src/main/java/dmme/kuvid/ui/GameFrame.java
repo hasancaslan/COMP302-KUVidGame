@@ -30,6 +30,7 @@ public class GameFrame extends JFrame implements PropertyListener{
         destroyHandler.getInstance().addPropertyListener("updateAtom",this);
         DomainFactory.getInstance().addPropertyListener("updateAtom", this);
         DomainFactory.getInstance().addPropertyListener("updatePower", this);
+        KUVidGame.getInstance().addPropertyListener("updateShield", this);
     }
 
     public GameFrame(Dimension size) {
@@ -140,10 +141,6 @@ public class GameFrame extends JFrame implements PropertyListener{
         
         
     }
-    
-    public static void updateNumShield() {
-    	GameFrame.menu.getPowerUpPanel().updateShieldCounts();
-    }
 
 	@Override
 	public void onPropertyEvent(PropertyEvent e) {
@@ -152,12 +149,15 @@ public class GameFrame extends JFrame implements PropertyListener{
 			GameFrame.menu.getBlenderPanel().updateAtomCounts();
 		}else if(e.getPropertyName().equals("updatePower")) {
 			GameFrame.menu.getPowerUpPanel().updatePowerCounts();
+		}else if(e.getPropertyName().equals("updateShield")) {
+			GameFrame.menu.getShieldPanel().updateShieldCounts();
 		}else if(e.getPropertyName().equals("finishGame")) {
 			new FinishWindow();
 		}else if(e.getPropertyName().equals("load")) {
 			 movementHandler.getInstance().addPropertyListener("updatePower",this);
 			 KUVidGame.getInstance().getShooter().addPropertyListener("updatePower",this);
 		     KUVidGame.getInstance().getShooter().addPropertyListener("updateAtom",this);
+		     KUVidGame.getInstance().getShooter().addPropertyListener("updateShield",this);
 		     this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter(), gamePanel);
 		     this.shooterUI.loadShooter(KUVidGame.getInstance().getShooter());
 		}

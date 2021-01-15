@@ -1,6 +1,7 @@
 package dmme.kuvid.domain.Controllers;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.lib.types.ShieldType;
 
 public class buildHandler {
 	
@@ -68,6 +69,13 @@ public class buildHandler {
 
 	public void setSpinning(boolean spinning) {
 		Game.setSpinning(spinning);	
+	}
+	
+	public void setShields(int num) {
+		KUVidGame.getShieldArsenal().put(ShieldType.ETA, num);
+        KUVidGame.getShieldArsenal().put(ShieldType.LOTA, num);
+        KUVidGame.getShieldArsenal().put(ShieldType.THETA, num);
+        KUVidGame.getShieldArsenal().put(ShieldType.ZETA, num);
 	}
 }
 

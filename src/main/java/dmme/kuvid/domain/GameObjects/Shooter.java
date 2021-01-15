@@ -177,6 +177,7 @@ public class Shooter extends Observable {
 			this.currentAtom.setActive(true);
 
 			 */
+			publishPropertyEvent("updateShield",null,null);
 			}
 
 
@@ -204,9 +205,6 @@ public class Shooter extends Observable {
         		KUVidGame.getGameObjectMap().get(new Key(this.currentAmmo.getType(),this.currentAmmo.getSubType())).remove(this.currentAmmo);
         		publishPropertyEvent("updateAtom",null,null);
     		}
-    		System.out.println(this.currentAmmo);
-    		System.out.println("ammo dy:"+this.currentAmmo.getDirection().getY());
-    		System.out.println("ammo pace factor:"+this.currentAmmo.paceFactor);
     		this.currentAmmo =null;
     		this.pickAtom();
     	}

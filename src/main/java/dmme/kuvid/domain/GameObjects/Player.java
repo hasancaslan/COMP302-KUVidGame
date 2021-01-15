@@ -1,5 +1,8 @@
 package dmme.kuvid.domain.GameObjects;
 
+import java.util.HashMap;
+
+import dmme.kuvid.lib.types.ShieldType;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Player extends Observable {
@@ -10,7 +13,8 @@ public class Player extends Observable {
     private int difficulty;
     private int L;
     private boolean spin;
-    private int linearity; 
+    private int linearity;
+    private HashMap<ShieldType, Integer> remainingShields=null;
 
     private Player() {
     }
@@ -106,5 +110,13 @@ public class Player extends Observable {
 
 	public void setLinearity(int linearity) {
 		this.linearity = linearity;
+	}
+
+	public HashMap<ShieldType, Integer> getRemainingShields() {
+		return remainingShields;
+	}
+
+	public void setRemainingShields(HashMap<ShieldType, Integer> remainingShields) {
+		this.remainingShields = remainingShields;
 	}
 }

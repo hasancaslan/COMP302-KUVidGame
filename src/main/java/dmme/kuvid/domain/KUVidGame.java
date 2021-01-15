@@ -1,13 +1,11 @@
 package dmme.kuvid.domain;
 
 import dmme.kuvid.domain.Controllers.DomainFactory;
-import dmme.kuvid.domain.Controllers.buildHandler;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
 import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
-import dmme.kuvid.domain.GameObjects.ReactionBlocker.ReactionBlocker;
 import dmme.kuvid.domain.database.SaveLoadFile;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
@@ -15,7 +13,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class KUVidGame extends Observable implements Runnable {
     private static KUVidGame instance = null;
@@ -23,7 +20,6 @@ public class KUVidGame extends Observable implements Runnable {
     private static List<Atom> shootedAtom = new ArrayList<>();
     private static List<PowerUp> shootedPower= new ArrayList<>();
     private static HashMap<PowerType, List<PowerUp>> powerArsenal = new HashMap<PowerType, List<PowerUp>>();
-    //TODO added this
     private static HashMap<ShieldType, Integer> shieldArsenal = new HashMap<ShieldType, Integer>();
 
     private static SaveLoadFile saveLoadFile = new SaveLoadFile();
@@ -91,6 +87,7 @@ public class KUVidGame extends Observable implements Runnable {
         KUVidGame.powerArsenal.put(PowerType.BETA_B, new ArrayList<PowerUp>());
         KUVidGame.powerArsenal.put(PowerType.GAMMA_B, new ArrayList<PowerUp>());
         KUVidGame.powerArsenal.put(PowerType.SIGMA_B, new ArrayList<PowerUp>());
+        
     }
 
     private KUVidGame(int time, boolean active, boolean blendingMode) {
@@ -319,7 +316,6 @@ public class KUVidGame extends Observable implements Runnable {
 	}
 
     public void runGame(){ //main loop
-    	
     	if(this.isLoad) {
 	        saveLoadFile.loadInit();
 	        this.L=Player.getInstance().getL();
@@ -334,11 +330,12 @@ public class KUVidGame extends Observable implements Runnable {
 	        this.difficulty=Player.getInstance().getDifficulty();
 	        this.linearity=Player.getInstance().getLinearity();
 	        this.spinning=Player.getInstance().isSpin();
-	        
+	        KUVidGame.shieldArsenal=Player.getInstance().getRemainingShields();
+	        publishPropertyEvent("updateShield",null,null);
 	        
     	}else {
     		publishPropertyEvent("load",null,false);
-    		
+    		publishPropertyEvent("updateShield",null,null);
 	    	int num=(int) Math.ceil((this.numAtoms/4.0));
 	        int numMol=(int) Math.ceil((this.numMolecules/4.0));
 	        int numBlock=(int) Math.ceil((this.numBlocker/4.0));
@@ -453,11 +450,7 @@ public class KUVidGame extends Observable implements Runnable {
 	}
 	
 	public void saveLocal() {
-		Player.getInstance().setTime(this.time);
-		Player.getInstance().setDifficulty(this.difficulty);
-		Player.getInstance().setL(this.L);
-		Player.getInstance().setSpin(this.spinning);
-		Player.getInstance().setLinearity(this.linearity);
+		this.snapshotPlayer();
 		saveLoadFile.saveGame();
 	}
 	
@@ -483,6 +476,15 @@ public class KUVidGame extends Observable implements Runnable {
 	
 	public int getShieldNum(ShieldType type) {
 		return KUVidGame.shieldArsenal.get(type);
+	}
+	
+	private void snapshotPlayer() {
+		Player.getInstance().setTime(this.time);
+		Player.getInstance().setDifficulty(this.difficulty);
+		Player.getInstance().setL(this.L);
+		Player.getInstance().setSpin(this.spinning);
+		Player.getInstance().setLinearity(this.linearity);
+		Player.getInstance().setRemainingShields(KUVidGame.getShieldArsenal());
 	}
 
 }

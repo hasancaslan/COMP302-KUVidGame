@@ -9,7 +9,10 @@ public class ZetaShield extends ShieldDecorator{
     //private Atom toBeDecorated ;
 
     public ZetaShield(Atom atom){
-        this.decoratedAtom = atom;this.boost = (new Random().nextInt(11)+5)/100;this.paceFactor*=(1-0.11);
+        this.decoratedAtom = atom;
+        this.boost = 0.2;
+        this.paceFactor=atom.paceFactor*(1-0.11);
+        this.decoratedAtom.efficiency=atom.getStability();
     }
 
 
@@ -18,8 +21,11 @@ public class ZetaShield extends ShieldDecorator{
     @Override
     public double getStability() {
         double new_eff = (1 - this.decoratedAtom.efficiency) * this.boost;
-
-        return this.decoratedAtom.efficiency*=new_eff;
+        
+        if(this.decoratedAtom.neutrons==this.decoratedAtom.protons) {
+        	this.decoratedAtom.efficiency*=(1+new_eff);//TODO changed here with 1+
+        }
+        return this.decoratedAtom.efficiency;
 
     }
 

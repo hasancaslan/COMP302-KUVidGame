@@ -227,8 +227,9 @@ public class SaveLoadFile extends Observable implements SaveMode {
 	        return new GsonBuilder().registerTypeAdapter(PowerUp.class, new AbstractPowerAdapter()).setPrettyPrinting().create()
 	                .toJson(KUVidGame.getGameObjectMap().get(new Key(objectType, subType)),type);
     	}
-    	return new GsonBuilder().setPrettyPrinting().create()
-                .toJson(KUVidGame.getGameObjectMap().get(new Key(objectType, subType)));
+    	Type type = new TypeToken<List<Atom>>(){}.getType();
+        return new GsonBuilder().registerTypeAdapter(Atom.class, new AbstractAtomAdapter()).setPrettyPrinting().create()
+                .toJson(KUVidGame.getGameObjectMap().get(new Key(objectType, subType)),type);
     }
     
     public String shootedAtomToJson() {
@@ -446,15 +447,8 @@ public class SaveLoadFile extends Observable implements SaveMode {
         Type type = null;
         Gson gson=new GsonBuilder().setPrettyPrinting().create();
         if (objectType == ObjectType.ATOM) {
-            if (subType == AtomType.ALPHA) {
-                type = new TypeToken<List<AlphaAtom>>(){}.getType();
-            } else if (subType == AtomType.BETA) {
-                type = new TypeToken<List<BetaAtom>>(){}.getType();
-            } else if (subType == AtomType.GAMMA) {
-                type = new TypeToken<List<GammaAtom>>(){}.getType();
-            } else if (subType == AtomType.SIGMA) {
-                type = new TypeToken<List<SigmaAtom>>(){}.getType();
-            }
+        	 type = new TypeToken<List<Atom>>(){}.getType();
+             gson=new GsonBuilder().registerTypeAdapter(Atom.class, new AbstractAtomAdapter()).setPrettyPrinting().create();
         } else if (objectType == ObjectType.MOLECULE) {
             type = new TypeToken<List<Molecule>>(){}.getType();
             gson=new GsonBuilder().registerTypeAdapter(Molecule.class, new AbstractMoleculeAdapter()).setPrettyPrinting().create();

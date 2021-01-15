@@ -20,21 +20,16 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
     private final JLabel gammaBCountLabel;
     private final JLabel sigmaBCountLabel;
 
-    private final JLabel etaCountLabel;
-    private final JLabel lotaCountLabel;
-    private final JLabel thetaCountLabel;
-    private final JLabel zetaCountLabel;
-
 
 
     public PowerUpPanel() {
-        super(new GridLayout(8, 2));
+        super(new GridLayout(4, 2));
         setOpaque(true);
         this.setBackground(new Color(204, 230, 255));
         this.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0, 0, 0, 120)));
 
         //Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
-        Font defaultFont = new Font("Sans-Serif", Font.PLAIN, 20);
+        Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
 
         alphaBCountLabel = new JLabel();
         betaBCountLabel = new JLabel();
@@ -51,10 +46,10 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         setPowerUpCount(PowerType.GAMMA_B, 0);
         setPowerUpCount(PowerType.SIGMA_B, 0);
 
-        ImageIcon alphaBIcon = IconImporter.getIconFromFileName("+alpha-b.png", "powerups", new Dimension(30, 30));
-        ImageIcon betaBIcon = IconImporter.getIconFromFileName("+beta-b.png", "powerups", new Dimension(30, 30));
-        ImageIcon gammaBIcon = IconImporter.getIconFromFileName("+gamma-b.png", "powerups", new Dimension(30, 30));
-        ImageIcon sigmaBIcon = IconImporter.getIconFromFileName("+sigma-b.png", "powerups", new Dimension(30, 30));
+        ImageIcon alphaBIcon = IconImporter.getIconFromFileName("+alpha-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
+        ImageIcon betaBIcon = IconImporter.getIconFromFileName("+beta-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
+        ImageIcon gammaBIcon = IconImporter.getIconFromFileName("+gamma-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
+        ImageIcon sigmaBIcon = IconImporter.getIconFromFileName("+sigma-b.png", "powerups", new Dimension(Config.fontSize, Config.fontSize));
 
         JLabel alphaBIconLabel = new JLabel(alphaBIcon, JLabel.TRAILING);
         JLabel betaBIconLabel = new JLabel(betaBIcon, JLabel.TRAILING);
@@ -98,70 +93,6 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         this.add(sigmaBIconLabel);
         this.add(sigmaBCountLabel);
 
-        //////////////////////////////// shields start
-
-        etaCountLabel = new JLabel();
-        lotaCountLabel = new JLabel();
-        thetaCountLabel = new JLabel();
-        zetaCountLabel = new JLabel();
-
-        etaCountLabel.setFont(defaultFont);
-        lotaCountLabel.setFont(defaultFont);
-        thetaCountLabel.setFont(defaultFont);
-        zetaCountLabel.setFont(defaultFont);
-
-        //TODO change to default
-        setShieldCount(ShieldType.ETA, 5);
-        setShieldCount(ShieldType.LOTA, 5);
-        setShieldCount(ShieldType.THETA, 5);
-        setShieldCount(ShieldType.ZETA, 5);
-
-
-        JLabel etaIcon = new JLabel("ETA Shield",JLabel.TRAILING);
-        JLabel lotaIcon = new JLabel("LOTA Shield",JLabel.TRAILING);
-        JLabel thetaIcon = new JLabel("THETA Shield",JLabel.TRAILING);
-        JLabel zetaIcon = new JLabel("ZETA Shield",JLabel.TRAILING);
-
-
-        etaIcon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                KUVidGame.getInstance().selectShield(ShieldType.ETA);
-            }
-        });
-
-        lotaIcon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                KUVidGame.getInstance().selectShield(ShieldType.LOTA);
-            }
-        });
-
-        thetaIcon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                KUVidGame.getInstance().selectShield(ShieldType.THETA);
-            }
-        });
-
-        zetaIcon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                KUVidGame.getInstance().selectShield(ShieldType.ZETA);
-            }
-        });
-
-        this.add(etaIcon);
-        this.add(etaCountLabel);
-        this.add(lotaIcon);
-        this.add(lotaCountLabel);
-        this.add(thetaIcon);
-        this.add(thetaCountLabel);
-        this.add(zetaIcon);
-        this.add(zetaCountLabel);
-
-        //////////////////////////////// shields end
-
 
 
     }
@@ -187,31 +118,6 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
                 sigmaBCountLabel.setText("  " + count);
                 break;
         }
-    }
-
-
-    public void setShieldCount(ShieldType type, int count) {
-        switch (type) {
-            case ETA:
-                etaCountLabel.setText("  " + count);
-                break;
-            case LOTA:
-                lotaCountLabel.setText("  " + count);
-                break;
-            case THETA:
-                thetaCountLabel.setText("  " + count);
-                break;
-            case ZETA:
-                zetaCountLabel.setText("  " + count);
-                break;
-        }
-    }
-
-
-    public void updateShieldCounts() {
-    	 for (ShieldType type : ShieldType.values()) {
-    		 setShieldCount(type, KUVidGame.getInstance().getShieldNum(type));
-         }
     }
 
     @Override

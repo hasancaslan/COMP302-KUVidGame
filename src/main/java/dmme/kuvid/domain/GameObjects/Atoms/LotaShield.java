@@ -8,7 +8,10 @@ public class LotaShield extends ShieldDecorator{
 
 
     public LotaShield(Atom atom){
-        this.decoratedAtom = atom;this.boost=0.1;this.paceFactor*=(1-0.07);
+        this.decoratedAtom = atom;
+        this.boost=0.1;
+        this.paceFactor=atom.paceFactor*(1-0.07);
+        this.decoratedAtom.efficiency=atom.getStability();
     }
 
 
@@ -16,7 +19,8 @@ public class LotaShield extends ShieldDecorator{
     public double getStability() {
         double new_eff = (1 - this.decoratedAtom.efficiency) * this.boost;
 
-        return this.decoratedAtom.efficiency*=new_eff;
+        this.decoratedAtom.efficiency*=(1+new_eff);//TODO changed here with 1+
+        return this.decoratedAtom.efficiency;
 
     }
 
