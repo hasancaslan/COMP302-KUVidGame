@@ -19,7 +19,7 @@ import java.io.IOException;
 
 
 public class GameFrame extends JFrame implements PropertyListener{
-    private final ShooterUI shooterUI;
+    private ShooterUI shooterUI;
     public GamePanel gamePanel;
     private static MenuPanel menu;
 
@@ -45,7 +45,7 @@ public class GameFrame extends JFrame implements PropertyListener{
 
         
         this.gamePanel = new GamePanel(KUVidGame.getInstance(), this);
-        this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter(), gamePanel);
+       
 
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -155,6 +155,7 @@ public class GameFrame extends JFrame implements PropertyListener{
 			 movementHandler.getInstance().addPropertyListener("updatePower",this);
 			 KUVidGame.getInstance().getShooter().addPropertyListener("updatePower",this);
 		     KUVidGame.getInstance().getShooter().addPropertyListener("updateAtom",this);
+		     this.shooterUI = new ShooterUI(KUVidGame.getInstance().getShooter(), gamePanel);
 		     this.shooterUI.loadShooter(KUVidGame.getInstance().getShooter());
 		}
 		

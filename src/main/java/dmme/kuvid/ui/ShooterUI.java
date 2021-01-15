@@ -74,11 +74,13 @@ public class ShooterUI extends JLabel implements PropertyListener {
 	public void loadShooter(Shooter shoot) {
 		this.panel.remove(this);
 		this.shooter=shoot;
+		L=KUVidGame.getInstance().getL();
 		int angle=(this.shooter.getAngle()-90);
     	String s = "shooter"+angle+".png";
     	ImageIcon icon =IconImporter.getIconFromFileName(s,"shooter",new Dimension((int) (10 * L), (int) (20 * L)));
     	this.setIcon(icon);
-    	this.setLocation(this.shooter.getPosition(),this.y);
+    	this.y=KUVidGame.getInstance().getPlayableArea().height-icon.getIconHeight();
+    	this.setLocation(this.shooter.getPosition(),this.y-L);
     	this.panel.add(this);
 		shooter.addPropertyListener("position", this);
         shooter.addPropertyListener("angle", this);

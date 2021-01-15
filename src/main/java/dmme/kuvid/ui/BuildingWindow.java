@@ -111,11 +111,12 @@ public class BuildingWindow extends JFrame {
                 buildHandler.getInstance().setDifficulty(difficulty);
                 buildHandler.getInstance().setLinearity(linear);
                 buildHandler.getInstance().setSpinning(spinning);
-                KUVidGame.getInstance().shooterStart();
                 dispose();
 
                 new GameFrame();
+                KUVidGame.getInstance().shooterStart();
                 Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
+                
             }
         });
         
@@ -129,14 +130,7 @@ public class BuildingWindow extends JFrame {
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
 
                 
-                buildHandler.getInstance().setNumMolecules(moleculeNumber);
-                buildHandler.getInstance().setNumBlocker(reactionBlockerNumber);
-                buildHandler.getInstance().setNumPowerUp(powerUpNumber);
-                buildHandler.getInstance().setL(L);
-                buildHandler.getInstance().setDifficulty(difficulty);
-                buildHandler.getInstance().setLinearity(linear);
-                buildHandler.getInstance().setSpinning(spinning);
-                KUVidGame.getInstance().shooterStart();
+                //buildHandler.getInstance().setL(L);
                 KUVidGame.getInstance().setIsLoad(true);
                 
                 dispose();

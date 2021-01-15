@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.utils.IconImporter;
 
-public class PauseWindow extends JFrame{
+public class PauseWindow extends JFrame implements KeyListener{
 	private JButton saveButton;
 	private JButton quitButton; 
 
@@ -57,31 +57,46 @@ public class PauseWindow extends JFrame{
             }
         });
         
+        addKeyListener(this);
         
-        this.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-                char key = e.getKeyChar();
-                switch (key) {
-                    case 'r':
-                    	dispose();
-                    	KUVidGame.getInstance().resumeGame();
-                    	break;
-             }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
 
  }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		char key = e.getKeyChar();
+        switch (key) {
+            case 'r':
+            	dispose();
+            	KUVidGame.getInstance().resumeGame();
+            	break;
+     }
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		char key = e.getKeyChar();
+        switch (key) {
+            case 'r':
+            	dispose();
+            	KUVidGame.getInstance().resumeGame();
+            	break;
+     }
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		char key = e.getKeyChar();
+        switch (key) {
+            case 'r':
+            	dispose();
+            	KUVidGame.getInstance().resumeGame();
+            	break;
+     }
+	}
 	
 
 }

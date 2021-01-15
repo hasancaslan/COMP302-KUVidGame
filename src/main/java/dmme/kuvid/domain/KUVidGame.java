@@ -1,6 +1,7 @@
 package dmme.kuvid.domain;
 
 import dmme.kuvid.domain.Controllers.DomainFactory;
+import dmme.kuvid.domain.Controllers.buildHandler;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.*;
@@ -48,9 +49,7 @@ public class KUVidGame extends Observable implements Runnable {
     private Blender blender;
     private DomainFactory creator;
     private destroyHandler destroyer;
-    private int time = 600;    //60;
-    private Player p1;
-    private Random rand = new Random();
+    private int time = 600; 
 
     private int throwMolecule;
     private int throwBlocker;
@@ -64,7 +63,6 @@ public class KUVidGame extends Observable implements Runnable {
     private KUVidGame() {
         this.shooter = new Shooter();
         this.blender = new Blender(this.creator, this.destroyer);
-        this.p1 = Player.getInstance();
         this.screenSize = new Dimension(1280,640);
         		//Toolkit.getDefaultToolkit().getScreenSize();
         this.playableArea = new Dimension(this.screenSize.width*7/10,this.screenSize.height);
@@ -294,7 +292,7 @@ public class KUVidGame extends Observable implements Runnable {
 	}
 	
 	public int getScore() {
-		return this.p1.getPoint();
+		return Player.getInstance().getPoint();
 	}
 
 	public static List<PowerUp> getShootedPower() {
@@ -308,6 +306,8 @@ public class KUVidGame extends Observable implements Runnable {
     public void runGame(){ //main loop
     	
     	if(this.isLoad) {
+	        saveLoadFile.loadInit();
+	        this.L=Player.getInstance().getL();
 	        
 	        this.loadLocal();
 	        this.setNumMolecules(this.getRemMolecules());
@@ -316,6 +316,10 @@ public class KUVidGame extends Observable implements Runnable {
 	        this.throwPower = movementHandler.getInstance().numPowerToThrow();
 	        publishPropertyEvent("load",null,true);
 	        this.time=Player.getInstance().getTime();
+	        this.difficulty=Player.getInstance().getDifficulty();
+	        this.linearity=Player.getInstance().getLinearity();
+	        this.spinning=Player.getInstance().isSpin();
+	        
 	        
     	}else {
     		publishPropertyEvent("load",null,false);
@@ -353,7 +357,7 @@ public class KUVidGame extends Observable implements Runnable {
         int select=0;
 
         while (true) {
-            if (this.p1.getHealth() <= 0) {
+            if (Player.getInstance().getHealth() <= 0) {
                 break;
             }
             if (getTime() <= 0) {
@@ -435,6 +439,10 @@ public class KUVidGame extends Observable implements Runnable {
 	
 	public void saveLocal() {
 		Player.getInstance().setTime(this.time);
+		Player.getInstance().setDifficulty(this.difficulty);
+		Player.getInstance().setL(this.L);
+		Player.getInstance().setSpin(this.spinning);
+		Player.getInstance().setLinearity(this.linearity);
 		saveLoadFile.saveGame();
 	}
 	

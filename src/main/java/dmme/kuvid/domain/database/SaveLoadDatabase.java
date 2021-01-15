@@ -11,4 +11,10 @@ public class SaveLoadDatabase implements SaveMode {
     public boolean loadGame() {
         return false;
     }
+
+	@Override
+	public boolean loadInit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

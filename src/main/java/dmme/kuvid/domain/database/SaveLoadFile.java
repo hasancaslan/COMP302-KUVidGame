@@ -67,7 +67,7 @@ public class SaveLoadFile extends Observable implements SaveMode {
 
     @Override
     public boolean loadGame() {
-    	load("player");
+    	
     	load("shooter");
     	
         load("atom_alpha");
@@ -481,5 +481,12 @@ public class SaveLoadFile extends Observable implements SaveMode {
         }
         return new GsonBuilder().setPrettyPrinting().create().fromJson(jsonString, type);
     }
+
+	@Override
+	public boolean loadInit() {
+		// TODO Auto-generated method stub
+		load("player");
+		return false;
+	}
 
 }

@@ -7,6 +7,10 @@ public class Player extends Observable {
     private int health = 100;
     private int point = 0;
     private int time;
+    private int difficulty;
+    private int L;
+    private boolean spin;
+    private int linearity; 
 
     private Player() {
     }
@@ -70,5 +74,37 @@ public class Player extends Observable {
 	
 	public static void setInstance(Player p1) {
 		Player.instance=p1;
+	}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
+
+	public int getL() {
+		return L;
+	}
+
+	public void setL(int l) {
+		L = l;
+	}
+
+	public boolean isSpin() {
+		return spin;
+	}
+
+	public void setSpin(boolean spin) {
+		this.spin = spin;
+	}
+
+	public int getLinearity() {
+		return linearity;
+	}
+
+	public void setLinearity(int linearity) {
+		this.linearity = linearity;
 	}
 }
