@@ -3,15 +3,17 @@ package dmme.kuvid.domain.GameObjects;
 
 import dmme.kuvid.domain.GameObjects.Atoms.*;
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.domain.Controllers.movementHandler;
+import dmme.kuvid.domain.GameObjects.Atoms.Atom;
+import dmme.kuvid.domain.GameObjects.Powerup.PowerUp;
 import dmme.kuvid.lib.types.*;
-import dmme.kuvid.ui.GameFrame;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Shooter extends Observable {
     private int position;
     private int angle;
     public AmmoType ammoType;
-    public GameObject currentAmmo;
+    public transient GameObject currentAmmo;
 
     public Shooter(int position, int angle, AmmoType ammoType) {
         this.position = position;
@@ -78,6 +80,13 @@ public class Shooter extends Observable {
     	}
     }
 
+    /*
+    REQUIRES: Domain factory have created some Atoms and current numOfAtoms is > 0.
+    MODIFIES: Shooter's current atom is set to randomly picked atom, current atom becomes active,
+    the current position of the shooter ammo assigned to selected atom
+    EFFECTS: The previously selected but replaced ammo's (either power-up or atom)
+     		 position and activeness properties are changed
+     */
     public void pickAtom() {
     	if(KUVidGame.getInstance().getRemAtoms()>0) {
 	    	int L=KUVidGame.getInstance().getL();
@@ -85,7 +94,7 @@ public class Shooter extends Observable {
 	    	if (this.currentAmmo != null) {
 	    		this.currentAmmo.setActive(false);
 	    	}
-	        this.currentAmmo =KUVidGame.getInstance().getRandomAtom();
+	        this.currentAmmo = movementHandler.getInstance().getRandomAtom();
 	        double angle=Math.toRadians(this.getAngle());
 	        int x=this.position-10*(int)(L*Math.cos(angle));
 	    	int y=gameHeight-(int)(10*L*Math.sin(angle));
@@ -187,13 +196,13 @@ public class Shooter extends Observable {
     		this.currentAmmo.setDirection(direction);
     		
     		if(this.currentAmmo.getType().equals(ObjectType.POWER_UP)) {
-    			KUVidGame.getShootedPower().add(this.currentAmmo);
+    			KUVidGame.getShootedPower().add((PowerUp) this.currentAmmo);
     			KUVidGame.getPowerArsenal().get(this.currentAmmo.getSubType()).remove(this.currentAmmo);
-    			GameFrame.updateNumPower();
+    			publishPropertyEvent("updatePower",null,null);
     		}else {
-    			KUVidGame.getShootedAtom().add(this.currentAmmo);
+    			KUVidGame.getShootedAtom().add((Atom) this.currentAmmo);
         		KUVidGame.getGameObjectMap().get(new Key(this.currentAmmo.getType(),this.currentAmmo.getSubType())).remove(this.currentAmmo);
-        		GameFrame.updateNumAtoms();
+        		publishPropertyEvent("updateAtom",null,null);
     		}
     		System.out.println(this.currentAmmo);
     		System.out.println("ammo dy:"+this.currentAmmo.getDirection().getY());
@@ -203,4 +212,14 @@ public class Shooter extends Observable {
     	}
     }
 
+	@Override
+	public String toString() {
+		return "Shooter [" +
+				"position=" + position +
+				", angle=" + angle +
+				", ammoType=" + ammoType +
+				", currentAtom=" + currentAmmo +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

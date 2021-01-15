@@ -7,11 +7,10 @@ import dmme.kuvid.lib.types.ObjectType;
 import dmme.kuvid.lib.types.ReactionType;
 
 public abstract class ReactionBlocker extends GameObject{
-	
-	public ObjectType type = ObjectType.REACTION_BLOCKER;
+
 	public ReactionType subtype;
 	protected int count;
-	protected MovementStrategy strategy = new StraightPatternStrategy();
+	protected transient MovementStrategy strategy = new StraightPatternStrategy();
 
 	public ReactionBlocker(Position position, Position direction, boolean active, ObjectType type) {
 		super(position, direction, active, type);
@@ -31,5 +30,23 @@ public abstract class ReactionBlocker extends GameObject{
 		this.strategy.move(this, count);
 	}
 	
+	public MovementStrategy getPattern() {
+		return this.strategy;
+	}
+	
 	public abstract void setBlockerType();
+
+	@Override
+	public String toString() {
+		return "ReactionBlocker [" +
+				"subtype=" + subtype +
+				", count=" + count +
+				", strategy=" + strategy +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }

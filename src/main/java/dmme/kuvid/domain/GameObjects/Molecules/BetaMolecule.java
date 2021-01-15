@@ -5,10 +5,12 @@ import dmme.kuvid.lib.types.MoleculeType;
 import dmme.kuvid.lib.types.ObjectType;
 
 public class BetaMolecule extends Molecule{
+	private transient MovementStrategy strategy;
 
 	public BetaMolecule(Position position, Position direction, boolean active, ObjectType type) {
 		super(position, direction, active, type);
 		// TODO Auto-generated constructor stub
+		this.setPattern(new StraightPatternStrategy());
 	}
 
 	@Override
@@ -41,6 +43,18 @@ public class BetaMolecule extends Molecule{
 		// TODO Auto-generated method stub
 		publishPropertyEvent("position",this.position,position);
 		this.position = position;
+	}
+
+	@Override
+	public void setPattern(MovementStrategy strategy) {
+		// TODO Auto-generated method stub
+		this.strategy=strategy;
+	}
+
+	@Override
+	public MovementStrategy getPattern() {
+		// TODO Auto-generated method stub
+		return this.strategy;
 	}
 
 }

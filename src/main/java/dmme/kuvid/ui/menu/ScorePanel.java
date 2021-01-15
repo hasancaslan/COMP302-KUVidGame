@@ -53,9 +53,9 @@ public class ScorePanel extends JPanel implements PropertyListener {
         this.add(healthTitleLabel);
         this.add(healthLabel);
 
-        Player.getInstance().addPropertyListener("point", this);
-        Player.getInstance().addPropertyListener("health", this);
+        
         KUVidGame.getInstance().addPropertyListener("time", this);
+        KUVidGame.getInstance().addPropertyListener("load", this);
     }
 
     public void setScoreLabel(double score) { //TODO changed int to double
@@ -97,6 +97,11 @@ public class ScorePanel extends JPanel implements PropertyListener {
             case "time":
                 int seconds = (int) e.getNewValue();
                 this.setTimeLabel(seconds);
+                break;
+            case "load":
+            	Player.getInstance().addPropertyListener("point", this);
+                Player.getInstance().addPropertyListener("health", this);
+                Player.getInstance().addPropertyListener("time", this);
                 break;
         }
     }

@@ -41,7 +41,7 @@ public class Application implements Runnable {
     }
 
     public void initGame() {
-        new BuildingWindow();
+        new BuildingWindow(); 
         
     }
 

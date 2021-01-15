@@ -1,13 +1,7 @@
 package dmme.kuvid.domain.GameObjects;
 
 import java.awt.Dimension;
-
-import java.util.*;
-
-
-import java.util.ArrayList;
 import java.util.List;
-
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.*;
 import dmme.kuvid.utils.observer.Observable;
@@ -75,9 +69,11 @@ public abstract class GameObject extends Observable{
 
 	}
 
-
 	public void move() {
-
+		// REQUIRES: This is initialized with position and direction
+		// MODIFIES: This.Position and This.Direction
+		// EFFECTS:  Updates position from this, so that new position = This.Position + This.Direction
+		// 			 If position is out of playable area updates This.Direction so that This.Direction = -This.Direction
 		if(this.isActive()) {
 			int x1 = this.getPosition().getX();
 			int y1 = this.getPosition().getY();
@@ -98,5 +94,18 @@ public abstract class GameObject extends Observable{
 			}
 
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "GameObject [" +
+				"L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", type=" + type +
+				", active=" + active +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
 	}
 }

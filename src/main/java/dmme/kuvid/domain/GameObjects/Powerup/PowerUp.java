@@ -5,8 +5,7 @@ import dmme.kuvid.lib.types.ObjectType;
 import dmme.kuvid.lib.types.PowerType;
 
 public abstract class PowerUp extends GameObject{
-	
-	public ObjectType type= ObjectType.POWER_UP;
+
 	
 	public PowerType subtype;
 
@@ -21,4 +20,15 @@ public abstract class PowerUp extends GameObject{
 		return this.subtype;
 	}
 
+	@Override
+	public String toString() {
+		return "PowerUp [" +
+				"subtype=" + subtype +
+				", L=" + L +
+				", gameField=" + gameField +
+				", position=" + position +
+				", direction=" + direction +
+				", propertyListenersMap=" + propertyListenersMap +
+				']';
+	}
 }
