@@ -1,5 +1,6 @@
 package dmme.kuvid.ui;
 
+import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.GameObjects.GameObject;
 import dmme.kuvid.utils.observer.PropertyEvent;
@@ -28,6 +29,15 @@ public class Factory implements PropertyListener{
 		DomainFactory.getInstance().addPropertyListener("betaBlocker",this);
 		DomainFactory.getInstance().addPropertyListener("gammaBlocker",this);
 		DomainFactory.getInstance().addPropertyListener("sigmaBlocker",this);
+		
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("alpha", this);
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("beta", this);
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("gamma", this);
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("sigma", this);
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("alphaPower", this);
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("betaPower", this);
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("gammaPower", this);
+		KUVidGame.getInstance().getSaveLoadFile().addPropertyListener("sigmaPower", this);
 	}
 	
 	public static void createAlphaUI(GameObject atom) {

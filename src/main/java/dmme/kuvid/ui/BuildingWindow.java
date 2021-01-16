@@ -5,6 +5,7 @@ import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.Controllers.buildHandler;
 import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
 import dmme.kuvid.lib.types.GameLevel;
+import dmme.kuvid.lib.types.SaveType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ public class BuildingWindow extends JFrame {
     private final String DEFAULT_BLOCKER_AMOUNT = "40";
     private final String DEFAULT_POWER_AMOUNT = "80";
     private final String DEFAULT_SIZE = "5";
+    private final String DEFAULT_SHIELD= "30";
     public boolean spinning = false;    //for Alpha and Beta
     public boolean linear = true;
     String[] Difficulty = new String[]{"Easy", "Medium", "Hard"};
@@ -29,6 +31,7 @@ public class BuildingWindow extends JFrame {
     JTextField PowerUpNumber = new JTextField(DEFAULT_POWER_AMOUNT, 8);
     JTextField MoleculeNumber = new JTextField(DEFAULT_COMPONENT_AMOUNT, 8);
     JTextField LTextField = new JTextField(DEFAULT_SIZE, 8);
+    JTextField ShieldCount = new JTextField(DEFAULT_SHIELD,8);
     ButtonGroup spinGroup;
     ButtonGroup movementGroup;
     JRadioButton SpinButton;
@@ -42,7 +45,10 @@ public class BuildingWindow extends JFrame {
     int powerUpNumber = 0;
     int moleculeNumber = 0;
     int L = 0;
+    int shieldNum=0;
 
+    private JButton Load;
+    
     public BuildingWindow() {
         this.setTitle("BUILDING WINDOW");
         this.setSize(510, 510);
@@ -52,7 +58,7 @@ public class BuildingWindow extends JFrame {
 
         this.ComboBox = new JComboBox<>(this.Difficulty);
         this.StartButton = new JButton("Start Game");
-        this.setLayout(new GridLayout(9, 2, 4, 4));
+        this.setLayout(new GridLayout(10, 2, 4, 4));
 
         this.add(new JLabel("Number of Atoms: "));
         this.add(this.AtomNumber);
@@ -62,6 +68,8 @@ public class BuildingWindow extends JFrame {
         this.add(this.PowerUpNumber);
         this.add(new JLabel("Number of Molecules: "));
         this.add(this.MoleculeNumber);
+        this.add(new JLabel("Number of Shields: "));
+        this.add(this.ShieldCount);
 
         SpinButton = new JRadioButton("Spinning Molecules", false);
         StationaryButton = new JRadioButton("Stationary Molecules", true);
@@ -88,6 +96,8 @@ public class BuildingWindow extends JFrame {
         this.add(this.ComboBox);
  
         this.add(this.StartButton);
+        this.Load=new JButton("Load Game");
+        this.add(this.Load);
 
         this.StartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -98,6 +108,7 @@ public class BuildingWindow extends JFrame {
                 moleculeNumber = Integer.parseInt((String) MoleculeNumber.getText());
                 L = Integer.parseInt((String) LTextField.getText());
                 difficulty = ComboBox.getItemAt(ComboBox.getSelectedIndex());
+                shieldNum = Integer.parseInt((String) ShieldCount.getText());
 
                 buildHandler.getInstance().setNumAtoms(atomNumber);
                 buildHandler.getInstance().setNumMolecules(moleculeNumber);
@@ -107,7 +118,21 @@ public class BuildingWindow extends JFrame {
                 buildHandler.getInstance().setDifficulty(difficulty);
                 buildHandler.getInstance().setLinearity(linear);
                 buildHandler.getInstance().setSpinning(spinning);
+                buildHandler.getInstance().setShields(shieldNum);
+                dispose();
+
+                new GameFrame();
                 KUVidGame.getInstance().shooterStart();
+                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
+                
+            }
+        });
+        
+        this.Load.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+            	KUVidGame.getInstance().setLoadMode(SaveType.DATABASE);
+                
                 dispose();
 
                 new GameFrame();

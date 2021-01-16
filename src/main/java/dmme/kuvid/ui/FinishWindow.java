@@ -30,7 +30,7 @@ public class FinishWindow extends JFrame{
 
         this.setLayout(new FlowLayout());
         this.add(new JLabel(Icon));
-        this.add(new JLabel("Your Score: "+Integer.toString(KUVidGame.getInstance().getScore())));
+        this.add(new JLabel("Your Score: "+Integer.toString((int) (KUVidGame.getInstance().getScore()*100.0))));
         
         this.setVisible(true);
        

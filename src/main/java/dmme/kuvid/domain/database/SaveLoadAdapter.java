@@ -18,4 +18,8 @@ public class SaveLoadAdapter {
     public SaveMode getSaveMode() {
         return saveMode;
     }
+    
+    public boolean loadInit() {
+    	return getSaveMode().loadInit();
+    }
 }

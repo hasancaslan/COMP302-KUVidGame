@@ -4,6 +4,7 @@ import dmme.kuvid.constants.Config;
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.lib.types.AtomType;
 import dmme.kuvid.lib.types.PowerType;
+import dmme.kuvid.lib.types.ShieldType;
 import dmme.kuvid.utils.IconImporter;
 import dmme.kuvid.utils.observer.PropertyEvent;
 import dmme.kuvid.utils.observer.PropertyListener;
@@ -19,12 +20,15 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
     private final JLabel gammaBCountLabel;
     private final JLabel sigmaBCountLabel;
 
+
+
     public PowerUpPanel() {
         super(new GridLayout(4, 2));
         setOpaque(true);
         this.setBackground(new Color(204, 230, 255));
         this.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0, 0, 0, 120)));
 
+        //Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
         Font defaultFont = new Font("Sans-Serif", Font.PLAIN, Config.fontSize);
 
         alphaBCountLabel = new JLabel();
@@ -88,6 +92,9 @@ public class PowerUpPanel extends JPanel implements PropertyListener {
         this.add(gammaBCountLabel);
         this.add(sigmaBIconLabel);
         this.add(sigmaBCountLabel);
+
+
+
     }
     
     public void updatePowerCounts() {

@@ -33,15 +33,15 @@ public class ShootAtomTest {
 	void testCurrentAtom() {
 		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 1);
 		KUVidGame.getInstance().getShooter().pickAtom();
-		KUVidGame.getInstance().getShooter().shootAtom();
-		assertEquals(KUVidGame.getInstance().getShooter().currentAtom, null);
+		KUVidGame.getInstance().getShooter().shootAmmo();
+		assertEquals(KUVidGame.getInstance().getShooter().currentAmmo, null);
 	}
 	
 	@Test
 	void testListChange() {
 		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 1); 
 		KUVidGame.getInstance().getShooter().pickAtom();
-		KUVidGame.getInstance().getShooter().shootAtom();
+		KUVidGame.getInstance().getShooter().shootAmmo();
 		assertEquals(KUVidGame.getShootedAtom().size(), 1);
 	}
 	
@@ -49,7 +49,7 @@ public class ShootAtomTest {
 	void testDirection() {
 		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 1);
 		KUVidGame.getInstance().getShooter().pickAtom();
-		KUVidGame.getInstance().getShooter().shootAtom();
+		KUVidGame.getInstance().getShooter().shootAmmo();
 		int L=KUVidGame.getInstance().getL();
 		double angle=Math.toRadians(KUVidGame.getInstance().getShooter().getAngle()); 
 		Position directest=new Position((int)(-L*Math.cos(angle)),(int)(-L*Math.sin(angle)));
@@ -61,7 +61,7 @@ public class ShootAtomTest {
 	void testRemoved() { 
 		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 1);
 		KUVidGame.getInstance().getShooter().pickAtom();
-		KUVidGame.getInstance().getShooter().shootAtom();
+		KUVidGame.getInstance().getShooter().shootAmmo();
 		assertEquals(KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA)).size(), 0);
 	}
 	
@@ -70,8 +70,8 @@ public class ShootAtomTest {
 		DomainFactory.getInstance().createAtom(AtomType.ALPHA, 1);
 		DomainFactory.getInstance().createAtom(AtomType.BETA, 1);
 		KUVidGame.getInstance().getShooter().pickAtom();
-		KUVidGame.getInstance().getShooter().shootAtom();
-		assertFalse(KUVidGame.getInstance().getShooter().currentAtom.equals(null));
+		KUVidGame.getInstance().getShooter().shootAmmo();
+		assertFalse(KUVidGame.getInstance().getShooter().currentAmmo.equals(null));
 	}
 	
 }

@@ -37,9 +37,9 @@ class ShooterTest {
     void tearDown() {
         //TODO
         KUVidGame.getInstance().getShooter().pickAtom();
-        while (KUVidGame.getInstance().getShooter().currentAtom!=null) {
+        while (KUVidGame.getInstance().getShooter().currentAmmo!=null) {
             KUVidGame.getInstance().getShooter().pickAtom();
-            KUVidGame.getInstance().getShooter().shootAtom();
+            KUVidGame.getInstance().getShooter().shootAmmo();
         }
 
     }
@@ -59,8 +59,8 @@ class ShooterTest {
 
         while (!(alphaPicked && sigmaPicked)) {
             KUVidGame.getInstance().getShooter().pickAtom();
-            currAmmoType = KUVidGame.getInstance().getShooter().currentAtom.getSubType();
-            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+            currAmmoType = KUVidGame.getInstance().getShooter().currentAmmo.getSubType();
+            assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
 
             if (currAmmoType == AtomType.ALPHA) {
                 alphaPicked = true;
@@ -87,21 +87,21 @@ class ShooterTest {
 
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA
-                    || KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.SIGMA);
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.ALPHA
+                    || KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.SIGMA);
 
 
-        Enum currAmmoType = KUVidGame.getInstance().getShooter().currentAtom.getSubType();
-        KUVidGame.getInstance().getShooter().shootAtom();
+        Enum currAmmoType = KUVidGame.getInstance().getShooter().currentAmmo.getSubType();
+        KUVidGame.getInstance().getShooter().shootAmmo();
         assertEquals(KUVidGame.getInstance().getNumAtom((AtomType) currAmmoType ),0);
 
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
         //assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA);
 
-        KUVidGame.getInstance().getShooter().shootAtom();
+        KUVidGame.getInstance().getShooter().shootAmmo();
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),0);
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),0);
     }
@@ -111,12 +111,12 @@ class ShooterTest {
     void testAtomOut() {
         DomainFactory.getInstance().createAtom(AtomType.ALPHA, 1);
         KUVidGame.getInstance().getShooter().pickAtom();
-        KUVidGame.getInstance().getShooter().shootAtom();
+        KUVidGame.getInstance().getShooter().shootAmmo();
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),0);
 
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertThrows(NullPointerException.class, () -> KUVidGame.getInstance().getShooter().currentAtom.isActive());
+        assertThrows(NullPointerException.class, () -> KUVidGame.getInstance().getShooter().currentAmmo.isActive());
     }
 
 
@@ -126,15 +126,15 @@ class ShooterTest {
             assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),2);
 
             KUVidGame.getInstance().getShooter().pickAtom();
-            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA);
+            assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+            assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.ALPHA);
 
-            KUVidGame.getInstance().getShooter().shootAtom();
+            KUVidGame.getInstance().getShooter().shootAmmo();
             assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.ALPHA),1);
 
             KUVidGame.getInstance().getShooter().pickAtom();
-            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-            assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.ALPHA);
+            assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+            assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.ALPHA);
     }
 
 
@@ -145,15 +145,15 @@ class ShooterTest {
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.BETA),2);
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.BETA);
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.BETA);
 
-        KUVidGame.getInstance().getShooter().shootAtom();
+        KUVidGame.getInstance().getShooter().shootAmmo();
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.BETA),1);
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.BETA);
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.BETA);
     }
 
     @Test
@@ -162,15 +162,15 @@ class ShooterTest {
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.GAMMA),2);
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.GAMMA);
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.GAMMA);
 
-        KUVidGame.getInstance().getShooter().shootAtom();
+        KUVidGame.getInstance().getShooter().shootAmmo();
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.GAMMA),1);
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.GAMMA);
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.GAMMA);
     }
 
     @Test
@@ -179,14 +179,14 @@ class ShooterTest {
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),2);
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.SIGMA);
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.SIGMA);
 
-        KUVidGame.getInstance().getShooter().shootAtom();
+        KUVidGame.getInstance().getShooter().shootAmmo();
         assertEquals(KUVidGame.getInstance().getNumAtom(AtomType.SIGMA),1);
 
         KUVidGame.getInstance().getShooter().pickAtom();
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.isActive());
-        assertTrue(KUVidGame.getInstance().getShooter().currentAtom.getSubType()==AtomType.SIGMA);
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.isActive());
+        assertTrue(KUVidGame.getInstance().getShooter().currentAmmo.getSubType()==AtomType.SIGMA);
     }
 }

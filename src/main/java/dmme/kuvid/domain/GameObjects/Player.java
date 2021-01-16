@@ -1,11 +1,20 @@
 package dmme.kuvid.domain.GameObjects;
 
+import java.util.HashMap;
+
+import dmme.kuvid.lib.types.ShieldType;
 import dmme.kuvid.utils.observer.Observable;
 
 public class Player extends Observable {
     private static Player instance = null;
     private int health = 100;
-    private int point = 0;
+    private double point = 0;
+    private int time;
+    private int difficulty;
+    private int L;
+    private boolean spin;
+    private int linearity;
+    private HashMap<ShieldType, Integer> remainingShields=null;
 
     private Player() {
     }
@@ -26,16 +35,16 @@ public class Player extends Observable {
         this.health = health;
     }
 
-    public int getPoint() {
+    public double getPoint() {
         return point;
     }
 
-    private void setPoint(int point) {
+    private void setPoint(double point) {
         publishPropertyEvent("point", this.point, point);
         this.point = point;
     }
 
-    public void incrementPoint(int increment) {
+    public void incrementPoint(double increment) {
         this.setPoint(this.getPoint() + increment);
     }
 
@@ -55,4 +64,59 @@ public class Player extends Observable {
                 ", propertyListenersMap=" + propertyListenersMap +
                 ']';
     }
+
+	public int getTime() {
+		publishPropertyEvent("point", null, this.point);
+		publishPropertyEvent("health", null, this.health);
+		publishPropertyEvent("time", null, this.time);
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	public static void setInstance(Player p1) {
+		Player.instance=p1;
+	}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
+
+	public int getL() {
+		return L;
+	}
+
+	public void setL(int l) {
+		L = l;
+	}
+
+	public boolean isSpin() {
+		return spin;
+	}
+
+	public void setSpin(boolean spin) {
+		this.spin = spin;
+	}
+
+	public int getLinearity() {
+		return linearity;
+	}
+
+	public void setLinearity(int linearity) {
+		this.linearity = linearity;
+	}
+
+	public HashMap<ShieldType, Integer> getRemainingShields() {
+		return remainingShields;
+	}
+
+	public void setRemainingShields(HashMap<ShieldType, Integer> remainingShields) {
+		this.remainingShields = remainingShields;
+	}
 }

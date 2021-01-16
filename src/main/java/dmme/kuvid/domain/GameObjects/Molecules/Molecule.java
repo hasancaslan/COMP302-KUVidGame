@@ -1,5 +1,7 @@
 package dmme.kuvid.domain.GameObjects.Molecules;
 
+import com.google.gson.annotations.SerializedName;
+
 import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.GameObjects.*;
 import dmme.kuvid.lib.types.MoleculeType;
@@ -11,7 +13,6 @@ public abstract class Molecule extends GameObject{
 	public MoleculeType subtype;
 	protected int count;
 	protected int spin;
-	protected MovementStrategy strategy = new StraightPatternStrategy();
 
 	public Molecule(Position position, Position direction, boolean active, ObjectType type) {
 		super(position, direction, active, type);
@@ -25,12 +26,10 @@ public abstract class Molecule extends GameObject{
 		return this.subtype;
 	}
 	
-	public void setPattern(MovementStrategy strategy){
-		this.strategy = strategy;
-	}
+	public abstract void setPattern(MovementStrategy strategy);
 	
 	public void move() {
-		this.strategy.move(this, count);
+		this.getPattern().move(this, count);
 		this.count++;
 		if(spinning) {
 			this.spin = this.count/2;
@@ -46,6 +45,8 @@ public abstract class Molecule extends GameObject{
 	public void setSpin(int spin) {
 		this.spin = spin;
 	}
+	
+	public abstract MovementStrategy getPattern() ;
 
 
 	public abstract void setMoleculeType();
@@ -57,7 +58,7 @@ public abstract class Molecule extends GameObject{
 				", subtype=" + subtype +
 				", count=" + count +
 				", spin=" + spin +
-				", strategy=" + strategy +
+				", strategy=" + this.getPattern() +
 				", L=" + L +
 				", gameField=" + gameField +
 				", position=" + position +

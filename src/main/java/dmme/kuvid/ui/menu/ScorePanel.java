@@ -9,6 +9,7 @@ import dmme.kuvid.utils.observer.PropertyListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class ScorePanel extends JPanel implements PropertyListener {
     private final JLabel scoreLabel;
@@ -32,6 +33,8 @@ public class ScorePanel extends JPanel implements PropertyListener {
         healthLabel.setFont(defaultFont);
 
         setScoreLabel(Player.getInstance().getPoint());
+
+
         setHealthLabel(Player.getInstance().getHealth());
         setTimeLabel(KUVidGame.getInstance().getTime());
 
@@ -50,13 +53,13 @@ public class ScorePanel extends JPanel implements PropertyListener {
         this.add(healthTitleLabel);
         this.add(healthLabel);
 
-        Player.getInstance().addPropertyListener("point", this);
-        Player.getInstance().addPropertyListener("health", this);
+        
         KUVidGame.getInstance().addPropertyListener("time", this);
+        KUVidGame.getInstance().addPropertyListener("load", this);
     }
 
-    public void setScoreLabel(int score) {
-        scoreLabel.setText("  " + score);
+    public void setScoreLabel(double score) { //TODO changed int to double
+        scoreLabel.setText("  " + (int)(score*100.0));
     }
 
     public void setTimeLabel(int seconds) {
@@ -79,7 +82,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
     public void onPropertyEvent(PropertyEvent e) {
         switch (e.getPropertyName()) {
             case "point":
-                int score = (int) e.getNewValue();
+                double score = (double) e.getNewValue();
                 this.setScoreLabel(score);
                 break;
             case "health":
@@ -89,6 +92,11 @@ public class ScorePanel extends JPanel implements PropertyListener {
             case "time":
                 int seconds = (int) e.getNewValue();
                 this.setTimeLabel(seconds);
+                break;
+            case "load":
+            	Player.getInstance().addPropertyListener("point", this);
+                Player.getInstance().addPropertyListener("health", this);
+                Player.getInstance().addPropertyListener("time", this);
                 break;
         }
     }
