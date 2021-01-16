@@ -82,12 +82,7 @@ public class ScorePanel extends JPanel implements PropertyListener {
     public void onPropertyEvent(PropertyEvent e) {
         switch (e.getPropertyName()) {
             case "point":
-                //DecimalFormat df = new DecimalFormat("#.#"); //TODO added
-                //double temp = (double) e.getNewValue();
-                //df.format(temp);
-                //double score = temp;
-                double score = (double) e.getNewValue(); //TODO actually double
-                System.out.println("point:"+score);
+                double score = (double) e.getNewValue();
                 this.setScoreLabel(score);
                 break;
             case "health":

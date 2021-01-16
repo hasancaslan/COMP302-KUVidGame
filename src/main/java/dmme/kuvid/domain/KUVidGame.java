@@ -303,8 +303,8 @@ public class KUVidGame extends Observable implements Runnable {
 		return this.getNumMol(MoleculeType.ALPHA)+this.getNumMol(MoleculeType.BETA)+this.getNumMol(MoleculeType.SIGMA)+this.getNumMol(MoleculeType.GAMMA);
 	}
 	
-	public int getScore() {
-		return (int) Player.getInstance().getPoint();
+	public double getScore() {
+		return Player.getInstance().getPoint();
 	}
 
 	public static List<PowerUp> getShootedPower() {

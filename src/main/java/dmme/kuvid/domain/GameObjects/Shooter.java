@@ -121,63 +121,30 @@ public class Shooter extends Observable {
     	
     }
 
-    //TODO refactoring for Shooter current'Atom' needed
-	//TODO added
 	public void pickShield(ShieldType type) {
 		if(KUVidGame.getShieldArsenal().get(type)>0) {
 			int L=KUVidGame.getInstance().getL();
 			int gameHeight=KUVidGame.getInstance().getPlayableArea().height;
-			if (this.currentAmmo != null) {
-				//this.currentAmmo.setActive(false);
-			
-			//Atom
-			//ShieldDecorator temp = KUVidGame.getShieldArsenal().get(type).get(KUVidGame.getShieldArsenal().get(type).size() - 1);
-			//this.currentAtom = temp.addShield();
+			if ((this.currentAmmo != null) && (this.currentAmmo.getType().equals(ObjectType.ATOM))) {
 
-			int curr = KUVidGame.getShieldArsenal().get(type);
-			KUVidGame.getShieldArsenal().put(type, curr-1);
-			
-			
-
-			switch(type) {
-				case ETA:
-					//TODO trying to take a shield with PowerUp ammo
-
-					//System.out.println(((Atom)this.currentAtom).getStability());
-
-					this.currentAmmo = new EtaShield((Atom)this.currentAmmo);
-					//System.out.println(this.currentAtom instanceof Atom);
-					//System.out.println("stability ->"+ ((Atom)this.currentAtom).getStability());
-					//TODO currentAtom stability = ((Atom)this.currentAtom).getStability()) etc?
-					//System.out.println("pace factor ->" +((Atom)this.currentAtom).paceFactor);
-
-					//this.currentAtom = new EtaShield((Atom)this.currentAtom);
-					//System.out.println(this.currentAtom instanceof Atom);
-					//System.out.println("stability ->"+ ((Atom)this.currentAtom).getStability());
-					//System.out.println("pace factor ->" +((Atom)this.currentAtom).paceFactor);
-
-					break;
-				case LOTA:
-					this.currentAmmo = new LotaShield((Atom)this.currentAmmo);
-					break;
-				case THETA:
-					this.currentAmmo = new ThetaShield((Atom)this.currentAmmo);
-					break;
-				case ZETA:
-					this.currentAmmo = new ZetaShield((Atom)this.currentAmmo);
-					break;
-			}
-
-			/*
-			double angle=Math.toRadians(this.getAngle());
-			int x=this.position-10*(int)(L*Math.cos(angle));
-			int y=gameHeight-(int)(10*L*Math.sin(angle));
-			this.currentAtom.setPosition(new Position(x,y));
-			this.currentAtom.setDirection(null);
-			this.currentAtom.setActive(true);
-
-			 */
-			publishPropertyEvent("updateShield",null,null);
+				int curr = KUVidGame.getShieldArsenal().get(type);
+				KUVidGame.getShieldArsenal().put(type, curr-1);
+	
+				switch(type) {
+					case ETA:
+						this.currentAmmo = new EtaShield((Atom)this.currentAmmo);
+						break;
+					case LOTA:
+						this.currentAmmo = new LotaShield((Atom)this.currentAmmo);
+						break;
+					case THETA:
+						this.currentAmmo = new ThetaShield((Atom)this.currentAmmo);
+						break;
+					case ZETA:
+						this.currentAmmo = new ZetaShield((Atom)this.currentAmmo);
+						break;
+				}
+				publishPropertyEvent("updateShield",null,null);
 			}
 
 
