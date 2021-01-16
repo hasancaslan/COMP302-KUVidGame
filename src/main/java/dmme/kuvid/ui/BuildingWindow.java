@@ -5,6 +5,7 @@ import dmme.kuvid.domain.KUVidGame;
 import dmme.kuvid.domain.Controllers.buildHandler;
 import dmme.kuvid.domain.GameObjects.Molecules.MovementStrategy;
 import dmme.kuvid.lib.types.GameLevel;
+import dmme.kuvid.lib.types.SaveType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -130,7 +131,7 @@ public class BuildingWindow extends JFrame {
         this.Load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-            	KUVidGame.getInstance().setIsLoad(true);
+            	KUVidGame.getInstance().setLoadMode(SaveType.DATABASE);
                 
                 dispose();
 

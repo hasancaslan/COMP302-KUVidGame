@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import dmme.kuvid.domain.KUVidGame;
+import dmme.kuvid.lib.types.SaveType;
 import dmme.kuvid.utils.IconImporter;
 
 public class PauseWindow extends JFrame implements KeyListener{
@@ -47,19 +48,17 @@ public class PauseWindow extends JFrame implements KeyListener{
         
         this.saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-            	KUVidGame.getInstance().saveLocal();
+            	KUVidGame.getInstance().save(SaveType.DATABASE);
             }
         });
         this.quitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-            	KUVidGame.getInstance().saveLocal();
+            	KUVidGame.getInstance().save(SaveType.DATABASE);
             	KUVidGame.getInstance().setQuit(true);
             }
         });
         
         addKeyListener(this);
-        
-
  }
 
 	@Override
