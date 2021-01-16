@@ -18,7 +18,6 @@ buildscript {
 
 group = "dmme"
 version = "1.0.0"
-sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -37,6 +36,9 @@ dependencies {
     // Required for tests
     compile 'org.junit.jupiter:junit-jupiter-api:5.6.3'
     compile 'org.junit.jupiter:junit-jupiter-engine:5.6.3'
+    compile 'org.mongodb:mongodb-driver-sync:4.1.1'
+    compile 'org.mongodb:mongodb-driver-core:4.1.1'
+    compile 'org.mongodb:mongodb-driver-legacy:4.1.1'
 }
 
 application {
