@@ -44,7 +44,7 @@ public class movementHandler extends Observable{
     
     private int L = KUVidGame.getInstance().getL();
     private int Width = KUVidGame.getInstance().getPlayableArea().width;
-    private Random rand = new Random();
+    private transient Random rand = new Random();
     private List<GameObject> garbage = new ArrayList<GameObject>();
     private List<GameObject> collidedMol = new ArrayList<GameObject>();
     private List<GameObject> collidedAtom = new ArrayList<GameObject>();

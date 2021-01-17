@@ -455,17 +455,19 @@ public class KUVidGame extends Observable implements Runnable {
 
     public void save(SaveType type) {
         this.snapshotPlayer();
-        if (type == SaveType.DATABASE)
+        if (type == SaveType.DATABASE) {
             saveLoadDatabase.saveGame();
-        else if (type == SaveType.LOCAL)
+        }else if (type == SaveType.LOCAL) {
             saveLoadFile.saveGame();
+        }
     }
 
     public void load(SaveType type) {
-        if (type == SaveType.DATABASE)
+        if (type == SaveType.DATABASE) {
             saveLoadDatabase.loadGame();
-        else if (type == SaveType.LOCAL)
+        }else if (type == SaveType.LOCAL) {
             saveLoadFile.loadGame();
+        }
     }
 
     public void setQuit(boolean quitting) {

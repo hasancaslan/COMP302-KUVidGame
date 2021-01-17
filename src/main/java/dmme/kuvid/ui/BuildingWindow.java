@@ -48,6 +48,7 @@ public class BuildingWindow extends JFrame {
     int shieldNum=0;
 
     private JButton Load;
+    private JComboBox<SaveType> saveOpts;
     
     public BuildingWindow() {
         this.setTitle("BUILDING WINDOW");
@@ -58,7 +59,7 @@ public class BuildingWindow extends JFrame {
 
         this.ComboBox = new JComboBox<>(this.Difficulty);
         this.StartButton = new JButton("Start Game");
-        this.setLayout(new GridLayout(10, 2, 4, 4));
+        this.setLayout(new GridLayout(11, 2, 4, 4));
 
         this.add(new JLabel("Number of Atoms: "));
         this.add(this.AtomNumber);
@@ -94,7 +95,10 @@ public class BuildingWindow extends JFrame {
 
         this.add(new JLabel("GameDifficulty"));
         this.add(this.ComboBox);
- 
+        
+        this.add(new JLabel("Select Load Option"));
+        this.saveOpts = new JComboBox<>(SaveType.values());
+        this.add(this.saveOpts);
         this.add(this.StartButton);
         this.Load=new JButton("Load Game");
         this.add(this.Load);
@@ -131,7 +135,9 @@ public class BuildingWindow extends JFrame {
         this.Load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-            	KUVidGame.getInstance().setLoadMode(SaveType.DATABASE);
+            	SaveType loadOpt=(SaveType) saveOpts.getSelectedItem();
+            	System.out.println(loadOpt);
+            	KUVidGame.getInstance().setLoadMode(loadOpt);
                 
                 dispose();
 
