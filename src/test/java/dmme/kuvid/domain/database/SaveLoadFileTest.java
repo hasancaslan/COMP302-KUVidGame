@@ -41,7 +41,8 @@ class SaveLoadFileTest {
         void testProduceCorrectJSON() {
             String jsonStringFromMethod = saveLoadFile.gameObjectToJson(ObjectType.ATOM, AtomType.ALPHA);
             List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.ALPHA));
-            String jsonStringManual = new GsonBuilder().setPrettyPrinting().create().toJson(list);
+            String jsonStringManual = new GsonBuilder().registerTypeAdapter(Atom.class, new AbstractAtomAdapter()).setPrettyPrinting().create()
+                    .toJson(list,new TypeToken<List<Atom>>(){}.getType());
 
             Assertions.assertEquals(jsonStringManual, jsonStringFromMethod);
         }
@@ -51,7 +52,8 @@ class SaveLoadFileTest {
             String jsonStringFromMethod = saveLoadFile.gameObjectToJson(ObjectType.ATOM, AtomType.ALPHA);
             List<GameObject> list = KUVidGame.getGameObjectMap().get(new Key(ObjectType.ATOM, AtomType.BETA));
 
-            String jsonStringManual = new GsonBuilder().setPrettyPrinting().create().toJson(list);
+            String jsonStringManual = new GsonBuilder().registerTypeAdapter(Atom.class, new AbstractAtomAdapter()).setPrettyPrinting().create()
+                    .toJson(list,new TypeToken<List<Atom>>(){}.getType());
 
             Assertions.assertNotEquals(jsonStringManual, jsonStringFromMethod);
         }
@@ -73,8 +75,8 @@ class SaveLoadFileTest {
 
         @Test
         void testFileLoaded() {
-            String json = new GsonBuilder().setPrettyPrinting().create()
-                    .toJson(list,new TypeToken<List<AlphaAtom>>(){}.getType());
+            String json = new GsonBuilder().registerTypeAdapter(Atom.class, new AbstractAtomAdapter()).setPrettyPrinting().create()
+                    .toJson(list,new TypeToken<List<Atom>>(){}.getType());
 
             saveLoadFile.save(ObjectType.ATOM, AtomType.ALPHA, "test_alpha");
             String loaded = saveLoadFile.load("test_alpha");
