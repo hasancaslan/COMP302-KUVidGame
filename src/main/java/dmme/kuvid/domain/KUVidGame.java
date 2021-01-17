@@ -1,5 +1,6 @@
 package dmme.kuvid.domain;
 
+import dmme.kuvid.Application;
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.destroyHandler;
 import dmme.kuvid.domain.Controllers.movementHandler;
@@ -377,7 +378,7 @@ public class KUVidGame extends Observable implements Runnable {
         }
 
         int select = 0;
-
+        Application.getInstance().getLogger().i("Game runing ...");
         while (true) {
             if (Player.getInstance().getHealth() <= 0) {
                 break;
@@ -432,6 +433,7 @@ public class KUVidGame extends Observable implements Runnable {
             }
         }
         publishPropertyEvent("finishGame", null, null);
+        Application.getInstance().getLogger().i("Game Finished!");
     }
 
     @Override
@@ -454,6 +456,7 @@ public class KUVidGame extends Observable implements Runnable {
     }
 
     public void save(SaveType type) {
+    	Application.getInstance().getLogger().i("Saving game to "+type+" ...");
         this.snapshotPlayer();
         if (type == SaveType.DATABASE) {
             saveLoadDatabase.saveGame();

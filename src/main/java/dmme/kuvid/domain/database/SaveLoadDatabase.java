@@ -7,6 +7,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.InsertOneResult;
+
 import dmme.kuvid.domain.Controllers.DomainFactory;
 import dmme.kuvid.domain.Controllers.movementHandler;
 import dmme.kuvid.domain.GameObjects.Atoms.Atom;
@@ -74,7 +76,9 @@ public class SaveLoadDatabase implements SaveMode {
         save("player", doc);
         save("shooter", doc);
 
+        
         collection.insertOne(doc);
+        
         return false;
     }
 
@@ -91,7 +95,8 @@ public class SaveLoadDatabase implements SaveMode {
 
         MongoCollection<Document> collection = database.getCollection("KuvidCollection");
 
-        Document doc = collection.find().first();
+        
+        Document doc = collection.find().sort(new Document("_id", -1)).first();
 
         load("shooter", doc);
 
@@ -470,7 +475,8 @@ public class SaveLoadDatabase implements SaveMode {
 
         MongoCollection<Document> collection = database.getCollection("KuvidCollection");
 
-        Document doc = collection.find().first();
+        //Document doc = collection.find().first();
+        Document doc = collection.find().sort(new Document("_id", -1)).first();
 
         load("player", doc);
         return false;

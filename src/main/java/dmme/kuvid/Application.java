@@ -56,4 +56,8 @@ public class Application implements Runnable {
     public void startGame(Thread t) {
     	t.start();
     }
+    
+    public Logger getLogger() {
+    	return this.logger;
+    }
 }

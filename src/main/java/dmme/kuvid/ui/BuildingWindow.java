@@ -136,13 +136,17 @@ public class BuildingWindow extends JFrame {
             public void actionPerformed(ActionEvent event) {
 
             	SaveType loadOpt=(SaveType) saveOpts.getSelectedItem();
-            	System.out.println(loadOpt);
-            	KUVidGame.getInstance().setLoadMode(loadOpt);
-                
-                dispose();
-
-                new GameFrame();
-                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
+            	
+            	if(!loadOpt.equals(SaveType.NONE)) {
+            		
+	            	Application.getInstance().getLogger().i("Loading last saved game from "+loadOpt+" ...");
+	            	KUVidGame.getInstance().setLoadMode(loadOpt);
+	                
+	                dispose();
+	
+	                new GameFrame();
+	                Application.getInstance().startGame(new Thread(KUVidGame.getInstance()));
+            	}
             }
         });
 

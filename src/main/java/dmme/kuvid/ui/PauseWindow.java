@@ -29,6 +29,7 @@ public class PauseWindow extends JFrame implements KeyListener{
 	private JButton quitButton;
 	private SaveType saveOpt=SaveType.LOCAL;
 	private JComboBox<SaveType> saveOpts;
+	private JButton quitWOsaveButton;
 
 	public PauseWindow() {
         this.setTitle("KUVid");
@@ -37,12 +38,16 @@ public class PauseWindow extends JFrame implements KeyListener{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         
-        this.setSize(350,250);
+        this.setSize(350,300);
         this.setBackground(Color.WHITE);
         ImageIcon Icon = IconImporter.getIconFromFileName("kuvid.png", "", new Dimension(300,150));
         this.saveButton=new JButton("Save Game");
         this.quitButton=new JButton("Save and Quit Game");
-        this.saveOpts = new JComboBox<>(SaveType.values());
+        this.saveOpts = new JComboBox<>();
+        this.saveOpts.addItem(SaveType.LOCAL);
+        this.saveOpts.addItem(SaveType.DATABASE);
+        this.quitWOsaveButton=new JButton("Quit Game");
+        
         
 
         this.setLayout(new FlowLayout());
@@ -54,6 +59,7 @@ public class PauseWindow extends JFrame implements KeyListener{
         this.add(this.saveOpts);
         this.add(saveButton);
         this.add(this.quitButton);
+        this.add(this.quitWOsaveButton);
         
         this.saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -65,6 +71,17 @@ public class PauseWindow extends JFrame implements KeyListener{
             public void actionPerformed(ActionEvent event) {
             	setSaveOpt(saveOpts.getItemAt(saveOpts.getSelectedIndex()));
             	KUVidGame.getInstance().save(getSaveOpt());
+            	KUVidGame.getInstance().setQuit(true);
+            }
+        });
+        
+        this.quitWOsaveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+            	int n=JOptionPane.showConfirmDialog(new JFrame(), "Exiting Without Saving !!! Do you wan't to save the game ?", "WARNING",JOptionPane.YES_NO_OPTION);
+            	if(n== JOptionPane.YES_OPTION) {
+            		setSaveOpt(saveOpts.getItemAt(saveOpts.getSelectedIndex()));
+                	KUVidGame.getInstance().save(getSaveOpt());
+            	}
             	KUVidGame.getInstance().setQuit(true);
             }
         });
