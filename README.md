@@ -1,6 +1,5 @@
 # KUVid - DM Me
-
-KuVid is a game for COMP 302 Term Project.
+### COMP 302: Software Engineering Term Project
 
 ## Team Members
 
