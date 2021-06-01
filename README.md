@@ -1,5 +1,5 @@
 # KUVid - DM Me
-### COMP 302: Software Engineering Term Project
+### COMP 302: Software Engineering Term Project
 
 ## Team Members
 
